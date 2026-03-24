@@ -1,0 +1,927 @@
+openapi: 3.1.0
+info:
+  title: Fiserv CardDeveloper API
+  description: >-
+    The Fiserv CardDeveloper API enables financial institutions and
+    cardholders to manage card and account information through various
+    touchpoints. The API supports account creation, card management,
+    authorization management, transaction inquiry, limit management,
+    and statement retrieval for credit and debit card programs.
+  version: '1.0.0'
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/CardDeveloper
+  termsOfService: https://www.fiserv.com/en/legal.html
+externalDocs:
+  description: CardDeveloper API Documentation
+  url: https://developer.fiserv.com/product/CardDeveloper/docs/?path=docs/gettingstarted/getting-started.md
+servers:
+  - url: https://cert.api.fiservapps.com
+    description: Certification Environment
+  - url: https://prod.api.fiservapps.com
+    description: Production Environment
+tags:
+  - name: Accounts
+    description: >-
+      Create and manage card accounts including credit and debit accounts.
+  - name: Cards
+    description: >-
+      Issue, activate, manage, and retrieve card details.
+  - name: Authorizations
+    description: >-
+      Create and manage transaction authorizations.
+  - name: Transactions
+    description: >-
+      Retrieve transaction history and details for card accounts.
+  - name: Limits
+    description: >-
+      Manage credit, temporary credit, and cash limits.
+  - name: Statements
+    description: >-
+      Retrieve account statements and statement transactions.
+security:
+  - bearerAuth: []
+paths:
+  /v2/accounts/account:
+    post:
+      operationId: addAccount
+      summary: Create a new card account
+      description: >-
+        Creates a new consumer or commercial card account. Supports
+        credit account creation with configurable credit limits and
+        billing preferences.
+      tags:
+        - Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountAddRequest'
+      responses:
+        '201':
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAddResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/accounts/{accountNumber}:
+    get:
+      operationId: getAccount
+      summary: Retrieve account details
+      description: >-
+        Retrieves account-specific data including balances, limits,
+        status, and billing information.
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/AccountNumber'
+      responses:
+        '200':
+          description: Account details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountInquiryResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/cards/card:
+    post:
+      operationId: issueCard
+      summary: Issue a new card
+      description: >-
+        Issues a new card for an existing account. The card can be
+        a primary card or an additional authorized user card.
+      tags:
+        - Cards
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardIssueRequest'
+      responses:
+        '201':
+          description: Card issued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardIssueResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/cards/{cardNumber}:
+    get:
+      operationId: getCard
+      summary: Retrieve card details
+      description: >-
+        Retrieves card information including card status, expiration
+        date, and card type.
+      tags:
+        - Cards
+      parameters:
+        - $ref: '#/components/parameters/CardNumber'
+      responses:
+        '200':
+          description: Card details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardInquiryResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Card not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      operationId: updateCard
+      summary: Update card details
+      description: >-
+        Updates card attributes such as status (activate, deactivate,
+        block), and PIN settings.
+      tags:
+        - Cards
+      parameters:
+        - $ref: '#/components/parameters/CardNumber'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardUpdateRequest'
+      responses:
+        '200':
+          description: Card updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardUpdateResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Card not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/authorizations:
+    post:
+      operationId: createAuthorization
+      summary: Create an authorization
+      description: >-
+        Creates a new authorization for an account or cancels an existing
+        authorization using the card number.
+      tags:
+        - Authorizations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizationRequest'
+      responses:
+        '201':
+          description: Authorization created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/authorizations/{authorizationId}/cancel:
+    post:
+      operationId: cancelAuthorization
+      summary: Cancel an authorization
+      description: >-
+        Cancels a previously created authorization, releasing the hold
+        on the account.
+      tags:
+        - Authorizations
+      parameters:
+        - name: authorizationId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: >-
+            The authorization identifier to cancel.
+      responses:
+        '200':
+          description: Authorization cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationCancelResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Authorization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/accounts/{accountNumber}/transactions:
+    get:
+      operationId: listTransactions
+      summary: List account transactions
+      description: >-
+        Retrieves summary or detailed transaction history for a card
+        account. Supports filtering by date range, merchant, and
+        transaction type.
+      tags:
+        - Transactions
+      parameters:
+        - $ref: '#/components/parameters/AccountNumber'
+        - name: fromDate
+          in: query
+          schema:
+            type: string
+            format: date
+          description: >-
+            Start date for the transaction search.
+        - name: toDate
+          in: query
+          schema:
+            type: string
+            format: date
+          description: >-
+            End date for the transaction search.
+        - name: transactionType
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter by transaction type.
+      responses:
+        '200':
+          description: Transactions returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionListResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/limits:
+    get:
+      operationId: getLimits
+      summary: Get account limits
+      description: >-
+        Retrieves account limits including credit limit, temporary credit
+        limit, and cash advance limit.
+      tags:
+        - Limits
+      parameters:
+        - name: accountNumber
+          in: query
+          required: true
+          schema:
+            type: string
+          description: >-
+            The account number to retrieve limits for.
+      responses:
+        '200':
+          description: Limits returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LimitsResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      operationId: updateLimits
+      summary: Update account limits
+      description: >-
+        Updates account limits such as credit limit, temporary credit
+        limit, or cash advance limit.
+      tags:
+        - Limits
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LimitsUpdateRequest'
+      responses:
+        '200':
+          description: Limits updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LimitsUpdateResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/accounts/{accountNumber}/statements:
+    get:
+      operationId: listStatements
+      summary: List account statements
+      description: >-
+        Retrieves statement information and statement transactions for
+        a card account.
+      tags:
+        - Statements
+      parameters:
+        - $ref: '#/components/parameters/AccountNumber'
+        - name: statementDate
+          in: query
+          schema:
+            type: string
+            format: date
+          description: >-
+            The statement date to retrieve.
+      responses:
+        '200':
+          description: Statements returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatementListResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        OAuth 2.0 Bearer token for API authentication.
+  parameters:
+    AccountNumber:
+      name: accountNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: >-
+        The card account number.
+    CardNumber:
+      name: cardNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: >-
+        The card number.
+  schemas:
+    AccountAddRequest:
+      type: object
+      description: >-
+        Request body for creating a card account.
+      required:
+        - accountType
+      properties:
+        accountType:
+          type: string
+          enum:
+            - CONSUMER_CREDIT
+            - COMMERCIAL_CREDIT
+            - CONSUMER_DEBIT
+          description: >-
+            The type of card account.
+        creditLimit:
+          type: number
+          format: double
+          description: >-
+            The credit limit for credit accounts.
+        billingCycleDay:
+          type: integer
+          minimum: 1
+          maximum: 28
+          description: >-
+            The billing cycle day of the month.
+    AccountAddResponse:
+      type: object
+      description: >-
+        Response body for account creation.
+      properties:
+        accountNumber:
+          type: string
+          description: >-
+            The new account number.
+        status:
+          type: string
+          description: >-
+            The account status.
+    AccountInquiryResponse:
+      type: object
+      description: >-
+        Response body for account inquiry.
+      properties:
+        accountNumber:
+          type: string
+          description: >-
+            The account number.
+        accountType:
+          type: string
+          description: >-
+            The account type.
+        status:
+          type: string
+          description: >-
+            The account status.
+        creditLimit:
+          type: number
+          format: double
+          description: >-
+            The credit limit.
+        availableCredit:
+          type: number
+          format: double
+          description: >-
+            The available credit.
+        currentBalance:
+          type: number
+          format: double
+          description: >-
+            The current balance.
+        minimumPaymentDue:
+          type: number
+          format: double
+          description: >-
+            The minimum payment due.
+        paymentDueDate:
+          type: string
+          format: date
+          description: >-
+            The payment due date.
+    CardIssueRequest:
+      type: object
+      description: >-
+        Request body for issuing a card.
+      required:
+        - accountNumber
+      properties:
+        accountNumber:
+          type: string
+          description: >-
+            The account to issue the card for.
+        cardType:
+          type: string
+          enum:
+            - PRIMARY
+            - AUTHORIZED_USER
+          description: >-
+            The card type.
+        nameOnCard:
+          type: string
+          description: >-
+            The name to emboss on the card.
+    CardIssueResponse:
+      type: object
+      description: >-
+        Response body for card issuance.
+      properties:
+        cardNumber:
+          type: string
+          description: >-
+            The issued card number (masked).
+        expirationDate:
+          type: string
+          description: >-
+            The card expiration date.
+        status:
+          type: string
+          description: >-
+            The card status.
+    CardInquiryResponse:
+      type: object
+      description: >-
+        Response body for card inquiry.
+      properties:
+        cardNumber:
+          type: string
+          description: >-
+            The masked card number.
+        accountNumber:
+          type: string
+          description: >-
+            The associated account number.
+        status:
+          type: string
+          description: >-
+            The card status.
+        expirationDate:
+          type: string
+          description: >-
+            The card expiration date.
+        cardType:
+          type: string
+          description: >-
+            The card type.
+        nameOnCard:
+          type: string
+          description: >-
+            The name on the card.
+    CardUpdateRequest:
+      type: object
+      description: >-
+        Request body for updating card attributes.
+      properties:
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+            - BLOCKED
+            - LOST
+            - STOLEN
+          description: >-
+            The updated card status.
+    CardUpdateResponse:
+      type: object
+      description: >-
+        Response body for card update.
+      properties:
+        cardNumber:
+          type: string
+          description: >-
+            The card number.
+        status:
+          type: string
+          description: >-
+            The updated status.
+    AuthorizationRequest:
+      type: object
+      description: >-
+        Request body for creating a transaction authorization.
+      required:
+        - cardNumber
+        - amount
+      properties:
+        cardNumber:
+          type: string
+          description: >-
+            The card number.
+        amount:
+          type: number
+          format: double
+          description: >-
+            The authorization amount.
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          description: >-
+            The ISO 4217 currency code.
+        merchantName:
+          type: string
+          description: >-
+            The merchant name.
+        merchantCategoryCode:
+          type: string
+          description: >-
+            The merchant category code (MCC).
+    AuthorizationResponse:
+      type: object
+      description: >-
+        Response body for authorization creation.
+      properties:
+        authorizationId:
+          type: string
+          description: >-
+            The authorization identifier.
+        status:
+          type: string
+          enum:
+            - APPROVED
+            - DECLINED
+          description: >-
+            The authorization status.
+        approvalCode:
+          type: string
+          description: >-
+            The approval code if authorized.
+    AuthorizationCancelResponse:
+      type: object
+      description: >-
+        Response body for authorization cancellation.
+      properties:
+        authorizationId:
+          type: string
+          description: >-
+            The cancelled authorization identifier.
+        status:
+          type: string
+          description: >-
+            The cancellation status.
+    TransactionListResponse:
+      type: object
+      description: >-
+        Response body for transaction list.
+      properties:
+        accountNumber:
+          type: string
+          description: >-
+            The account number.
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardTransaction'
+          description: >-
+            The list of transactions.
+    CardTransaction:
+      type: object
+      description: >-
+        A single card transaction record.
+      properties:
+        transactionId:
+          type: string
+          description: >-
+            The transaction identifier.
+        transactionDate:
+          type: string
+          format: date
+          description: >-
+            The transaction date.
+        postDate:
+          type: string
+          format: date
+          description: >-
+            The posting date.
+        amount:
+          type: number
+          format: double
+          description: >-
+            The transaction amount.
+        currency:
+          type: string
+          description: >-
+            The currency code.
+        merchantName:
+          type: string
+          description: >-
+            The merchant name.
+        merchantCategoryCode:
+          type: string
+          description: >-
+            The merchant category code.
+        transactionType:
+          type: string
+          description: >-
+            The transaction type (purchase, refund, etc.).
+        description:
+          type: string
+          description: >-
+            The transaction description.
+    LimitsResponse:
+      type: object
+      description: >-
+        Response body for account limits inquiry.
+      properties:
+        accountNumber:
+          type: string
+          description: >-
+            The account number.
+        creditLimit:
+          type: number
+          format: double
+          description: >-
+            The permanent credit limit.
+        temporaryCreditLimit:
+          type: number
+          format: double
+          description: >-
+            The temporary credit limit.
+        cashLimit:
+          type: number
+          format: double
+          description: >-
+            The cash advance limit.
+        availableCredit:
+          type: number
+          format: double
+          description: >-
+            The available credit.
+        availableCash:
+          type: number
+          format: double
+          description: >-
+            The available cash advance amount.
+    LimitsUpdateRequest:
+      type: object
+      description: >-
+        Request body for updating account limits.
+      required:
+        - accountNumber
+      properties:
+        accountNumber:
+          type: string
+          description: >-
+            The account number.
+        creditLimit:
+          type: number
+          format: double
+          description: >-
+            The new credit limit.
+        temporaryCreditLimit:
+          type: number
+          format: double
+          description: >-
+            The new temporary credit limit.
+        temporaryCreditLimitExpiry:
+          type: string
+          format: date
+          description: >-
+            The expiry date for the temporary limit.
+        cashLimit:
+          type: number
+          format: double
+          description: >-
+            The new cash advance limit.
+    LimitsUpdateResponse:
+      type: object
+      description: >-
+        Response body for limits update.
+      properties:
+        accountNumber:
+          type: string
+          description: >-
+            The account number.
+        status:
+          type: string
+          description: >-
+            The update status.
+    StatementListResponse:
+      type: object
+      description: >-
+        Response body for statement list.
+      properties:
+        accountNumber:
+          type: string
+          description: >-
+            The account number.
+        statements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+          description: >-
+            The list of statements.
+    Statement:
+      type: object
+      description: >-
+        A single account statement record.
+      properties:
+        statementDate:
+          type: string
+          format: date
+          description: >-
+            The statement date.
+        openingBalance:
+          type: number
+          format: double
+          description: >-
+            The opening balance.
+        closingBalance:
+          type: number
+          format: double
+          description: >-
+            The closing balance.
+        minimumPaymentDue:
+          type: number
+          format: double
+          description: >-
+            The minimum payment due.
+        paymentDueDate:
+          type: string
+          format: date
+          description: >-
+            The payment due date.
+        totalDebits:
+          type: number
+          format: double
+          description: >-
+            Total debits for the statement period.
+        totalCredits:
+          type: number
+          format: double
+          description: >-
+            Total credits for the statement period.
+    ErrorResponse:
+      type: object
+      description: >-
+        Standard error response.
+      properties:
+        code:
+          type: string
+          description: >-
+            The error code.
+        message:
+          type: string
+          description: >-
+            The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: >-
+                  The field that caused the error.
+              message:
+                type: string
+                description: >-
+                  The field-level error message.
+          description: >-
+            Detailed field-level errors.

@@ -1,0 +1,167 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "fiserv": "https://developer.fiserv.com/vocab/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "pay": "https://www.w3.org/ns/payment#",
+
+    "PaymentTransaction": {
+      "@id": "fiserv:PaymentTransaction",
+      "@context": {
+        "transactionId": "fiserv:transactionId",
+        "orderId": "fiserv:orderId",
+        "merchantId": "fiserv:merchantId",
+        "transactionType": "fiserv:transactionType",
+        "transactionState": "fiserv:transactionState",
+        "amount": "schema:price",
+        "currency": "schema:priceCurrency",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "settlementDate": {
+          "@id": "fiserv:settlementDate",
+          "@type": "xsd:date"
+        },
+        "paymentSource": "fiserv:paymentSource",
+        "processorResponse": "fiserv:processorResponse"
+      }
+    },
+
+    "Account": {
+      "@id": "fiserv:Account",
+      "@context": {
+        "accountId": "fiserv:accountId",
+        "accountNumber": "fiserv:accountNumber",
+        "accountType": "fiserv:accountType",
+        "status": "fiserv:accountStatus",
+        "currency": "schema:priceCurrency",
+        "openDate": {
+          "@id": "fiserv:openDate",
+          "@type": "xsd:date"
+        },
+        "closeDate": {
+          "@id": "fiserv:closeDate",
+          "@type": "xsd:date"
+        },
+        "branchId": "fiserv:branchId",
+        "balances": "fiserv:balances",
+        "limits": "fiserv:limits",
+        "owner": {
+          "@id": "fiserv:owner",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Card": {
+      "@id": "fiserv:Card",
+      "@context": {
+        "cardNumber": "fiserv:cardNumber",
+        "cardType": "fiserv:cardType",
+        "cardBrand": "fiserv:cardBrand",
+        "status": "fiserv:cardStatus",
+        "expirationDate": {
+          "@id": "fiserv:expirationDate",
+          "@type": "xsd:gYearMonth"
+        },
+        "nameOnCard": "schema:name",
+        "account": {
+          "@id": "fiserv:account",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Party": {
+      "@id": "fiserv:Party",
+      "@context": {
+        "partyId": "fiserv:partyId",
+        "partyType": "fiserv:partyType",
+        "firstName": "schema:givenName",
+        "lastName": "schema:familyName",
+        "organizationName": "schema:legalName",
+        "email": "schema:email",
+        "phone": "schema:telephone",
+        "dateOfBirth": {
+          "@id": "schema:birthDate",
+          "@type": "xsd:date"
+        },
+        "address": "schema:address"
+      }
+    },
+
+    "Merchant": {
+      "@id": "fiserv:Merchant",
+      "@context": {
+        "merchantId": "fiserv:merchantId",
+        "merchantName": "schema:name",
+        "merchantCategoryCode": "fiserv:merchantCategoryCode",
+        "website": {
+          "@id": "schema:url",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Dispute": {
+      "@id": "fiserv:Dispute",
+      "@context": {
+        "disputeId": "fiserv:disputeId",
+        "disputeStatus": "fiserv:disputeStatus",
+        "reason": "fiserv:disputeReason",
+        "reasonCode": "fiserv:disputeReasonCode",
+        "disputeAmount": "schema:price",
+        "transaction": {
+          "@id": "fiserv:transaction",
+          "@type": "@id"
+        },
+        "responseDeadline": {
+          "@id": "fiserv:responseDeadline",
+          "@type": "xsd:date"
+        }
+      }
+    },
+
+    "Transfer": {
+      "@id": "fiserv:Transfer",
+      "@context": {
+        "transferId": "fiserv:transferId",
+        "transferType": "fiserv:transferType",
+        "amount": "schema:price",
+        "currency": "schema:priceCurrency",
+        "fromAccount": {
+          "@id": "fiserv:fromAccount",
+          "@type": "@id"
+        },
+        "toAccount": {
+          "@id": "fiserv:toAccount",
+          "@type": "@id"
+        },
+        "scheduledDate": {
+          "@id": "fiserv:scheduledDate",
+          "@type": "xsd:date"
+        },
+        "status": "fiserv:transferStatus"
+      }
+    },
+
+    "WebhookEvent": {
+      "@id": "fiserv:WebhookEvent",
+      "@context": {
+        "eventId": "fiserv:eventId",
+        "eventType": "fiserv:eventType",
+        "timestamp": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    }
+  }
+}

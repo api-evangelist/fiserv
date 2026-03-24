@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://developer.fiserv.com/schemas/fiserv/account.json",
+  "title": "Fiserv Account",
+  "description": "Schema representing a financial account across Fiserv banking and card APIs including BankingHub and CardDeveloper.",
+  "type": "object",
+  "required": ["accountId", "accountType", "status"],
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "The unique account identifier."
+    },
+    "accountNumber": {
+      "type": "string",
+      "description": "The account number."
+    },
+    "accountType": {
+      "type": "string",
+      "enum": ["DDA", "SDA", "MMA", "CDA", "LOAN", "CONSUMER_CREDIT", "COMMERCIAL_CREDIT", "CONSUMER_DEBIT"],
+      "description": "The type of account."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ACTIVE", "INACTIVE", "CLOSED", "DORMANT", "FROZEN"],
+      "description": "The current account status."
+    },
+    "partyId": {
+      "type": "string",
+      "description": "The party (customer) identifier who owns the account."
+    },
+    "productCode": {
+      "type": "string",
+      "description": "The product code for the account."
+    },
+    "branchId": {
+      "type": "string",
+      "description": "The branch identifier where the account is held."
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "The ISO 4217 currency code for the account."
+    },
+    "balances": {
+      "$ref": "#/$defs/Balances"
+    },
+    "limits": {
+      "$ref": "#/$defs/Limits"
+    },
+    "openDate": {
+      "type": "string",
+      "format": "date",
+      "description": "The date the account was opened."
+    },
+    "closeDate": {
+      "type": "string",
+      "format": "date",
+      "description": "The date the account was closed, if applicable."
+    },
+    "billingCycleDay": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 28,
+      "description": "The billing cycle day of the month for credit accounts."
+    }
+  },
+  "$defs": {
+    "Balances": {
+      "type": "object",
+      "description": "Account balance information.",
+      "properties": {
+        "available": {
+          "type": "number",
+          "description": "The available balance or available credit."
+        },
+        "current": {
+          "type": "number",
+          "description": "The current (ledger) balance."
+        },
+        "pending": {
+          "type": "number",
+          "description": "The pending balance from unposted transactions."
+        },
+        "creditLimit": {
+          "type": "number",
+          "description": "The credit limit for credit accounts."
+        },
+        "minimumPaymentDue": {
+          "type": "number",
+          "description": "The minimum payment due for credit accounts."
+        }
+      }
+    },
+    "Limits": {
+      "type": "object",
+      "description": "Account limit information for credit and card accounts.",
+      "properties": {
+        "creditLimit": {
+          "type": "number",
+          "minimum": 0,
+          "description": "The permanent credit limit."
+        },
+        "temporaryCreditLimit": {
+          "type": "number",
+          "minimum": 0,
+          "description": "The temporary credit limit."
+        },
+        "temporaryCreditLimitExpiry": {
+          "type": "string",
+          "format": "date",
+          "description": "The expiry date for the temporary credit limit."
+        },
+        "cashLimit": {
+          "type": "number",
+          "minimum": 0,
+          "description": "The cash advance limit."
+        },
+        "availableCredit": {
+          "type": "number",
+          "description": "The available credit amount."
+        },
+        "availableCash": {
+          "type": "number",
+          "description": "The available cash advance amount."
+        }
+      }
+    }
+  }
+}

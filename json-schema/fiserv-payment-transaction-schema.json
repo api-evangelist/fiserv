@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://developer.fiserv.com/schemas/fiserv/payment-transaction.json",
+  "title": "Fiserv Payment Transaction",
+  "description": "Schema representing a payment transaction across Fiserv payment processing APIs including CommerceHub and CardPointe Gateway.",
+  "type": "object",
+  "required": ["transactionId", "amount", "currency", "transactionType", "transactionState"],
+  "properties": {
+    "transactionId": {
+      "type": "string",
+      "description": "The unique identifier assigned to the transaction by the gateway."
+    },
+    "orderId": {
+      "type": "string",
+      "description": "The merchant-assigned order identifier."
+    },
+    "merchantId": {
+      "type": "string",
+      "description": "The merchant identifier."
+    },
+    "transactionType": {
+      "type": "string",
+      "enum": ["CHARGE", "AUTHORIZATION", "CAPTURE", "REFUND", "VOID", "VERIFICATION"],
+      "description": "The type of transaction."
+    },
+    "transactionState": {
+      "type": "string",
+      "enum": ["AUTHORIZED", "CAPTURED", "SETTLED", "REFUNDED", "VOIDED", "DECLINED", "PENDING"],
+      "description": "The current state of the transaction."
+    },
+    "amount": {
+      "$ref": "#/$defs/Amount"
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "The ISO 4217 three-letter currency code."
+    },
+    "paymentSource": {
+      "$ref": "#/$defs/PaymentSource"
+    },
+    "processorResponse": {
+      "$ref": "#/$defs/ProcessorResponse"
+    },
+    "billingAddress": {
+      "$ref": "#/$defs/Address"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The timestamp when the transaction was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The timestamp when the transaction was last updated."
+    },
+    "captureFlag": {
+      "type": "boolean",
+      "description": "Whether the transaction was captured immediately."
+    },
+    "settlementDate": {
+      "type": "string",
+      "format": "date",
+      "description": "The date the transaction was settled."
+    }
+  },
+  "$defs": {
+    "Amount": {
+      "type": "object",
+      "description": "A monetary amount.",
+      "required": ["total"],
+      "properties": {
+        "total": {
+          "type": "number",
+          "minimum": 0,
+          "description": "The total amount."
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "The ISO 4217 currency code."
+        }
+      }
+    },
+    "PaymentSource": {
+      "type": "object",
+      "description": "The payment source used for the transaction.",
+      "properties": {
+        "sourceType": {
+          "type": "string",
+          "enum": ["PaymentCard", "PaymentToken", "PaymentSession", "GooglePay", "ApplePay", "BankAccount"],
+          "description": "The type of payment source."
+        },
+        "cardBrand": {
+          "type": "string",
+          "enum": ["VISA", "MASTERCARD", "AMEX", "DISCOVER", "JCB", "DINERS"],
+          "description": "The card brand."
+        },
+        "maskedCardNumber": {
+          "type": "string",
+          "pattern": "^\\*{4,}\\d{4}$",
+          "description": "The masked card number showing only the last four digits."
+        },
+        "expirationMonth": {
+          "type": "string",
+          "pattern": "^\\d{2}$",
+          "description": "The card expiration month in MM format."
+        },
+        "expirationYear": {
+          "type": "string",
+          "pattern": "^\\d{4}$",
+          "description": "The card expiration year in YYYY format."
+        },
+        "token": {
+          "type": "string",
+          "description": "The payment token if tokenized."
+        }
+      }
+    },
+    "ProcessorResponse": {
+      "type": "object",
+      "description": "The response from the payment processor.",
+      "properties": {
+        "approvalStatus": {
+          "type": "string",
+          "enum": ["APPROVED", "DECLINED", "PROCESSING_FAILED", "RETRY"],
+          "description": "The approval status."
+        },
+        "approvalCode": {
+          "type": "string",
+          "description": "The issuer approval code."
+        },
+        "responseCode": {
+          "type": "string",
+          "description": "The processor response code."
+        },
+        "responseMessage": {
+          "type": "string",
+          "description": "The human-readable response message."
+        },
+        "avsResponseCode": {
+          "type": "string",
+          "description": "The Address Verification System response code."
+        },
+        "cvvResponseCode": {
+          "type": "string",
+          "description": "The Card Verification Value response code."
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "description": "A physical or billing address.",
+      "properties": {
+        "line1": {
+          "type": "string",
+          "maxLength": 255,
+          "description": "Address line 1."
+        },
+        "line2": {
+          "type": "string",
+          "maxLength": 255,
+          "description": "Address line 2."
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "The city."
+        },
+        "state": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "The state or province."
+        },
+        "postalCode": {
+          "type": "string",
+          "maxLength": 20,
+          "description": "The postal or ZIP code."
+        },
+        "country": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$",
+          "description": "The ISO 3166-1 alpha-2 country code."
+        }
+      }
+    }
+  }
+}

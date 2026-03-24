@@ -1,0 +1,1148 @@
+openapi: 3.1.0
+info:
+  title: Fiserv CardPointe Gateway API
+  description: >-
+    The CardPointe Gateway API provides a RESTful interface for integrating
+    secure tokenization, payment processing, and reporting features into
+    applications and websites. The API supports authorization, capture,
+    void, refund, and inquiry operations, as well as customer profile
+    management for storing payment credentials securely.
+  version: '1.0.0'
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/CardPointe
+  termsOfService: https://www.fiserv.com/en/legal.html
+externalDocs:
+  description: CardPointe Gateway API Documentation
+  url: https://developer.fiserv.com/product/CardPointe/docs/?path=docs%2FAPIs%2FCardPointeGatewayAPI.md
+servers:
+  - url: https://{site}-uat.cardconnect.com/cardconnect/rest
+    description: UAT Environment
+    variables:
+      site:
+        default: fts
+        description: >-
+          The site name provided during onboarding.
+  - url: https://{site}.cardconnect.com/cardconnect/rest
+    description: Production Environment
+    variables:
+      site:
+        default: fts
+        description: >-
+          The site name provided during onboarding.
+tags:
+  - name: Authorization
+    description: >-
+      Authorize payment transactions against a cardholder account.
+  - name: Capture
+    description: >-
+      Capture previously authorized transactions for settlement.
+  - name: Void
+    description: >-
+      Void previously authorized transactions before settlement.
+  - name: Refund
+    description: >-
+      Refund previously captured and settled transactions.
+  - name: Inquire
+    description: >-
+      Inquire about the status of transactions and merchant information.
+  - name: Settlement
+    description: >-
+      Retrieve settlement status for processed transactions.
+  - name: Funding
+    description: >-
+      Retrieve funding information for settled transactions.
+  - name: Profile
+    description: >-
+      Manage stored customer payment profiles for recurring or
+      future transactions.
+  - name: Signature Capture
+    description: >-
+      Submit signature capture data for completed transactions.
+  - name: BIN
+    description: >-
+      Look up Bank Identification Number (BIN) data for cards.
+security:
+  - basicAuth: []
+paths:
+  /auth:
+    put:
+      operationId: authorizeTransaction
+      summary: Authorize a payment transaction
+      description: >-
+        Submits an authorization request to process a payment. The
+        authorization verifies the cardholder account and places a hold
+        on funds. The response includes a retref (retrieval reference
+        number) used for subsequent capture, void, or refund operations.
+      tags:
+        - Authorization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: Authorization processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /capture:
+    put:
+      operationId: captureTransaction
+      summary: Capture an authorized transaction
+      description: >-
+        Captures a previously authorized transaction for settlement. The
+        capture amount can be less than or equal to the original
+        authorization amount.
+      tags:
+        - Capture
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaptureRequest'
+      responses:
+        '200':
+          description: Capture processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaptureResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /void:
+    put:
+      operationId: voidTransaction
+      summary: Void a transaction
+      description: >-
+        Voids a previously authorized transaction that has not yet been
+        settled. If the transaction has already been settled, use the
+        refund endpoint instead.
+      tags:
+        - Void
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoidRequest'
+      responses:
+        '200':
+          description: Void processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoidResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /refund:
+    put:
+      operationId: refundTransaction
+      summary: Refund a settled transaction
+      description: >-
+        Processes a refund for a previously captured and settled
+        transaction. Supports full and partial refunds.
+      tags:
+        - Refund
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundRequest'
+      responses:
+        '200':
+          description: Refund processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /inquire/{retref}/{merchid}:
+    get:
+      operationId: inquireTransaction
+      summary: Inquire about a transaction
+      description: >-
+        Retrieves the current status and details of a previously processed
+        transaction using its retrieval reference number.
+      tags:
+        - Inquire
+      parameters:
+        - $ref: '#/components/parameters/Retref'
+        - $ref: '#/components/parameters/MerchantId'
+      responses:
+        '200':
+          description: Transaction details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InquireResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /inquireByOrderid/{orderid}/{merchid}:
+    get:
+      operationId: inquireTransactionByOrderId
+      summary: Inquire about a transaction by order ID
+      description: >-
+        Retrieves the current status and details of a previously processed
+        transaction using the merchant-assigned order identifier.
+      tags:
+        - Inquire
+      parameters:
+        - name: orderid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: >-
+            The merchant-assigned order identifier.
+        - $ref: '#/components/parameters/MerchantId'
+      responses:
+        '200':
+          description: Transaction details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InquireResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /settlestat:
+    get:
+      operationId: getSettlementStatus
+      summary: Get settlement status
+      description: >-
+        Retrieves the settlement status for transactions processed on a
+        given date for a specified merchant.
+      tags:
+        - Settlement
+      parameters:
+        - name: merchid
+          in: query
+          required: true
+          schema:
+            type: string
+          description: >-
+            The CardPointe merchant ID.
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: >-
+            The settlement date in MMDD format.
+      responses:
+        '200':
+          description: Settlement status returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SettlementRecord'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /funding:
+    get:
+      operationId: getFundingInfo
+      summary: Get funding information
+      description: >-
+        Retrieves funding information for settled transactions, including
+        deposit amounts and dates.
+      tags:
+        - Funding
+      parameters:
+        - name: merchid
+          in: query
+          required: true
+          schema:
+            type: string
+          description: >-
+            The CardPointe merchant ID.
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: >-
+            The funding date in MMDD format.
+      responses:
+        '200':
+          description: Funding information returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FundingResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /profile:
+    put:
+      operationId: createOrUpdateProfile
+      summary: Create or update a customer profile
+      description: >-
+        Creates or updates a stored customer payment profile. Profiles
+        securely store payment credentials for recurring or future
+        transactions without requiring the merchant to handle raw card data.
+      tags:
+        - Profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileRequest'
+      responses:
+        '200':
+          description: Profile created or updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /profile/{profileid}/{accountid}/{merchid}:
+    get:
+      operationId: getProfile
+      summary: Retrieve a customer profile
+      description: >-
+        Retrieves a stored customer payment profile by profile ID and
+        account ID.
+      tags:
+        - Profile
+      parameters:
+        - name: profileid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: >-
+            The unique profile identifier.
+        - name: accountid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: >-
+            The account identifier within the profile.
+        - $ref: '#/components/parameters/MerchantIdPath'
+      responses:
+        '200':
+          description: Profile returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Profile not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      operationId: deleteProfile
+      summary: Delete a customer profile
+      description: >-
+        Deletes a stored customer payment profile or a specific account
+        within a profile.
+      tags:
+        - Profile
+      parameters:
+        - name: profileid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: >-
+            The unique profile identifier.
+        - name: accountid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: >-
+            The account identifier within the profile.
+        - $ref: '#/components/parameters/MerchantIdPath'
+      responses:
+        '200':
+          description: Profile deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileDeleteResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Profile not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /sigcap:
+    put:
+      operationId: submitSignatureCapture
+      summary: Submit a signature capture
+      description: >-
+        Submits a captured signature image for a completed transaction.
+        The signature data is associated with the transaction for
+        record-keeping and dispute resolution.
+      tags:
+        - Signature Capture
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignatureCaptureRequest'
+      responses:
+        '200':
+          description: Signature captured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignatureCaptureResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /bin/{token}/{merchid}:
+    get:
+      operationId: lookupBIN
+      summary: Look up BIN data
+      description: >-
+        Retrieves Bank Identification Number (BIN) data for a given
+        token or card number, including card brand, card type, and
+        issuing country information.
+      tags:
+        - BIN
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+          description: >-
+            The CardSecure token or card number to look up.
+        - $ref: '#/components/parameters/MerchantIdPath'
+      responses:
+        '200':
+          description: BIN data returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BINResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: >-
+        HTTP Basic authentication using the CardPointe Gateway credentials.
+  parameters:
+    Retref:
+      name: retref
+      in: path
+      required: true
+      schema:
+        type: string
+      description: >-
+        The retrieval reference number from the original transaction.
+    MerchantId:
+      name: merchid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: >-
+        The CardPointe merchant identifier.
+    MerchantIdPath:
+      name: merchid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: >-
+        The CardPointe merchant identifier.
+  schemas:
+    AuthRequest:
+      type: object
+      description: >-
+        Authorization request payload.
+      required:
+        - merchid
+        - account
+        - amount
+      properties:
+        merchid:
+          type: string
+          description: >-
+            The CardPointe merchant ID.
+        account:
+          type: string
+          description: >-
+            The card number or CardSecure token.
+        expiry:
+          type: string
+          pattern: '^\d{4}$'
+          description: >-
+            Card expiration date in MMYY format.
+        amount:
+          type: string
+          description: >-
+            The transaction amount in the smallest currency unit.
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          description: >-
+            The ISO 4217 currency code.
+        cvv2:
+          type: string
+          description: >-
+            The card verification value.
+        orderid:
+          type: string
+          maxLength: 19
+          description: >-
+            The merchant-assigned order identifier.
+        name:
+          type: string
+          description: >-
+            The cardholder name.
+        address:
+          type: string
+          description: >-
+            The cardholder billing street address.
+        city:
+          type: string
+          description: >-
+            The cardholder billing city.
+        region:
+          type: string
+          description: >-
+            The cardholder billing state or province.
+        country:
+          type: string
+          description: >-
+            The cardholder billing country.
+        postal:
+          type: string
+          description: >-
+            The cardholder billing postal code.
+        capture:
+          type: string
+          enum:
+            - 'Y'
+            - 'N'
+          description: >-
+            Set to Y to capture the transaction immediately (sale).
+        profile:
+          type: string
+          enum:
+            - 'Y'
+            - 'N'
+          description: >-
+            Set to Y to create a stored profile for the account.
+    AuthResponse:
+      type: object
+      description: >-
+        Authorization response payload.
+      properties:
+        respstat:
+          type: string
+          enum:
+            - A
+            - B
+            - C
+          description: >-
+            Response status: A=Approved, B=Retry, C=Declined.
+        retref:
+          type: string
+          description: >-
+            The retrieval reference number for the transaction.
+        account:
+          type: string
+          description: >-
+            The masked account number or token.
+        token:
+          type: string
+          description: >-
+            The CardSecure token for the account.
+        amount:
+          type: string
+          description: >-
+            The authorized amount.
+        merchid:
+          type: string
+          description: >-
+            The merchant identifier.
+        respcode:
+          type: string
+          description: >-
+            The processor response code.
+        resptext:
+          type: string
+          description: >-
+            The human-readable response text.
+        authcode:
+          type: string
+          description: >-
+            The authorization code from the issuer.
+        avsresp:
+          type: string
+          description: >-
+            The AVS response code.
+        cvvresp:
+          type: string
+          description: >-
+            The CVV response code.
+        profileid:
+          type: string
+          description: >-
+            The stored profile ID if profile creation was requested.
+    CaptureRequest:
+      type: object
+      description: >-
+        Capture request payload.
+      required:
+        - merchid
+        - retref
+      properties:
+        merchid:
+          type: string
+          description: >-
+            The CardPointe merchant ID.
+        retref:
+          type: string
+          description: >-
+            The retrieval reference number of the authorization.
+        amount:
+          type: string
+          description: >-
+            The capture amount. If omitted, the full authorization
+            amount is captured.
+    CaptureResponse:
+      type: object
+      description: >-
+        Capture response payload.
+      properties:
+        merchid:
+          type: string
+          description: >-
+            The merchant identifier.
+        retref:
+          type: string
+          description: >-
+            The retrieval reference number.
+        amount:
+          type: string
+          description: >-
+            The captured amount.
+        setlstat:
+          type: string
+          description: >-
+            The settlement status.
+        respcode:
+          type: string
+          description: >-
+            The response code.
+        resptext:
+          type: string
+          description: >-
+            The response text.
+    VoidRequest:
+      type: object
+      description: >-
+        Void request payload.
+      required:
+        - merchid
+        - retref
+      properties:
+        merchid:
+          type: string
+          description: >-
+            The CardPointe merchant ID.
+        retref:
+          type: string
+          description: >-
+            The retrieval reference number of the transaction to void.
+    VoidResponse:
+      type: object
+      description: >-
+        Void response payload.
+      properties:
+        merchid:
+          type: string
+          description: >-
+            The merchant identifier.
+        retref:
+          type: string
+          description: >-
+            The retrieval reference number.
+        amount:
+          type: string
+          description: >-
+            The voided amount.
+        respcode:
+          type: string
+          description: >-
+            The response code.
+        resptext:
+          type: string
+          description: >-
+            The response text.
+        authcode:
+          type: string
+          description: >-
+            The original authorization code.
+    RefundRequest:
+      type: object
+      description: >-
+        Refund request payload.
+      required:
+        - merchid
+        - retref
+      properties:
+        merchid:
+          type: string
+          description: >-
+            The CardPointe merchant ID.
+        retref:
+          type: string
+          description: >-
+            The retrieval reference number of the transaction to refund.
+        amount:
+          type: string
+          description: >-
+            The refund amount. If omitted, a full refund is processed.
+    RefundResponse:
+      type: object
+      description: >-
+        Refund response payload.
+      properties:
+        merchid:
+          type: string
+          description: >-
+            The merchant identifier.
+        retref:
+          type: string
+          description: >-
+            The retrieval reference number.
+        amount:
+          type: string
+          description: >-
+            The refunded amount.
+        respcode:
+          type: string
+          description: >-
+            The response code.
+        resptext:
+          type: string
+          description: >-
+            The response text.
+    InquireResponse:
+      type: object
+      description: >-
+        Transaction inquiry response payload.
+      properties:
+        merchid:
+          type: string
+          description: >-
+            The merchant identifier.
+        retref:
+          type: string
+          description: >-
+            The retrieval reference number.
+        respstat:
+          type: string
+          description: >-
+            The response status.
+        account:
+          type: string
+          description: >-
+            The masked account number.
+        amount:
+          type: string
+          description: >-
+            The transaction amount.
+        currency:
+          type: string
+          description: >-
+            The currency code.
+        setlstat:
+          type: string
+          description: >-
+            The settlement status.
+        respcode:
+          type: string
+          description: >-
+            The response code.
+        resptext:
+          type: string
+          description: >-
+            The response text.
+        authcode:
+          type: string
+          description: >-
+            The authorization code.
+        captureStatus:
+          type: string
+          description: >-
+            The capture status of the transaction.
+        voidable:
+          type: string
+          description: >-
+            Whether the transaction can be voided.
+        refundable:
+          type: string
+          description: >-
+            Whether the transaction can be refunded.
+    SettlementRecord:
+      type: object
+      description: >-
+        Settlement status record for a transaction batch.
+      properties:
+        merchid:
+          type: string
+          description: >-
+            The merchant identifier.
+        retref:
+          type: string
+          description: >-
+            The retrieval reference number.
+        setlstat:
+          type: string
+          description: >-
+            The settlement status.
+        amount:
+          type: string
+          description: >-
+            The settled amount.
+    FundingResponse:
+      type: object
+      description: >-
+        Funding information response.
+      properties:
+        fundingdate:
+          type: string
+          format: date
+          description: >-
+            The funding date.
+        fundingmasterid:
+          type: string
+          description: >-
+            The master funding identifier.
+        txns:
+          type: array
+          items:
+            type: object
+            properties:
+              retref:
+                type: string
+                description: >-
+                  The retrieval reference number.
+              amount:
+                type: string
+                description: >-
+                  The transaction amount.
+              type:
+                type: string
+                description: >-
+                  The transaction type.
+          description: >-
+            The funded transactions.
+    ProfileRequest:
+      type: object
+      description: >-
+        Profile creation or update request.
+      required:
+        - merchid
+        - account
+      properties:
+        merchid:
+          type: string
+          description: >-
+            The CardPointe merchant ID.
+        profileid:
+          type: string
+          description: >-
+            The profile ID to update. Omit to create a new profile.
+        account:
+          type: string
+          description: >-
+            The card number or CardSecure token.
+        expiry:
+          type: string
+          pattern: '^\d{4}$'
+          description: >-
+            Card expiration date in MMYY format.
+        name:
+          type: string
+          description: >-
+            The cardholder name.
+        address:
+          type: string
+          description: >-
+            The billing street address.
+        city:
+          type: string
+          description: >-
+            The billing city.
+        region:
+          type: string
+          description: >-
+            The billing state or province.
+        country:
+          type: string
+          description: >-
+            The billing country.
+        postal:
+          type: string
+          description: >-
+            The billing postal code.
+    ProfileResponse:
+      type: object
+      description: >-
+        Profile response payload.
+      properties:
+        profileid:
+          type: string
+          description: >-
+            The unique profile identifier.
+        acctid:
+          type: string
+          description: >-
+            The account identifier within the profile.
+        respstat:
+          type: string
+          description: >-
+            The response status.
+        account:
+          type: string
+          description: >-
+            The masked account number or token.
+        respcode:
+          type: string
+          description: >-
+            The response code.
+        resptext:
+          type: string
+          description: >-
+            The response text.
+        token:
+          type: string
+          description: >-
+            The CardSecure token for the account.
+    ProfileDeleteResponse:
+      type: object
+      description: >-
+        Profile deletion response.
+      properties:
+        profileid:
+          type: string
+          description: >-
+            The deleted profile identifier.
+        respstat:
+          type: string
+          description: >-
+            The response status.
+        respcode:
+          type: string
+          description: >-
+            The response code.
+        resptext:
+          type: string
+          description: >-
+            The response text.
+    SignatureCaptureRequest:
+      type: object
+      description: >-
+        Signature capture request payload.
+      required:
+        - merchid
+        - retref
+        - signature
+      properties:
+        merchid:
+          type: string
+          description: >-
+            The CardPointe merchant ID.
+        retref:
+          type: string
+          description: >-
+            The retrieval reference number of the transaction.
+        signature:
+          type: string
+          description: >-
+            The base64-encoded signature image data.
+    SignatureCaptureResponse:
+      type: object
+      description: >-
+        Signature capture response payload.
+      properties:
+        retref:
+          type: string
+          description: >-
+            The retrieval reference number.
+        respstat:
+          type: string
+          description: >-
+            The response status.
+        respcode:
+          type: string
+          description: >-
+            The response code.
+        resptext:
+          type: string
+          description: >-
+            The response text.
+    BINResponse:
+      type: object
+      description: >-
+        BIN lookup response payload.
+      properties:
+        country:
+          type: string
+          description: >-
+            The issuing country.
+        product:
+          type: string
+          description: >-
+            The card product type (e.g., Visa, Mastercard).
+        bin:
+          type: string
+          description: >-
+            The Bank Identification Number.
+        cardusestring:
+          type: string
+          description: >-
+            The card use description (e.g., Credit, Debit).
+        corporate:
+          type: string
+          description: >-
+            Whether the card is a corporate card.
+    ErrorResponse:
+      type: object
+      description: >-
+        Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: >-
+            The response status (C for declined/error).
+        respcode:
+          type: string
+          description: >-
+            The error response code.
+        resptext:
+          type: string
+          description: >-
+            A human-readable error message.

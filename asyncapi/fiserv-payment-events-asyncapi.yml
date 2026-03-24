@@ -1,0 +1,435 @@
+asyncapi: 2.6.0
+info:
+  title: Fiserv Payment Events
+  description: >-
+    Fiserv provides webhook-based event notifications across the payments
+    lifecycle. Merchants can subscribe to webhooks to receive real-time
+    notifications for key events including transaction status changes,
+    settlement updates, dispute notifications, and checkout completions.
+    Events are delivered as HTTP POST requests to merchant-configured
+    URL endpoints.
+  version: '1.0.0'
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/support
+servers:
+  fiservWebhooks:
+    url: '{merchantWebhookUrl}'
+    protocol: https
+    description: >-
+      Merchant-configured webhook endpoint that receives event
+      notifications from Fiserv.
+    variables:
+      merchantWebhookUrl:
+        description: >-
+          The URL endpoint configured by the merchant to receive
+          webhook notifications.
+    security:
+      - hmacSignature: []
+channels:
+  /webhooks/transactions:
+    description: >-
+      Receives transaction lifecycle event notifications including
+      authorizations, captures, refunds, voids, and declines.
+    publish:
+      operationId: receiveTransactionEvent
+      summary: Receive transaction event notification
+      description: >-
+        Fiserv sends transaction event notifications when the status
+        of a payment transaction changes, including successful
+        authorizations, captures, refunds, and declines.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/TransactionAuthorized'
+          - $ref: '#/components/messages/TransactionCaptured'
+          - $ref: '#/components/messages/TransactionRefunded'
+          - $ref: '#/components/messages/TransactionVoided'
+          - $ref: '#/components/messages/TransactionDeclined'
+  /webhooks/settlements:
+    description: >-
+      Receives settlement event notifications when transaction batches
+      are settled and funds are deposited.
+    publish:
+      operationId: receiveSettlementEvent
+      summary: Receive settlement event notification
+      description: >-
+        Fiserv sends settlement notifications when transaction batches
+        are processed and funds are scheduled for deposit.
+      message:
+        $ref: '#/components/messages/SettlementCompleted'
+  /webhooks/disputes:
+    description: >-
+      Receives dispute and chargeback event notifications when
+      cardholders raise disputes against transactions.
+    publish:
+      operationId: receiveDisputeEvent
+      summary: Receive dispute event notification
+      description: >-
+        Fiserv sends dispute notifications when a cardholder raises
+        a dispute, when dispute status changes, or when a dispute
+        is resolved.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/DisputeOpened'
+          - $ref: '#/components/messages/DisputeUpdated'
+          - $ref: '#/components/messages/DisputeResolved'
+  /webhooks/checkout:
+    description: >-
+      Receives checkout session event notifications for hosted
+      checkout page integrations.
+    publish:
+      operationId: receiveCheckoutEvent
+      summary: Receive checkout event notification
+      description: >-
+        Fiserv sends checkout event notifications when a hosted
+        checkout session is completed, abandoned, or expires.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/CheckoutCompleted'
+          - $ref: '#/components/messages/CheckoutAbandoned'
+components:
+  securitySchemes:
+    hmacSignature:
+      type: httpApiKey
+      name: X-Fiserv-Signature
+      in: header
+      description: >-
+        HMAC-SHA256 signature of the webhook payload, computed using
+        the merchant's webhook secret. Merchants should verify this
+        signature to ensure the authenticity and integrity of the
+        webhook notification.
+  messages:
+    TransactionAuthorized:
+      name: TransactionAuthorized
+      title: Transaction Authorized
+      summary: >-
+        Notification sent when a transaction is successfully authorized.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/TransactionEvent'
+    TransactionCaptured:
+      name: TransactionCaptured
+      title: Transaction Captured
+      summary: >-
+        Notification sent when an authorized transaction is captured
+        for settlement.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/TransactionEvent'
+    TransactionRefunded:
+      name: TransactionRefunded
+      title: Transaction Refunded
+      summary: >-
+        Notification sent when a transaction refund is processed.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/TransactionEvent'
+    TransactionVoided:
+      name: TransactionVoided
+      title: Transaction Voided
+      summary: >-
+        Notification sent when a transaction is voided.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/TransactionEvent'
+    TransactionDeclined:
+      name: TransactionDeclined
+      title: Transaction Declined
+      summary: >-
+        Notification sent when a transaction is declined.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/TransactionEvent'
+    SettlementCompleted:
+      name: SettlementCompleted
+      title: Settlement Completed
+      summary: >-
+        Notification sent when a settlement batch is completed and
+        funds are scheduled for deposit.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/SettlementEvent'
+    DisputeOpened:
+      name: DisputeOpened
+      title: Dispute Opened
+      summary: >-
+        Notification sent when a new dispute is opened against a
+        transaction.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/DisputeEvent'
+    DisputeUpdated:
+      name: DisputeUpdated
+      title: Dispute Updated
+      summary: >-
+        Notification sent when a dispute status changes.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/DisputeEvent'
+    DisputeResolved:
+      name: DisputeResolved
+      title: Dispute Resolved
+      summary: >-
+        Notification sent when a dispute is resolved, either in
+        favor of the merchant or the cardholder.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/DisputeEvent'
+    CheckoutCompleted:
+      name: CheckoutCompleted
+      title: Checkout Completed
+      summary: >-
+        Notification sent when a hosted checkout session is
+        completed successfully.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CheckoutEvent'
+    CheckoutAbandoned:
+      name: CheckoutAbandoned
+      title: Checkout Abandoned
+      summary: >-
+        Notification sent when a hosted checkout session is
+        abandoned or expires.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CheckoutEvent'
+  schemas:
+    TransactionEvent:
+      type: object
+      description: >-
+        Transaction lifecycle event payload.
+      required:
+        - eventId
+        - eventType
+        - timestamp
+        - transactionId
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          description: >-
+            Unique identifier for this event.
+        eventType:
+          type: string
+          enum:
+            - TRANSACTION_AUTHORIZED
+            - TRANSACTION_CAPTURED
+            - TRANSACTION_REFUNDED
+            - TRANSACTION_VOIDED
+            - TRANSACTION_DECLINED
+          description: >-
+            The type of transaction event.
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            The timestamp when the event occurred.
+        transactionId:
+          type: string
+          description: >-
+            The unique transaction identifier.
+        orderId:
+          type: string
+          description: >-
+            The merchant order identifier.
+        amount:
+          type: number
+          format: double
+          description: >-
+            The transaction amount.
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          description: >-
+            The ISO 4217 currency code.
+        transactionState:
+          type: string
+          description: >-
+            The current state of the transaction.
+        merchantId:
+          type: string
+          description: >-
+            The merchant identifier.
+        paymentMethod:
+          type: string
+          description: >-
+            The payment method used (e.g., card brand).
+        responseCode:
+          type: string
+          description: >-
+            The processor response code.
+        responseMessage:
+          type: string
+          description: >-
+            The processor response message.
+    SettlementEvent:
+      type: object
+      description: >-
+        Settlement batch event payload.
+      required:
+        - eventId
+        - eventType
+        - timestamp
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          description: >-
+            Unique identifier for this event.
+        eventType:
+          type: string
+          enum:
+            - SETTLEMENT_COMPLETED
+          description: >-
+            The type of settlement event.
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            The timestamp when the event occurred.
+        batchId:
+          type: string
+          description: >-
+            The settlement batch identifier.
+        merchantId:
+          type: string
+          description: >-
+            The merchant identifier.
+        totalAmount:
+          type: number
+          format: double
+          description: >-
+            The total settlement amount.
+        currency:
+          type: string
+          description: >-
+            The ISO 4217 currency code.
+        transactionCount:
+          type: integer
+          description: >-
+            The number of transactions in the batch.
+        fundingDate:
+          type: string
+          format: date
+          description: >-
+            The expected funding date.
+    DisputeEvent:
+      type: object
+      description: >-
+        Dispute event payload.
+      required:
+        - eventId
+        - eventType
+        - timestamp
+        - disputeId
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          description: >-
+            Unique identifier for this event.
+        eventType:
+          type: string
+          enum:
+            - DISPUTE_OPENED
+            - DISPUTE_UPDATED
+            - DISPUTE_RESOLVED
+          description: >-
+            The type of dispute event.
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            The timestamp when the event occurred.
+        disputeId:
+          type: string
+          description: >-
+            The unique dispute identifier.
+        transactionId:
+          type: string
+          description: >-
+            The disputed transaction identifier.
+        disputeStatus:
+          type: string
+          enum:
+            - OPEN
+            - UNDER_REVIEW
+            - MERCHANT_RESPONSE_REQUIRED
+            - RESOLVED_MERCHANT_FAVOR
+            - RESOLVED_CARDHOLDER_FAVOR
+          description: >-
+            The current dispute status.
+        disputeAmount:
+          type: number
+          format: double
+          description: >-
+            The disputed amount.
+        currency:
+          type: string
+          description: >-
+            The ISO 4217 currency code.
+        reason:
+          type: string
+          description: >-
+            The dispute reason description.
+        reasonCode:
+          type: string
+          description: >-
+            The dispute reason code.
+        responseDeadline:
+          type: string
+          format: date
+          description: >-
+            The deadline for merchant response.
+    CheckoutEvent:
+      type: object
+      description: >-
+        Checkout session event payload.
+      required:
+        - eventId
+        - eventType
+        - timestamp
+        - sessionId
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          description: >-
+            Unique identifier for this event.
+        eventType:
+          type: string
+          enum:
+            - CHECKOUT_COMPLETED
+            - CHECKOUT_ABANDONED
+          description: >-
+            The type of checkout event.
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            The timestamp when the event occurred.
+        sessionId:
+          type: string
+          description: >-
+            The checkout session identifier.
+        transactionId:
+          type: string
+          description: >-
+            The transaction identifier if payment was processed.
+        orderId:
+          type: string
+          description: >-
+            The merchant order identifier.
+        amount:
+          type: number
+          format: double
+          description: >-
+            The checkout amount.
+        currency:
+          type: string
+          description: >-
+            The ISO 4217 currency code.
+        paymentStatus:
+          type: string
+          description: >-
+            The payment status.
