@@ -45,7 +45,7 @@ paths:
   /v2/accounts/account:
     post:
       operationId: addAccount
-      summary: Create a new card account
+      summary: Fiserv Create a new card account
       description: >-
         Creates a new consumer or commercial card account. Supports
         credit account creation with configurable credit limits and
@@ -80,7 +80,7 @@ paths:
   /v2/accounts/{accountNumber}:
     get:
       operationId: getAccount
-      summary: Retrieve account details
+      summary: Fiserv Retrieve account details
       description: >-
         Retrieves account-specific data including balances, limits,
         status, and billing information.
@@ -110,7 +110,7 @@ paths:
   /v2/cards/card:
     post:
       operationId: issueCard
-      summary: Issue a new card
+      summary: Fiserv Issue a new card
       description: >-
         Issues a new card for an existing account. The card can be
         a primary card or an additional authorized user card.
@@ -144,7 +144,7 @@ paths:
   /v2/cards/{cardNumber}:
     get:
       operationId: getCard
-      summary: Retrieve card details
+      summary: Fiserv Retrieve card details
       description: >-
         Retrieves card information including card status, expiration
         date, and card type.
@@ -173,7 +173,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     patch:
       operationId: updateCard
-      summary: Update card details
+      summary: Fiserv Update card details
       description: >-
         Updates card attributes such as status (activate, deactivate,
         block), and PIN settings.
@@ -215,7 +215,7 @@ paths:
   /v1/authorizations:
     post:
       operationId: createAuthorization
-      summary: Create an authorization
+      summary: Fiserv Create an authorization
       description: >-
         Creates a new authorization for an account or cancels an existing
         authorization using the card number.
@@ -249,7 +249,7 @@ paths:
   /v1/authorizations/{authorizationId}/cancel:
     post:
       operationId: cancelAuthorization
-      summary: Cancel an authorization
+      summary: Fiserv Cancel an authorization
       description: >-
         Cancels a previously created authorization, releasing the hold
         on the account.
@@ -285,7 +285,7 @@ paths:
   /v1/accounts/{accountNumber}/transactions:
     get:
       operationId: listTransactions
-      summary: List account transactions
+      summary: Fiserv List account transactions
       description: >-
         Retrieves summary or detailed transaction history for a card
         account. Supports filtering by date range, merchant, and
@@ -336,7 +336,7 @@ paths:
   /v1/limits:
     get:
       operationId: getLimits
-      summary: Get account limits
+      summary: Fiserv Get account limits
       description: >-
         Retrieves account limits including credit limit, temporary credit
         limit, and cash advance limit.
@@ -371,7 +371,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     patch:
       operationId: updateLimits
-      summary: Update account limits
+      summary: Fiserv Update account limits
       description: >-
         Updates account limits such as credit limit, temporary credit
         limit, or cash advance limit.
@@ -405,7 +405,7 @@ paths:
   /v1/accounts/{accountNumber}/statements:
     get:
       operationId: listStatements
-      summary: List account statements
+      summary: Fiserv List account statements
       description: >-
         Retrieves statement information and statement transactions for
         a card account.

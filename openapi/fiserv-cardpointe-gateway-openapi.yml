@@ -68,7 +68,7 @@ paths:
   /auth:
     put:
       operationId: authorizeTransaction
-      summary: Authorize a payment transaction
+      summary: Fiserv Authorize a payment transaction
       description: >-
         Submits an authorization request to process a payment. The
         authorization verifies the cardholder account and places a hold
@@ -104,7 +104,7 @@ paths:
   /capture:
     put:
       operationId: captureTransaction
-      summary: Capture an authorized transaction
+      summary: Fiserv Capture an authorized transaction
       description: >-
         Captures a previously authorized transaction for settlement. The
         capture amount can be less than or equal to the original
@@ -139,7 +139,7 @@ paths:
   /void:
     put:
       operationId: voidTransaction
-      summary: Void a transaction
+      summary: Fiserv Void a transaction
       description: >-
         Voids a previously authorized transaction that has not yet been
         settled. If the transaction has already been settled, use the
@@ -174,7 +174,7 @@ paths:
   /refund:
     put:
       operationId: refundTransaction
-      summary: Refund a settled transaction
+      summary: Fiserv Refund a settled transaction
       description: >-
         Processes a refund for a previously captured and settled
         transaction. Supports full and partial refunds.
@@ -208,7 +208,7 @@ paths:
   /inquire/{retref}/{merchid}:
     get:
       operationId: inquireTransaction
-      summary: Inquire about a transaction
+      summary: Fiserv Inquire about a transaction
       description: >-
         Retrieves the current status and details of a previously processed
         transaction using its retrieval reference number.
@@ -239,7 +239,7 @@ paths:
   /inquireByOrderid/{orderid}/{merchid}:
     get:
       operationId: inquireTransactionByOrderId
-      summary: Inquire about a transaction by order ID
+      summary: Fiserv Inquire about a transaction by order ID
       description: >-
         Retrieves the current status and details of a previously processed
         transaction using the merchant-assigned order identifier.
@@ -276,7 +276,7 @@ paths:
   /settlestat:
     get:
       operationId: getSettlementStatus
-      summary: Get settlement status
+      summary: Fiserv Get settlement status
       description: >-
         Retrieves the settlement status for transactions processed on a
         given date for a specified merchant.
@@ -316,7 +316,7 @@ paths:
   /funding:
     get:
       operationId: getFundingInfo
-      summary: Get funding information
+      summary: Fiserv Get funding information
       description: >-
         Retrieves funding information for settled transactions, including
         deposit amounts and dates.
@@ -354,7 +354,7 @@ paths:
   /profile:
     put:
       operationId: createOrUpdateProfile
-      summary: Create or update a customer profile
+      summary: Fiserv Create or update a customer profile
       description: >-
         Creates or updates a stored customer payment profile. Profiles
         securely store payment credentials for recurring or future
@@ -389,7 +389,7 @@ paths:
   /profile/{profileid}/{accountid}/{merchid}:
     get:
       operationId: getProfile
-      summary: Retrieve a customer profile
+      summary: Fiserv Retrieve a customer profile
       description: >-
         Retrieves a stored customer payment profile by profile ID and
         account ID.
@@ -432,7 +432,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     delete:
       operationId: deleteProfile
-      summary: Delete a customer profile
+      summary: Fiserv Delete a customer profile
       description: >-
         Deletes a stored customer payment profile or a specific account
         within a profile.
@@ -476,7 +476,7 @@ paths:
   /sigcap:
     put:
       operationId: submitSignatureCapture
-      summary: Submit a signature capture
+      summary: Fiserv Submit a signature capture
       description: >-
         Submits a captured signature image for a completed transaction.
         The signature data is associated with the transaction for
@@ -511,7 +511,7 @@ paths:
   /bin/{token}/{merchid}:
     get:
       operationId: lookupBIN
-      summary: Look up BIN data
+      summary: Fiserv Look up BIN data
       description: >-
         Retrieves Bank Identification Number (BIN) data for a given
         token or card number, including card brand, card type, and

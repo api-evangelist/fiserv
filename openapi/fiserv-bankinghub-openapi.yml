@@ -44,7 +44,7 @@ paths:
   /banking/accounts:
     post:
       operationId: addAccount
-      summary: Create a new account
+      summary: Fiserv Create a new account
       description: >-
         Creates a new deposit or loan account for an existing customer.
         Supports checking, savings, money market, certificate of deposit,
@@ -79,7 +79,7 @@ paths:
   /banking/accounts/{accountId}:
     get:
       operationId: getAccount
-      summary: Retrieve account details
+      summary: Fiserv Retrieve account details
       description: >-
         Retrieves detailed information for a specific account including
         balance, status, and account attributes.
@@ -108,7 +108,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     patch:
       operationId: updateAccount
-      summary: Update account details
+      summary: Fiserv Update account details
       description: >-
         Updates attributes of an existing account such as status,
         description, or other configurable fields.
@@ -150,7 +150,7 @@ paths:
   /banking/accounts/{accountId}/transactions:
     get:
       operationId: listTransactions
-      summary: List account transactions
+      summary: Fiserv List account transactions
       description: >-
         Retrieves transaction history for a specific account. Supports
         filtering by date range, transaction type, and amount range.
@@ -200,7 +200,7 @@ paths:
   /banking/transfers:
     post:
       operationId: createTransfer
-      summary: Initiate a fund transfer
+      summary: Fiserv Initiate a fund transfer
       description: >-
         Initiates a fund transfer between accounts. Supports internal
         transfers between accounts at the same institution and external
@@ -235,7 +235,7 @@ paths:
   /banking/transfers/{transferId}:
     get:
       operationId: getTransfer
-      summary: Retrieve transfer details
+      summary: Fiserv Retrieve transfer details
       description: >-
         Retrieves the status and details of a previously initiated fund
         transfer.
@@ -271,7 +271,7 @@ paths:
   /banking/payments:
     post:
       operationId: createPayment
-      summary: Process a payment
+      summary: Fiserv Process a payment
       description: >-
         Processes a payment transaction including credits, debits, bill
         payments, and disbursements through the enterprise payments hub.
@@ -305,7 +305,7 @@ paths:
   /banking/payments/{paymentId}/reverse:
     post:
       operationId: reversePayment
-      summary: Reverse a payment
+      summary: Fiserv Reverse a payment
       description: >-
         Reverses a previously processed payment transaction.
       tags:
@@ -352,7 +352,7 @@ paths:
   /banking/parties:
     post:
       operationId: addParty
-      summary: Create a customer party
+      summary: Fiserv Create a customer party
       description: >-
         Creates a new customer party record including personal
         information, contact details, and identification data.
@@ -386,7 +386,7 @@ paths:
   /banking/parties/{partyId}:
     get:
       operationId: getParty
-      summary: Retrieve party details
+      summary: Fiserv Retrieve party details
       description: >-
         Retrieves detailed information for a specific customer party
         including personal data, addresses, and contact information.
@@ -421,7 +421,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     patch:
       operationId: updateParty
-      summary: Update party details
+      summary: Fiserv Update party details
       description: >-
         Updates attributes of an existing customer party record.
       tags:

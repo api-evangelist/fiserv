@@ -52,7 +52,7 @@ paths:
   /payments/v1/charges:
     post:
       operationId: createCharge
-      summary: Process a payment charge
+      summary: Fiserv Process a payment charge
       description: >-
         Submits a charge request to process a payment transaction. Supports
         authorization-only, sale (authorization and capture), and
@@ -94,7 +94,7 @@ paths:
   /payments/v1/charges/{transactionId}/capture:
     post:
       operationId: captureCharge
-      summary: Capture an authorized payment
+      summary: Fiserv Capture an authorized payment
       description: >-
         Captures a previously authorized transaction for settlement. The
         capture amount can be equal to or less than the original
@@ -142,7 +142,7 @@ paths:
   /payments/v1/charges/{transactionId}/cancel:
     post:
       operationId: cancelCharge
-      summary: Cancel or void a transaction
+      summary: Fiserv Cancel or void a transaction
       description: >-
         Cancels or voids a previously authorized transaction. If the
         transaction has not yet been captured, it will be voided. If it
@@ -190,7 +190,7 @@ paths:
   /payments/v1/charges/{transactionId}/refund:
     post:
       operationId: refundCharge
-      summary: Refund a captured transaction
+      summary: Fiserv Refund a captured transaction
       description: >-
         Processes a refund against a previously captured and settled
         transaction. Supports full and partial refunds. The refund amount
@@ -239,7 +239,7 @@ paths:
   /payments-vas/v1/tokens:
     post:
       operationId: createToken
-      summary: Create a payment token
+      summary: Fiserv Create a payment token
       description: >-
         Tokenizes a payment source such as a card number, creating a secure
         token that can be used in subsequent transactions. This eliminates
@@ -281,7 +281,7 @@ paths:
   /payments-vas/v1/accounts/verification:
     post:
       operationId: verifyAccount
-      summary: Verify a payment account
+      summary: Fiserv Verify a payment account
       description: >-
         Verifies a payment card or token to confirm it is valid before
         processing a transaction. This can include address verification
@@ -322,7 +322,7 @@ paths:
   /payments-vas/v1/3ds/authentication:
     post:
       operationId: authenticate3DS
-      summary: Initiate 3-D Secure authentication
+      summary: Fiserv Initiate 3-D Secure authentication
       description: >-
         Initiates a 3-D Secure authentication flow for cardholder verification.
         This step is used to authenticate the cardholder before processing a
