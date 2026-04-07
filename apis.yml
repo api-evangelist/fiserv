@@ -11,8 +11,8 @@ created: '2025-02-17'
 modified: '2026-03-24'
 position: Consumer
 tags:
-  - Financial
   - Banking
+  - Financial
   - Payments
   - Wealth Management
 url: >-
@@ -22,10 +22,10 @@ apis:
   - aid: fiserv:commercehub
     name: Fiserv CommerceHub API
     tags:
-      - Payments
-      - Commerce
-      - Tokenization
       - 3-D Secure
+      - Commerce
+      - Payments
+      - Tokenization
     humanURL: https://developer.fiserv.com/product/CommerceHub
     properties:
       - url: https://developer.fiserv.com/product/CommerceHub/docs/?path=docs/Resources/API-Documents/Use-Our-APIs.md
@@ -42,10 +42,10 @@ apis:
   - aid: fiserv:cardpointe-gateway
     name: Fiserv CardPointe Gateway API
     tags:
-      - Payments
       - Gateway
-      - Tokenization
+      - Payments
       - Point of Sale
+      - Tokenization
     humanURL: https://developer.fiserv.com/product/CardPointe
     properties:
       - url: https://developer.fiserv.com/product/CardPointe/docs/?path=docs%2FAPIs%2FCardPointeGatewayAPI.md
@@ -61,10 +61,10 @@ apis:
   - aid: fiserv:bankinghub
     name: Fiserv BankingHub API
     tags:
-      - Banking
       - Accounts
-      - Transfers
+      - Banking
       - Payments
+      - Transfers
     humanURL: https://developer.fiserv.com/product/BankingHub
     properties:
       - url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md
@@ -81,9 +81,9 @@ apis:
   - aid: fiserv:carddeveloper
     name: Fiserv CardDeveloper API
     tags:
-      - Cards
       - Accounts
       - Authorizations
+      - Cards
       - Statements
     humanURL: https://developer.fiserv.com/product/CardDeveloper
     properties:
@@ -100,10 +100,10 @@ apis:
   - aid: fiserv:payment-events
     name: Fiserv Payment Events
     tags:
-      - Webhooks
+      - Disputes
       - Events
       - Payments
-      - Disputes
+      - Webhooks
     humanURL: https://docs.fiserv.dev/public/docs/webhooks-and-status-updates-checkout
     properties:
       - url: https://docs.fiserv.dev/public/docs/webhooks-and-status-updates-checkout

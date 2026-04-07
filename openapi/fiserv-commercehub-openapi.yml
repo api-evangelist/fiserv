@@ -22,16 +22,19 @@ servers:
   - url: https://connect.fiservapis.com/ch
     description: Production Environment
 tags:
+  - name: 3-D Secure
+    description: >-
+      Manage 3-D Secure authentication flows for cardholder verification.
+  - name: Cancels
+    description: >-
+      Cancel or void previously authorized transactions.
+  - name: Captures
+    description: >-
+      Capture previously authorized transactions for settlement.
   - name: Charges
     description: >-
       Process payment charges including authorizations, sales, and
       pre-authorizations.
-  - name: Captures
-    description: >-
-      Capture previously authorized transactions for settlement.
-  - name: Cancels
-    description: >-
-      Cancel or void previously authorized transactions.
   - name: Refunds
     description: >-
       Process refunds against previously captured transactions.
@@ -42,9 +45,6 @@ tags:
   - name: Verifications
     description: >-
       Verify payment cards or tokens before processing a transaction.
-  - name: 3-D Secure
-    description: >-
-      Manage 3-D Secure authentication flows for cardholder verification.
 security:
   - apiKeyAuth: []
     hmacAuth: []

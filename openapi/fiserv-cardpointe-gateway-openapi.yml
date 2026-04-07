@@ -34,34 +34,34 @@ tags:
   - name: Authorization
     description: >-
       Authorize payment transactions against a cardholder account.
+  - name: BIN
+    description: >-
+      Look up Bank Identification Number (BIN) data for cards.
   - name: Capture
     description: >-
       Capture previously authorized transactions for settlement.
-  - name: Void
-    description: >-
-      Void previously authorized transactions before settlement.
-  - name: Refund
-    description: >-
-      Refund previously captured and settled transactions.
-  - name: Inquire
-    description: >-
-      Inquire about the status of transactions and merchant information.
-  - name: Settlement
-    description: >-
-      Retrieve settlement status for processed transactions.
   - name: Funding
     description: >-
       Retrieve funding information for settled transactions.
+  - name: Inquire
+    description: >-
+      Inquire about the status of transactions and merchant information.
   - name: Profile
     description: >-
       Manage stored customer payment profiles for recurring or
       future transactions.
+  - name: Refund
+    description: >-
+      Refund previously captured and settled transactions.
+  - name: Settlement
+    description: >-
+      Retrieve settlement status for processed transactions.
   - name: Signature Capture
     description: >-
       Submit signature capture data for completed transactions.
-  - name: BIN
+  - name: Void
     description: >-
-      Look up Bank Identification Number (BIN) data for cards.
+      Void previously authorized transactions before settlement.
 security:
   - basicAuth: []
 paths:

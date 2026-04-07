@@ -24,21 +24,21 @@ tags:
   - name: Accounts
     description: >-
       Create and manage card accounts including credit and debit accounts.
-  - name: Cards
-    description: >-
-      Issue, activate, manage, and retrieve card details.
   - name: Authorizations
     description: >-
       Create and manage transaction authorizations.
-  - name: Transactions
+  - name: Cards
     description: >-
-      Retrieve transaction history and details for card accounts.
+      Issue, activate, manage, and retrieve card details.
   - name: Limits
     description: >-
       Manage credit, temporary credit, and cash limits.
   - name: Statements
     description: >-
       Retrieve account statements and statement transactions.
+  - name: Transactions
+    description: >-
+      Retrieve transaction history and details for card accounts.
 security:
   - bearerAuth: []
 paths:

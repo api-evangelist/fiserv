@@ -24,20 +24,20 @@ tags:
   - name: Accounts
     description: >-
       Create, retrieve, update, and manage deposit and loan accounts.
+  - name: Parties
+    description: >-
+      Manage customer and party information including personal details
+      and contact information.
+  - name: Payments
+    description: >-
+      Process payment transactions including credits, debits, and
+      bill payments.
   - name: Transactions
     description: >-
       Retrieve and manage account transaction history and details.
   - name: Transfers
     description: >-
       Initiate and manage fund transfers between accounts.
-  - name: Payments
-    description: >-
-      Process payment transactions including credits, debits, and
-      bill payments.
-  - name: Parties
-    description: >-
-      Manage customer and party information including personal details
-      and contact information.
 security:
   - bearerAuth: []
 paths:
