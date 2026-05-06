@@ -1,0 +1,459 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fiserv BankingHub API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management,
+    transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech
+    partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  tags:
+  - Fiserv
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: fiserv
+    baseUri: https://cert.api.fiservapps.com
+    description: Fiserv BankingHub API HTTP API.
+    authentication:
+      type: bearer
+      token: '{{FISERV_TOKEN}}'
+    resources:
+    - name: banking-accounts
+      path: /banking/accounts
+      operations:
+      - name: addaccount
+        method: POST
+        description: Fiserv Create a new account
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: banking-accounts-accountid
+      path: /banking/accounts/{accountId}
+      operations:
+      - name: getaccount
+        method: GET
+        description: Fiserv Retrieve account details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateaccount
+        method: PATCH
+        description: Fiserv Update account details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: banking-accounts-accountid-transactions
+      path: /banking/accounts/{accountId}/transactions
+      operations:
+      - name: listtransactions
+        method: GET
+        description: Fiserv List account transactions
+        inputParameters:
+        - name: fromDate
+          in: query
+          type: string
+          description: Start date for the transaction search range.
+        - name: toDate
+          in: query
+          type: string
+          description: End date for the transaction search range.
+        - name: transactionType
+          in: query
+          type: string
+          description: Filter by transaction type.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: banking-transfers
+      path: /banking/transfers
+      operations:
+      - name: createtransfer
+        method: POST
+        description: Fiserv Initiate a fund transfer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: banking-transfers-transferid
+      path: /banking/transfers/{transferId}
+      operations:
+      - name: gettransfer
+        method: GET
+        description: Fiserv Retrieve transfer details
+        inputParameters:
+        - name: transferId
+          in: path
+          type: string
+          required: true
+          description: The unique transfer identifier.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: banking-payments
+      path: /banking/payments
+      operations:
+      - name: createpayment
+        method: POST
+        description: Fiserv Process a payment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: banking-payments-paymentid-reverse
+      path: /banking/payments/{paymentId}/reverse
+      operations:
+      - name: reversepayment
+        method: POST
+        description: Fiserv Reverse a payment
+        inputParameters:
+        - name: paymentId
+          in: path
+          type: string
+          required: true
+          description: The unique payment identifier.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: banking-parties
+      path: /banking/parties
+      operations:
+      - name: addparty
+        method: POST
+        description: Fiserv Create a customer party
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: banking-parties-partyid
+      path: /banking/parties/{partyId}
+      operations:
+      - name: getparty
+        method: GET
+        description: Fiserv Retrieve party details
+        inputParameters:
+        - name: partyId
+          in: path
+          type: string
+          required: true
+          description: The unique party identifier.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateparty
+        method: PATCH
+        description: Fiserv Update party details
+        inputParameters:
+        - name: partyId
+          in: path
+          type: string
+          required: true
+          description: The unique party identifier.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: fiserv-rest
+    description: REST adapter for Fiserv BankingHub API.
+    resources:
+    - path: /banking/accounts
+      name: addaccount
+      operations:
+      - method: POST
+        name: addaccount
+        description: Fiserv Create a new account
+        call: fiserv.addaccount
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /banking/accounts/{accountId}
+      name: getaccount
+      operations:
+      - method: GET
+        name: getaccount
+        description: Fiserv Retrieve account details
+        call: fiserv.getaccount
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /banking/accounts/{accountId}
+      name: updateaccount
+      operations:
+      - method: PATCH
+        name: updateaccount
+        description: Fiserv Update account details
+        call: fiserv.updateaccount
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /banking/accounts/{accountId}/transactions
+      name: listtransactions
+      operations:
+      - method: GET
+        name: listtransactions
+        description: Fiserv List account transactions
+        call: fiserv.listtransactions
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /banking/transfers
+      name: createtransfer
+      operations:
+      - method: POST
+        name: createtransfer
+        description: Fiserv Initiate a fund transfer
+        call: fiserv.createtransfer
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /banking/transfers/{transferId}
+      name: gettransfer
+      operations:
+      - method: GET
+        name: gettransfer
+        description: Fiserv Retrieve transfer details
+        call: fiserv.gettransfer
+        with:
+          transferId: rest.transferId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /banking/payments
+      name: createpayment
+      operations:
+      - method: POST
+        name: createpayment
+        description: Fiserv Process a payment
+        call: fiserv.createpayment
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /banking/payments/{paymentId}/reverse
+      name: reversepayment
+      operations:
+      - method: POST
+        name: reversepayment
+        description: Fiserv Reverse a payment
+        call: fiserv.reversepayment
+        with:
+          paymentId: rest.paymentId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /banking/parties
+      name: addparty
+      operations:
+      - method: POST
+        name: addparty
+        description: Fiserv Create a customer party
+        call: fiserv.addparty
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /banking/parties/{partyId}
+      name: getparty
+      operations:
+      - method: GET
+        name: getparty
+        description: Fiserv Retrieve party details
+        call: fiserv.getparty
+        with:
+          partyId: rest.partyId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /banking/parties/{partyId}
+      name: updateparty
+      operations:
+      - method: PATCH
+        name: updateparty
+        description: Fiserv Update party details
+        call: fiserv.updateparty
+        with:
+          partyId: rest.partyId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: fiserv-mcp
+    transport: http
+    description: MCP adapter for Fiserv BankingHub API for AI agent use.
+    tools:
+    - name: addaccount
+      description: Fiserv Create a new account
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: fiserv.addaccount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getaccount
+      description: Fiserv Retrieve account details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: fiserv.getaccount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateaccount
+      description: Fiserv Update account details
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: fiserv.updateaccount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listtransactions
+      description: Fiserv List account transactions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: fiserv.listtransactions
+      with:
+        fromDate: tools.fromDate
+        toDate: tools.toDate
+        transactionType: tools.transactionType
+      inputParameters:
+      - name: fromDate
+        type: string
+        description: Start date for the transaction search range.
+      - name: toDate
+        type: string
+        description: End date for the transaction search range.
+      - name: transactionType
+        type: string
+        description: Filter by transaction type.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createtransfer
+      description: Fiserv Initiate a fund transfer
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: fiserv.createtransfer
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gettransfer
+      description: Fiserv Retrieve transfer details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: fiserv.gettransfer
+      with:
+        transferId: tools.transferId
+      inputParameters:
+      - name: transferId
+        type: string
+        description: The unique transfer identifier.
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createpayment
+      description: Fiserv Process a payment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: fiserv.createpayment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reversepayment
+      description: Fiserv Reverse a payment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: fiserv.reversepayment
+      with:
+        paymentId: tools.paymentId
+      inputParameters:
+      - name: paymentId
+        type: string
+        description: The unique payment identifier.
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: addparty
+      description: Fiserv Create a customer party
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: fiserv.addparty
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getparty
+      description: Fiserv Retrieve party details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: fiserv.getparty
+      with:
+        partyId: tools.partyId
+      inputParameters:
+      - name: partyId
+        type: string
+        description: The unique party identifier.
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateparty
+      description: Fiserv Update party details
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: fiserv.updateparty
+      with:
+        partyId: tools.partyId
+      inputParameters:
+      - name: partyId
+        type: string
+        description: The unique party identifier.
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    FISERV_TOKEN: FISERV_TOKEN
