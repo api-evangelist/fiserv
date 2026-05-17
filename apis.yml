@@ -106,9 +106,9 @@ common:
     url: https://www.fiserv.com/
   - type: Documentation
     url: https://developer.fiserv.com/
-  - type: Sign Up
+  - type: SignUp
     url: https://developer.fiserv.com/
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/fiserv-context.jsonld
   - type: JSONSchema
     url: json-schema/fiserv-payment-transaction-schema.json
