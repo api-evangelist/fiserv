@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fiserv CommerceHub API — Captures
+  description: 'Fiserv CommerceHub API — Captures. 1 operations. Lead operation: Fiserv Capture an authorized payment. Self-contained
+    Naftiko capability covering one Fiserv business surface.'
+  tags:
+  - Fiserv
+  - Captures
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FISERV_API_KEY: FISERV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: commercehub-captures
+    baseUri: https://connect-cert.fiservapis.com/ch
+    description: Fiserv CommerceHub API — Captures business capability. Self-contained, no shared references.
+    resources:
+    - name: payments-v1-charges-transactionId-capture
+      path: /payments/v1/charges/{transactionId}/capture
+      operations:
+      - name: capturecharge
+        method: POST
+        description: Fiserv Capture an authorized payment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Api-Key
+      value: '{{env.FISERV_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: commercehub-captures-rest
+    port: 8080
+    description: REST adapter for Fiserv CommerceHub API — Captures. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/payments/v1/charges/{transactionid}/capture
+      name: payments-v1-charges-transactionid-capture
+      description: REST surface for payments-v1-charges-transactionId-capture.
+      operations:
+      - method: POST
+        name: capturecharge
+        description: Fiserv Capture an authorized payment
+        call: commercehub-captures.capturecharge
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: commercehub-captures-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fiserv CommerceHub API — Captures. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: fiserv-capture-authorized-payment
+      description: Fiserv Capture an authorized payment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: commercehub-captures.capturecharge
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

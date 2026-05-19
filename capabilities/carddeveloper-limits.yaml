@@ -1,0 +1,115 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fiserv CardDeveloper API — Limits
+  description: 'Fiserv CardDeveloper API — Limits. 2 operations. Lead operation: Fiserv Get account limits. Self-contained
+    Naftiko capability covering one Fiserv business surface.'
+  tags:
+  - Fiserv
+  - Limits
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FISERV_API_KEY: FISERV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: carddeveloper-limits
+    baseUri: https://cert.api.fiservapps.com
+    description: Fiserv CardDeveloper API — Limits business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-limits
+      path: /v1/limits
+      operations:
+      - name: getlimits
+        method: GET
+        description: Fiserv Get account limits
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountNumber
+          in: query
+          type: string
+          description: The account number to retrieve limits for.
+          required: true
+      - name: updatelimits
+        method: PATCH
+        description: Fiserv Update account limits
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FISERV_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: carddeveloper-limits-rest
+    port: 8080
+    description: REST adapter for Fiserv CardDeveloper API — Limits. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/limits
+      name: v1-limits
+      description: REST surface for v1-limits.
+      operations:
+      - method: GET
+        name: getlimits
+        description: Fiserv Get account limits
+        call: carddeveloper-limits.getlimits
+        with:
+          accountNumber: rest.accountNumber
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatelimits
+        description: Fiserv Update account limits
+        call: carddeveloper-limits.updatelimits
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: carddeveloper-limits-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fiserv CardDeveloper API — Limits. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: fiserv-get-account-limits
+      description: Fiserv Get account limits
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: carddeveloper-limits.getlimits
+      with:
+        accountNumber: tools.accountNumber
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fiserv-update-account-limits
+      description: Fiserv Update account limits
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: carddeveloper-limits.updatelimits
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

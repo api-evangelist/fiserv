@@ -1,0 +1,164 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fiserv BankingHub API — Parties
+  description: 'Fiserv BankingHub API — Parties. 3 operations. Lead operation: Fiserv Create a customer party. Self-contained
+    Naftiko capability covering one Fiserv business surface.'
+  tags:
+  - Fiserv
+  - Parties
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FISERV_API_KEY: FISERV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bankinghub-parties
+    baseUri: https://cert.api.fiservapps.com
+    description: Fiserv BankingHub API — Parties business capability. Self-contained, no shared references.
+    resources:
+    - name: banking-parties
+      path: /banking/parties
+      operations:
+      - name: addparty
+        method: POST
+        description: Fiserv Create a customer party
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: banking-parties-partyId
+      path: /banking/parties/{partyId}
+      operations:
+      - name: getparty
+        method: GET
+        description: Fiserv Retrieve party details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: partyId
+          in: path
+          type: string
+          description: The unique party identifier.
+          required: true
+      - name: updateparty
+        method: PATCH
+        description: Fiserv Update party details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: partyId
+          in: path
+          type: string
+          description: The unique party identifier.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FISERV_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bankinghub-parties-rest
+    port: 8080
+    description: REST adapter for Fiserv BankingHub API — Parties. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/banking/parties
+      name: banking-parties
+      description: REST surface for banking-parties.
+      operations:
+      - method: POST
+        name: addparty
+        description: Fiserv Create a customer party
+        call: bankinghub-parties.addparty
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/banking/parties/{partyid}
+      name: banking-parties-partyid
+      description: REST surface for banking-parties-partyId.
+      operations:
+      - method: GET
+        name: getparty
+        description: Fiserv Retrieve party details
+        call: bankinghub-parties.getparty
+        with:
+          partyId: rest.partyId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateparty
+        description: Fiserv Update party details
+        call: bankinghub-parties.updateparty
+        with:
+          partyId: rest.partyId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bankinghub-parties-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fiserv BankingHub API — Parties. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: fiserv-create-customer-party
+      description: Fiserv Create a customer party
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bankinghub-parties.addparty
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fiserv-retrieve-party-details
+      description: Fiserv Retrieve party details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bankinghub-parties.getparty
+      with:
+        partyId: tools.partyId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fiserv-update-party-details
+      description: Fiserv Update party details
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: bankinghub-parties.updateparty
+      with:
+        partyId: tools.partyId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

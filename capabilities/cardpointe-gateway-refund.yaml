@@ -1,0 +1,81 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fiserv CardPointe Gateway API — Refund
+  description: 'Fiserv CardPointe Gateway API — Refund. 1 operations. Lead operation: Fiserv Refund a settled transaction.
+    Self-contained Naftiko capability covering one Fiserv business surface.'
+  tags:
+  - Fiserv
+  - Refund
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FISERV_API_KEY: FISERV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cardpointe-gateway-refund
+    baseUri: https://{site}-uat.cardconnect.com/cardconnect/rest
+    description: Fiserv CardPointe Gateway API — Refund business capability. Self-contained, no shared references.
+    resources:
+    - name: refund
+      path: /refund
+      operations:
+      - name: refundtransaction
+        method: PUT
+        description: Fiserv Refund a settled transaction
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.FISERV_USER}}'
+      password: '{{env.FISERV_PASS}}'
+  exposes:
+  - type: rest
+    namespace: cardpointe-gateway-refund-rest
+    port: 8080
+    description: REST adapter for Fiserv CardPointe Gateway API — Refund. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/refund
+      name: refund
+      description: REST surface for refund.
+      operations:
+      - method: PUT
+        name: refundtransaction
+        description: Fiserv Refund a settled transaction
+        call: cardpointe-gateway-refund.refundtransaction
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cardpointe-gateway-refund-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fiserv CardPointe Gateway API — Refund. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: fiserv-refund-settled-transaction
+      description: Fiserv Refund a settled transaction
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cardpointe-gateway-refund.refundtransaction
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

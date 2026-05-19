@@ -1,0 +1,81 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fiserv CardPointe Gateway API — Void
+  description: 'Fiserv CardPointe Gateway API — Void. 1 operations. Lead operation: Fiserv Void a transaction. Self-contained
+    Naftiko capability covering one Fiserv business surface.'
+  tags:
+  - Fiserv
+  - Void
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FISERV_API_KEY: FISERV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cardpointe-gateway-void
+    baseUri: https://{site}-uat.cardconnect.com/cardconnect/rest
+    description: Fiserv CardPointe Gateway API — Void business capability. Self-contained, no shared references.
+    resources:
+    - name: void
+      path: /void
+      operations:
+      - name: voidtransaction
+        method: PUT
+        description: Fiserv Void a transaction
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.FISERV_USER}}'
+      password: '{{env.FISERV_PASS}}'
+  exposes:
+  - type: rest
+    namespace: cardpointe-gateway-void-rest
+    port: 8080
+    description: REST adapter for Fiserv CardPointe Gateway API — Void. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/void
+      name: void
+      description: REST surface for void.
+      operations:
+      - method: PUT
+        name: voidtransaction
+        description: Fiserv Void a transaction
+        call: cardpointe-gateway-void.voidtransaction
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cardpointe-gateway-void-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fiserv CardPointe Gateway API — Void. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: fiserv-void-transaction
+      description: Fiserv Void a transaction
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cardpointe-gateway-void.voidtransaction
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

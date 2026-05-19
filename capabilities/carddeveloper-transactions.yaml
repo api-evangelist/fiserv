@@ -1,0 +1,91 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fiserv CardDeveloper API — Transactions
+  description: 'Fiserv CardDeveloper API — Transactions. 1 operations. Lead operation: Fiserv List account transactions. Self-contained
+    Naftiko capability covering one Fiserv business surface.'
+  tags:
+  - Fiserv
+  - Transactions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FISERV_API_KEY: FISERV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: carddeveloper-transactions
+    baseUri: https://cert.api.fiservapps.com
+    description: Fiserv CardDeveloper API — Transactions business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-accounts-accountNumber-transactions
+      path: /v1/accounts/{accountNumber}/transactions
+      operations:
+      - name: listtransactions
+        method: GET
+        description: Fiserv List account transactions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: fromDate
+          in: query
+          type: string
+          description: Start date for the transaction search.
+        - name: toDate
+          in: query
+          type: string
+          description: End date for the transaction search.
+        - name: transactionType
+          in: query
+          type: string
+          description: Filter by transaction type.
+    authentication:
+      type: bearer
+      token: '{{env.FISERV_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: carddeveloper-transactions-rest
+    port: 8080
+    description: REST adapter for Fiserv CardDeveloper API — Transactions. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/accounts/{accountnumber}/transactions
+      name: v1-accounts-accountnumber-transactions
+      description: REST surface for v1-accounts-accountNumber-transactions.
+      operations:
+      - method: GET
+        name: listtransactions
+        description: Fiserv List account transactions
+        call: carddeveloper-transactions.listtransactions
+        with:
+          fromDate: rest.fromDate
+          toDate: rest.toDate
+          transactionType: rest.transactionType
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: carddeveloper-transactions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fiserv CardDeveloper API — Transactions. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: fiserv-list-account-transactions
+      description: Fiserv List account transactions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: carddeveloper-transactions.listtransactions
+      with:
+        fromDate: tools.fromDate
+        toDate: tools.toDate
+        transactionType: tools.transactionType
+      outputParameters:
+      - type: object
+        mapping: $.

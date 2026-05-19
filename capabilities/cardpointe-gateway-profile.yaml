@@ -1,0 +1,172 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fiserv CardPointe Gateway API — Profile
+  description: 'Fiserv CardPointe Gateway API — Profile. 3 operations. Lead operation: Fiserv Create or update a customer
+    profile. Self-contained Naftiko capability covering one Fiserv business surface.'
+  tags:
+  - Fiserv
+  - Profile
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FISERV_API_KEY: FISERV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cardpointe-gateway-profile
+    baseUri: https://{site}-uat.cardconnect.com/cardconnect/rest
+    description: Fiserv CardPointe Gateway API — Profile business capability. Self-contained, no shared references.
+    resources:
+    - name: profile
+      path: /profile
+      operations:
+      - name: createorupdateprofile
+        method: PUT
+        description: Fiserv Create or update a customer profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: profile-profileid-accountid-merchid
+      path: /profile/{profileid}/{accountid}/{merchid}
+      operations:
+      - name: getprofile
+        method: GET
+        description: Fiserv Retrieve a customer profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: profileid
+          in: path
+          type: string
+          description: The unique profile identifier.
+          required: true
+        - name: accountid
+          in: path
+          type: string
+          description: The account identifier within the profile.
+          required: true
+      - name: deleteprofile
+        method: DELETE
+        description: Fiserv Delete a customer profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: profileid
+          in: path
+          type: string
+          description: The unique profile identifier.
+          required: true
+        - name: accountid
+          in: path
+          type: string
+          description: The account identifier within the profile.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.FISERV_USER}}'
+      password: '{{env.FISERV_PASS}}'
+  exposes:
+  - type: rest
+    namespace: cardpointe-gateway-profile-rest
+    port: 8080
+    description: REST adapter for Fiserv CardPointe Gateway API — Profile. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/profile
+      name: profile
+      description: REST surface for profile.
+      operations:
+      - method: PUT
+        name: createorupdateprofile
+        description: Fiserv Create or update a customer profile
+        call: cardpointe-gateway-profile.createorupdateprofile
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/profile/{profileid}/{accountid}/{merchid}
+      name: profile-profileid-accountid-merchid
+      description: REST surface for profile-profileid-accountid-merchid.
+      operations:
+      - method: GET
+        name: getprofile
+        description: Fiserv Retrieve a customer profile
+        call: cardpointe-gateway-profile.getprofile
+        with:
+          profileid: rest.profileid
+          accountid: rest.accountid
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteprofile
+        description: Fiserv Delete a customer profile
+        call: cardpointe-gateway-profile.deleteprofile
+        with:
+          profileid: rest.profileid
+          accountid: rest.accountid
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cardpointe-gateway-profile-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fiserv CardPointe Gateway API — Profile. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: fiserv-create-update-customer-profile
+      description: Fiserv Create or update a customer profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cardpointe-gateway-profile.createorupdateprofile
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fiserv-retrieve-customer-profile
+      description: Fiserv Retrieve a customer profile
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cardpointe-gateway-profile.getprofile
+      with:
+        profileid: tools.profileid
+        accountid: tools.accountid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fiserv-delete-customer-profile
+      description: Fiserv Delete a customer profile
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: cardpointe-gateway-profile.deleteprofile
+      with:
+        profileid: tools.profileid
+        accountid: tools.accountid
+      outputParameters:
+      - type: object
+        mapping: $.

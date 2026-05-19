@@ -1,0 +1,129 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fiserv BankingHub API — Payments
+  description: 'Fiserv BankingHub API — Payments. 2 operations. Lead operation: Fiserv Process a payment. Self-contained Naftiko
+    capability covering one Fiserv business surface.'
+  tags:
+  - Fiserv
+  - Payments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FISERV_API_KEY: FISERV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bankinghub-payments
+    baseUri: https://cert.api.fiservapps.com
+    description: Fiserv BankingHub API — Payments business capability. Self-contained, no shared references.
+    resources:
+    - name: banking-payments
+      path: /banking/payments
+      operations:
+      - name: createpayment
+        method: POST
+        description: Fiserv Process a payment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: banking-payments-paymentId-reverse
+      path: /banking/payments/{paymentId}/reverse
+      operations:
+      - name: reversepayment
+        method: POST
+        description: Fiserv Reverse a payment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: paymentId
+          in: path
+          type: string
+          description: The unique payment identifier.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FISERV_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bankinghub-payments-rest
+    port: 8080
+    description: REST adapter for Fiserv BankingHub API — Payments. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/banking/payments
+      name: banking-payments
+      description: REST surface for banking-payments.
+      operations:
+      - method: POST
+        name: createpayment
+        description: Fiserv Process a payment
+        call: bankinghub-payments.createpayment
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/banking/payments/{paymentid}/reverse
+      name: banking-payments-paymentid-reverse
+      description: REST surface for banking-payments-paymentId-reverse.
+      operations:
+      - method: POST
+        name: reversepayment
+        description: Fiserv Reverse a payment
+        call: bankinghub-payments.reversepayment
+        with:
+          paymentId: rest.paymentId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bankinghub-payments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fiserv BankingHub API — Payments. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: fiserv-process-payment
+      description: Fiserv Process a payment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bankinghub-payments.createpayment
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fiserv-reverse-payment
+      description: Fiserv Reverse a payment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bankinghub-payments.reversepayment
+      with:
+        paymentId: tools.paymentId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

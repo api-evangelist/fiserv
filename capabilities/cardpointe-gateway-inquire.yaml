@@ -1,0 +1,113 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fiserv CardPointe Gateway API — Inquire
+  description: 'Fiserv CardPointe Gateway API — Inquire. 2 operations. Lead operation: Fiserv Inquire about a transaction.
+    Self-contained Naftiko capability covering one Fiserv business surface.'
+  tags:
+  - Fiserv
+  - Inquire
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FISERV_API_KEY: FISERV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cardpointe-gateway-inquire
+    baseUri: https://{site}-uat.cardconnect.com/cardconnect/rest
+    description: Fiserv CardPointe Gateway API — Inquire business capability. Self-contained, no shared references.
+    resources:
+    - name: inquire-retref-merchid
+      path: /inquire/{retref}/{merchid}
+      operations:
+      - name: inquiretransaction
+        method: GET
+        description: Fiserv Inquire about a transaction
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: inquireByOrderid-orderid-merchid
+      path: /inquireByOrderid/{orderid}/{merchid}
+      operations:
+      - name: inquiretransactionbyorderid
+        method: GET
+        description: Fiserv Inquire about a transaction by order ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: orderid
+          in: path
+          type: string
+          description: The merchant-assigned order identifier.
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.FISERV_USER}}'
+      password: '{{env.FISERV_PASS}}'
+  exposes:
+  - type: rest
+    namespace: cardpointe-gateway-inquire-rest
+    port: 8080
+    description: REST adapter for Fiserv CardPointe Gateway API — Inquire. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/inquire/{retref}/{merchid}
+      name: inquire-retref-merchid
+      description: REST surface for inquire-retref-merchid.
+      operations:
+      - method: GET
+        name: inquiretransaction
+        description: Fiserv Inquire about a transaction
+        call: cardpointe-gateway-inquire.inquiretransaction
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/inquirebyorderid/{orderid}/{merchid}
+      name: inquirebyorderid-orderid-merchid
+      description: REST surface for inquireByOrderid-orderid-merchid.
+      operations:
+      - method: GET
+        name: inquiretransactionbyorderid
+        description: Fiserv Inquire about a transaction by order ID
+        call: cardpointe-gateway-inquire.inquiretransactionbyorderid
+        with:
+          orderid: rest.orderid
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cardpointe-gateway-inquire-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fiserv CardPointe Gateway API — Inquire. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: fiserv-inquire-about-transaction
+      description: Fiserv Inquire about a transaction
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cardpointe-gateway-inquire.inquiretransaction
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fiserv-inquire-about-transaction-order
+      description: Fiserv Inquire about a transaction by order ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cardpointe-gateway-inquire.inquiretransactionbyorderid
+      with:
+        orderid: tools.orderid
+      outputParameters:
+      - type: object
+        mapping: $.

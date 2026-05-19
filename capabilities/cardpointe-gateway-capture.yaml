@@ -1,0 +1,81 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fiserv CardPointe Gateway API — Capture
+  description: 'Fiserv CardPointe Gateway API — Capture. 1 operations. Lead operation: Fiserv Capture an authorized transaction.
+    Self-contained Naftiko capability covering one Fiserv business surface.'
+  tags:
+  - Fiserv
+  - Capture
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FISERV_API_KEY: FISERV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cardpointe-gateway-capture
+    baseUri: https://{site}-uat.cardconnect.com/cardconnect/rest
+    description: Fiserv CardPointe Gateway API — Capture business capability. Self-contained, no shared references.
+    resources:
+    - name: capture
+      path: /capture
+      operations:
+      - name: capturetransaction
+        method: PUT
+        description: Fiserv Capture an authorized transaction
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.FISERV_USER}}'
+      password: '{{env.FISERV_PASS}}'
+  exposes:
+  - type: rest
+    namespace: cardpointe-gateway-capture-rest
+    port: 8080
+    description: REST adapter for Fiserv CardPointe Gateway API — Capture. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/capture
+      name: capture
+      description: REST surface for capture.
+      operations:
+      - method: PUT
+        name: capturetransaction
+        description: Fiserv Capture an authorized transaction
+        call: cardpointe-gateway-capture.capturetransaction
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cardpointe-gateway-capture-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fiserv CardPointe Gateway API — Capture. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: fiserv-capture-authorized-transaction
+      description: Fiserv Capture an authorized transaction
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cardpointe-gateway-capture.capturetransaction
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

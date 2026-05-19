@@ -1,0 +1,147 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fiserv BankingHub API — Accounts
+  description: 'Fiserv BankingHub API — Accounts. 3 operations. Lead operation: Fiserv Create a new account. Self-contained
+    Naftiko capability covering one Fiserv business surface.'
+  tags:
+  - Fiserv
+  - Accounts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FISERV_API_KEY: FISERV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bankinghub-accounts
+    baseUri: https://cert.api.fiservapps.com
+    description: Fiserv BankingHub API — Accounts business capability. Self-contained, no shared references.
+    resources:
+    - name: banking-accounts
+      path: /banking/accounts
+      operations:
+      - name: addaccount
+        method: POST
+        description: Fiserv Create a new account
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: banking-accounts-accountId
+      path: /banking/accounts/{accountId}
+      operations:
+      - name: getaccount
+        method: GET
+        description: Fiserv Retrieve account details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateaccount
+        method: PATCH
+        description: Fiserv Update account details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FISERV_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bankinghub-accounts-rest
+    port: 8080
+    description: REST adapter for Fiserv BankingHub API — Accounts. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/banking/accounts
+      name: banking-accounts
+      description: REST surface for banking-accounts.
+      operations:
+      - method: POST
+        name: addaccount
+        description: Fiserv Create a new account
+        call: bankinghub-accounts.addaccount
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/banking/accounts/{accountid}
+      name: banking-accounts-accountid
+      description: REST surface for banking-accounts-accountId.
+      operations:
+      - method: GET
+        name: getaccount
+        description: Fiserv Retrieve account details
+        call: bankinghub-accounts.getaccount
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateaccount
+        description: Fiserv Update account details
+        call: bankinghub-accounts.updateaccount
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bankinghub-accounts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fiserv BankingHub API — Accounts. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: fiserv-create-new-account
+      description: Fiserv Create a new account
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bankinghub-accounts.addaccount
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fiserv-retrieve-account-details
+      description: Fiserv Retrieve account details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bankinghub-accounts.getaccount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fiserv-update-account-details
+      description: Fiserv Update account details
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: bankinghub-accounts.updateaccount
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
