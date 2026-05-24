@@ -178,6 +178,8 @@ common:
     sources:
     - https://developer.fiserv.com/
     updated: '2026-05-04'
+  - type: LLMsTxt
+    url: https://docs.fiserv.dev/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
