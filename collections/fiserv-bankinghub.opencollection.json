@@ -1,0 +1,279 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Create a new account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/banking/accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new deposit or loan account for an existing customer. Supports checking, savings, money market, certificate of deposit, and loan account types."
+        },
+        {
+          "info": {
+            "name": "Fiserv Retrieve account details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/banking/accounts/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The unique account identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information for a specific account including balance, status, and account attributes."
+        },
+        {
+          "info": {
+            "name": "Fiserv Update account details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cert.api.fiservapps.com/banking/accounts/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The unique account identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates attributes of an existing account such as status, description, or other configurable fields."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv List account transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/banking/accounts/:accountId/transactions",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The unique account identifier."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for the transaction search range."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for the transaction search range."
+              },
+              {
+                "name": "transactionType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by transaction type."
+              }
+            ]
+          },
+          "docs": "Retrieves transaction history for a specific account. Supports filtering by date range, transaction type, and amount range."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Initiate a fund transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/banking/transfers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a fund transfer between accounts. Supports internal transfers between accounts at the same institution and external transfers via ACH or wire."
+        },
+        {
+          "info": {
+            "name": "Fiserv Retrieve transfer details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/banking/transfers/:transferId",
+            "params": [
+              {
+                "name": "transferId",
+                "value": "",
+                "type": "path",
+                "description": "The unique transfer identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves the status and details of a previously initiated fund transfer."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Process a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/banking/payments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Processes a payment transaction including credits, debits, bill payments, and disbursements through the enterprise payments hub."
+        },
+        {
+          "info": {
+            "name": "Fiserv Reverse a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/banking/payments/:paymentId/reverse",
+            "params": [
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique payment identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reverses a previously processed payment transaction."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Parties",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Create a customer party",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/banking/parties",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new customer party record including personal information, contact details, and identification data."
+        },
+        {
+          "info": {
+            "name": "Fiserv Retrieve party details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/banking/parties/:partyId",
+            "params": [
+              {
+                "name": "partyId",
+                "value": "",
+                "type": "path",
+                "description": "The unique party identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information for a specific customer party including personal data, addresses, and contact information."
+        },
+        {
+          "info": {
+            "name": "Fiserv Update party details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cert.api.fiservapps.com/banking/parties/:partyId",
+            "params": [
+              {
+                "name": "partyId",
+                "value": "",
+                "type": "path",
+                "description": "The unique party identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates attributes of an existing customer party record."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

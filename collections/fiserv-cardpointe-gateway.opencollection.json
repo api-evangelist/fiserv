@@ -1,0 +1,374 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv CardPointe Gateway API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authorization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Authorize a payment transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/auth",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits an authorization request to process a payment. The authorization verifies the cardholder account and places a hold on funds. The response includes a retref (retrieval reference number) used for subsequent capture, void, or refund operations."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Capture",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Capture an authorized transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/capture",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Captures a previously authorized transaction for settlement. The capture amount can be less than or equal to the original authorization amount."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Void",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Void a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/void",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Voids a previously authorized transaction that has not yet been settled. If the transaction has already been settled, use the refund endpoint instead."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Refund",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Refund a settled transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/refund",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Processes a refund for a previously captured and settled transaction. Supports full and partial refunds."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Inquire",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Inquire about a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/inquire/:retref/:merchid",
+            "params": [
+              {
+                "name": "retref",
+                "value": "",
+                "type": "path",
+                "description": "The retrieval reference number from the original transaction."
+              },
+              {
+                "name": "merchid",
+                "value": "",
+                "type": "path",
+                "description": "The CardPointe merchant identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and details of a previously processed transaction using its retrieval reference number."
+        },
+        {
+          "info": {
+            "name": "Fiserv Inquire about a transaction by order ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/inquireByOrderid/:orderid/:merchid",
+            "params": [
+              {
+                "name": "orderid",
+                "value": "",
+                "type": "path",
+                "description": "The merchant-assigned order identifier."
+              },
+              {
+                "name": "merchid",
+                "value": "",
+                "type": "path",
+                "description": "The CardPointe merchant identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and details of a previously processed transaction using the merchant-assigned order identifier."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Settlement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Get settlement status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/settlestat",
+            "params": [
+              {
+                "name": "merchid",
+                "value": "",
+                "type": "query",
+                "description": "The CardPointe merchant ID."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "The settlement date in MMDD format."
+              }
+            ]
+          },
+          "docs": "Retrieves the settlement status for transactions processed on a given date for a specified merchant."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Funding",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Get funding information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/funding",
+            "params": [
+              {
+                "name": "merchid",
+                "value": "",
+                "type": "query",
+                "description": "The CardPointe merchant ID."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "The funding date in MMDD format."
+              }
+            ]
+          },
+          "docs": "Retrieves funding information for settled transactions, including deposit amounts and dates."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Profile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Create or update a customer profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/profile",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates a stored customer payment profile. Profiles securely store payment credentials for recurring or future transactions without requiring the merchant to handle raw card data."
+        },
+        {
+          "info": {
+            "name": "Fiserv Retrieve a customer profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/profile/:profileid/:accountid/:merchid",
+            "params": [
+              {
+                "name": "profileid",
+                "value": "",
+                "type": "path",
+                "description": "The unique profile identifier."
+              },
+              {
+                "name": "accountid",
+                "value": "",
+                "type": "path",
+                "description": "The account identifier within the profile."
+              },
+              {
+                "name": "merchid",
+                "value": "",
+                "type": "path",
+                "description": "The CardPointe merchant identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves a stored customer payment profile by profile ID and account ID."
+        },
+        {
+          "info": {
+            "name": "Fiserv Delete a customer profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/profile/:profileid/:accountid/:merchid",
+            "params": [
+              {
+                "name": "profileid",
+                "value": "",
+                "type": "path",
+                "description": "The unique profile identifier."
+              },
+              {
+                "name": "accountid",
+                "value": "",
+                "type": "path",
+                "description": "The account identifier within the profile."
+              },
+              {
+                "name": "merchid",
+                "value": "",
+                "type": "path",
+                "description": "The CardPointe merchant identifier."
+              }
+            ]
+          },
+          "docs": "Deletes a stored customer payment profile or a specific account within a profile."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Signature Capture",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Submit a signature capture",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/sigcap",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a captured signature image for a completed transaction. The signature data is associated with the transaction for record-keeping and dispute resolution."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "BIN",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Look up BIN data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{site}-uat.cardconnect.com/cardconnect/rest/bin/:token/:merchid",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "path",
+                "description": "The CardSecure token or card number to look up."
+              },
+              {
+                "name": "merchid",
+                "value": "",
+                "type": "path",
+                "description": "The CardPointe merchant identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves Bank Identification Number (BIN) data for a given token or card number, including card brand, card type, and issuing country information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

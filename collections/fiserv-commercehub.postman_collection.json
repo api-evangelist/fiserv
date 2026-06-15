@@ -1,0 +1,2741 @@
+{
+  "item": [
+    {
+      "id": "70b571f8-f638-4701-9543-e83f57dac4be",
+      "name": "3-D Secure",
+      "description": {
+        "content": "Manage 3-D Secure authentication flows for cardholder verification.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ee0180ac-0cca-4b41-b7ac-81ad666b805f",
+          "name": "Fiserv Initiate 3-D Secure authentication",
+          "request": {
+            "name": "Fiserv Initiate 3-D Secure authentication",
+            "description": {
+              "content": "Initiates a 3-D Secure authentication flow for cardholder verification. This step is used to authenticate the cardholder before processing a payment, enabling Strong Customer Authentication (SCA) compliance and potential liability shift.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments-vas",
+                "v1",
+                "3ds",
+                "authentication"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                "key": "Client-Request-Id",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The API key assigned to the merchant.",
+                "key": "Api-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                "key": "Timestamp",
+                "value": "<long>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source\": {\n    \"sourceType\": \"<string>\",\n    \"card\": {\n      \"cardData\": \"<string>\",\n      \"expirationMonth\": \"<string>\",\n      \"expirationYear\": \"<string>\",\n      \"securityCode\": \"<string>\"\n    },\n    \"token\": {\n      \"tokenData\": \"<string>\",\n      \"tokenSource\": \"<string>\",\n      \"expirationMonth\": \"<string>\",\n      \"expirationYear\": \"<string>\"\n    }\n  },\n  \"amount\": {\n    \"total\": \"<double>\",\n    \"currency\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "be08c31a-d89f-4db7-bc51-6b7c347a9d4f",
+              "name": "3-D Secure authentication initiated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments-vas",
+                    "v1",
+                    "3ds",
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": {\n    \"sourceType\": \"GooglePay\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"96\",\n      \"expirationYear\": \"7712\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"50\",\n      \"expirationYear\": \"4057\"\n    }\n  },\n  \"amount\": {\n    \"total\": 622.1102498185471,\n    \"currency\": \"ZLQ\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"gatewayResponse\": {\n    \"transactionType\": \"string\",\n    \"transactionState\": \"REFUNDED\",\n    \"transactionProcessingDetails\": {\n      \"transactionId\": \"string\",\n      \"orderId\": \"string\",\n      \"transactionTimestamp\": \"1967-02-11T06:09:01.060Z\",\n      \"apiTraceId\": \"string\"\n    }\n  },\n  \"authenticationStatus\": \"string\",\n  \"authenticationValue\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5fadbc4-ded4-48d6-8463-b6cab2cebd8f",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments-vas",
+                    "v1",
+                    "3ds",
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": {\n    \"sourceType\": \"GooglePay\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"96\",\n      \"expirationYear\": \"7712\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"50\",\n      \"expirationYear\": \"4057\"\n    }\n  },\n  \"amount\": {\n    \"total\": 622.1102498185471,\n    \"currency\": \"ZLQ\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c5a65c3-4af0-4c37-beed-48bccdcce308",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments-vas",
+                    "v1",
+                    "3ds",
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": {\n    \"sourceType\": \"GooglePay\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"96\",\n      \"expirationYear\": \"7712\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"50\",\n      \"expirationYear\": \"4057\"\n    }\n  },\n  \"amount\": {\n    \"total\": 622.1102498185471,\n    \"currency\": \"ZLQ\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "e2d16e7a-8c2f-4bc4-bd6d-54ceebb1243e",
+      "name": "Cancels",
+      "description": {
+        "content": "Cancel or void previously authorized transactions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "59629972-fb35-4592-a7b5-74de1ca7bce2",
+          "name": "Fiserv Cancel or void a transaction",
+          "request": {
+            "name": "Fiserv Cancel or void a transaction",
+            "description": {
+              "content": "Cancels or voids a previously authorized transaction. If the transaction has not yet been captured, it will be voided. If it has been captured but not yet settled, a reversal will be attempted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                "v1",
+                "charges",
+                ":transactionId",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) The unique identifier of the original transaction."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                "key": "Client-Request-Id",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The API key assigned to the merchant.",
+                "key": "Api-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                "key": "Timestamp",
+                "value": "<long>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {\n    \"total\": \"<double>\",\n    \"currency\": \"<string>\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": \"<boolean>\",\n    \"merchantOrderId\": \"<string>\",\n    \"merchantTransactionId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "63c943f1-a0bf-4824-b20b-65d1924f3e07",
+              "name": "Cancel processed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges",
+                    ":transactionId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the original transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 3628.2241372912836,\n    \"currency\": \"GHK\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": true,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"gatewayResponse\": {\n    \"transactionType\": \"string\",\n    \"transactionState\": \"DECLINED\",\n    \"transactionProcessingDetails\": {\n      \"transactionId\": \"string\",\n      \"orderId\": \"string\",\n      \"transactionTimestamp\": \"1975-04-14T05:28:32.436Z\",\n      \"apiTraceId\": \"string\"\n    }\n  },\n  \"transactionProcessingDetails\": {\n    \"transactionId\": \"string\",\n    \"orderId\": \"string\",\n    \"transactionTimestamp\": \"1994-11-02T08:34:18.909Z\",\n    \"apiTraceId\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1079e6d-95ba-4fb2-87dd-f84217af79c3",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges",
+                    ":transactionId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the original transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 3628.2241372912836,\n    \"currency\": \"GHK\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": true,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97e2716f-b706-4eec-9123-a65185e01102",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges",
+                    ":transactionId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the original transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 3628.2241372912836,\n    \"currency\": \"GHK\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": true,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fece1232-0bc7-47e8-806b-e856262e9384",
+              "name": "Transaction not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges",
+                    ":transactionId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the original transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 3628.2241372912836,\n    \"currency\": \"GHK\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": true,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "eceaa889-ab4b-4a37-8f0b-34ffa4c1c5bd",
+      "name": "Captures",
+      "description": {
+        "content": "Capture previously authorized transactions for settlement.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a5add832-d9e1-4190-bb98-ad5e6c08cdfb",
+          "name": "Fiserv Capture an authorized payment",
+          "request": {
+            "name": "Fiserv Capture an authorized payment",
+            "description": {
+              "content": "Captures a previously authorized transaction for settlement. The capture amount can be equal to or less than the original authorization amount.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                "v1",
+                "charges",
+                ":transactionId",
+                "capture"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) The unique identifier of the original transaction."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                "key": "Client-Request-Id",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The API key assigned to the merchant.",
+                "key": "Api-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                "key": "Timestamp",
+                "value": "<long>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {\n    \"total\": \"<double>\",\n    \"currency\": \"<string>\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": \"<boolean>\",\n    \"merchantOrderId\": \"<string>\",\n    \"merchantTransactionId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eb9890d0-1b16-421c-9307-02dadfb35ca7",
+              "name": "Capture processed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges",
+                    ":transactionId",
+                    "capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the original transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 5969.125049125716,\n    \"currency\": \"WYN\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": true,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"gatewayResponse\": {\n    \"transactionType\": \"string\",\n    \"transactionState\": \"REFUNDED\",\n    \"transactionProcessingDetails\": {\n      \"transactionId\": \"string\",\n      \"orderId\": \"string\",\n      \"transactionTimestamp\": \"1989-05-11T17:51:25.906Z\",\n      \"apiTraceId\": \"string\"\n    }\n  },\n  \"transactionProcessingDetails\": {\n    \"transactionId\": \"string\",\n    \"orderId\": \"string\",\n    \"transactionTimestamp\": \"2024-06-20T06:44:06.860Z\",\n    \"apiTraceId\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f12dd3f2-8a5e-4cde-ae68-e6973ae1e76a",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges",
+                    ":transactionId",
+                    "capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the original transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 5969.125049125716,\n    \"currency\": \"WYN\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": true,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b96611ad-f183-4121-b897-de34aa646b1b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges",
+                    ":transactionId",
+                    "capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the original transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 5969.125049125716,\n    \"currency\": \"WYN\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": true,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b796abd-4da5-4514-a6c8-6a3dd6ab1105",
+              "name": "Transaction not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges",
+                    ":transactionId",
+                    "capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the original transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 5969.125049125716,\n    \"currency\": \"WYN\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": true,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "07b18860-380b-4965-bf88-380d6e33921d",
+      "name": "Charges",
+      "description": {
+        "content": "Process payment charges including authorizations, sales, and pre-authorizations.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fd5a78ef-d089-4b01-a6ca-63c084e4b7dc",
+          "name": "Fiserv Process a payment charge",
+          "request": {
+            "name": "Fiserv Process a payment charge",
+            "description": {
+              "content": "Submits a charge request to process a payment transaction. Supports authorization-only, sale (authorization and capture), and pre-authorization transaction types. The request can include payment source details such as card data, tokens, or encrypted payment data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                "v1",
+                "charges"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                "key": "Client-Request-Id",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The API key assigned to the merchant.",
+                "key": "Api-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                "key": "Timestamp",
+                "value": "<long>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {\n    \"total\": \"<double>\",\n    \"currency\": \"<string>\"\n  },\n  \"source\": {\n    \"sourceType\": \"<string>\",\n    \"card\": {\n      \"cardData\": \"<string>\",\n      \"expirationMonth\": \"<string>\",\n      \"expirationYear\": \"<string>\",\n      \"securityCode\": \"<string>\"\n    },\n    \"token\": {\n      \"tokenData\": \"<string>\",\n      \"tokenSource\": \"<string>\",\n      \"expirationMonth\": \"<string>\",\n      \"expirationYear\": \"<string>\"\n    }\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": \"<boolean>\",\n    \"merchantOrderId\": \"<string>\",\n    \"merchantTransactionId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a5ce18a5-7eea-4ca2-bd59-bbb4dc0dd795",
+              "name": "Charge processed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 9561.938650100217,\n    \"currency\": \"DLR\"\n  },\n  \"source\": {\n    \"sourceType\": \"PaymentCard\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"57\",\n      \"expirationYear\": \"2822\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"33\",\n      \"expirationYear\": \"7999\"\n    }\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": false,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"gatewayResponse\": {\n    \"transactionType\": \"string\",\n    \"transactionState\": \"REFUNDED\",\n    \"transactionProcessingDetails\": {\n      \"transactionId\": \"string\",\n      \"orderId\": \"string\",\n      \"transactionTimestamp\": \"1975-02-19T15:49:39.537Z\",\n      \"apiTraceId\": \"string\"\n    }\n  },\n  \"source\": {\n    \"sourceType\": \"GooglePay\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"19\",\n      \"expirationYear\": \"9980\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"67\",\n      \"expirationYear\": \"0575\"\n    }\n  },\n  \"transactionProcessingDetails\": {\n    \"transactionId\": \"string\",\n    \"orderId\": \"string\",\n    \"transactionTimestamp\": \"1963-09-02T23:24:20.769Z\",\n    \"apiTraceId\": \"string\"\n  },\n  \"paymentReceipt\": {\n    \"approvedAmount\": {\n      \"total\": 895.0426499386776,\n      \"currency\": \"SYT\"\n    },\n    \"processorResponseDetails\": {\n      \"approvalStatus\": \"DECLINED\",\n      \"approvalCode\": \"string\",\n      \"responseCode\": \"string\",\n      \"responseMessage\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ce56411-22b1-4b48-838c-1eff8a584224",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 9561.938650100217,\n    \"currency\": \"DLR\"\n  },\n  \"source\": {\n    \"sourceType\": \"PaymentCard\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"57\",\n      \"expirationYear\": \"2822\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"33\",\n      \"expirationYear\": \"7999\"\n    }\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": false,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef868287-f90e-40c2-9628-190d6e888f87",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 9561.938650100217,\n    \"currency\": \"DLR\"\n  },\n  \"source\": {\n    \"sourceType\": \"PaymentCard\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"57\",\n      \"expirationYear\": \"2822\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"33\",\n      \"expirationYear\": \"7999\"\n    }\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": false,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "29cb2746-a7a6-4589-ba75-43ffb127a326",
+      "name": "Refunds",
+      "description": {
+        "content": "Process refunds against previously captured transactions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "21949311-2b76-4f6b-92f3-edc93d572039",
+          "name": "Fiserv Refund a captured transaction",
+          "request": {
+            "name": "Fiserv Refund a captured transaction",
+            "description": {
+              "content": "Processes a refund against a previously captured and settled transaction. Supports full and partial refunds. The refund amount must not exceed the original captured amount minus any previous refunds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                "v1",
+                "charges",
+                ":transactionId",
+                "refund"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) The unique identifier of the original transaction."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                "key": "Client-Request-Id",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The API key assigned to the merchant.",
+                "key": "Api-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                "key": "Timestamp",
+                "value": "<long>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {\n    \"total\": \"<double>\",\n    \"currency\": \"<string>\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": \"<boolean>\",\n    \"merchantOrderId\": \"<string>\",\n    \"merchantTransactionId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "55b5ec9d-36bd-4191-bd63-902f8d1747d3",
+              "name": "Refund processed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges",
+                    ":transactionId",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the original transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 5988.3360222880665,\n    \"currency\": \"VYG\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": true,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"gatewayResponse\": {\n    \"transactionType\": \"string\",\n    \"transactionState\": \"VOIDED\",\n    \"transactionProcessingDetails\": {\n      \"transactionId\": \"string\",\n      \"orderId\": \"string\",\n      \"transactionTimestamp\": \"2002-11-01T09:25:02.751Z\",\n      \"apiTraceId\": \"string\"\n    }\n  },\n  \"transactionProcessingDetails\": {\n    \"transactionId\": \"string\",\n    \"orderId\": \"string\",\n    \"transactionTimestamp\": \"1968-04-14T16:33:19.648Z\",\n    \"apiTraceId\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74acb917-d871-40f9-af77-02518c34ac24",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges",
+                    ":transactionId",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the original transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 5988.3360222880665,\n    \"currency\": \"VYG\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": true,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b85a38ac-fbd9-4484-bd47-0e50102270ae",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges",
+                    ":transactionId",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the original transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 5988.3360222880665,\n    \"currency\": \"VYG\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": true,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf2e6078-9828-4060-b818-c78da693a591",
+              "name": "Transaction not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "v1",
+                    "charges",
+                    ":transactionId",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the original transaction."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"total\": 5988.3360222880665,\n    \"currency\": \"VYG\"\n  },\n  \"transactionDetails\": {\n    \"captureFlag\": true,\n    \"merchantOrderId\": \"string\",\n    \"merchantTransactionId\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "cf9b852a-296c-4d5d-8dfa-0b6ac2e8afca",
+      "name": "Tokens",
+      "description": {
+        "content": "Create, manage, and use payment tokens for secure storage of payment credentials.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d1037e38-a0de-4ffb-91af-29bc4f9e0e4b",
+          "name": "Fiserv Create a payment token",
+          "request": {
+            "name": "Fiserv Create a payment token",
+            "description": {
+              "content": "Tokenizes a payment source such as a card number, creating a secure token that can be used in subsequent transactions. This eliminates the need to store sensitive payment data and reduces PCI compliance scope.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments-vas",
+                "v1",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                "key": "Client-Request-Id",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The API key assigned to the merchant.",
+                "key": "Api-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                "key": "Timestamp",
+                "value": "<long>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source\": {\n    \"sourceType\": \"<string>\",\n    \"card\": {\n      \"cardData\": \"<string>\",\n      \"expirationMonth\": \"<string>\",\n      \"expirationYear\": \"<string>\",\n      \"securityCode\": \"<string>\"\n    },\n    \"token\": {\n      \"tokenData\": \"<string>\",\n      \"tokenSource\": \"<string>\",\n      \"expirationMonth\": \"<string>\",\n      \"expirationYear\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5402fc25-bfe5-4847-9322-a4bdd12e5314",
+              "name": "Token created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments-vas",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": {\n    \"sourceType\": \"PaymentToken\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"27\",\n      \"expirationYear\": \"5268\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"02\",\n      \"expirationYear\": \"9526\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"gatewayResponse\": {\n    \"transactionType\": \"string\",\n    \"transactionState\": \"DECLINED\",\n    \"transactionProcessingDetails\": {\n      \"transactionId\": \"string\",\n      \"orderId\": \"string\",\n      \"transactionTimestamp\": \"1960-05-10T23:42:08.120Z\",\n      \"apiTraceId\": \"string\"\n    }\n  },\n  \"source\": {\n    \"sourceType\": \"PaymentSession\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"31\",\n      \"expirationYear\": \"8065\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"11\",\n      \"expirationYear\": \"9384\"\n    }\n  },\n  \"paymentTokens\": [\n    {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"24\",\n      \"expirationYear\": \"9136\"\n    },\n    {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"15\",\n      \"expirationYear\": \"8271\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60143063-9a12-4c37-b658-e75cfdc7d5f7",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments-vas",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": {\n    \"sourceType\": \"PaymentToken\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"27\",\n      \"expirationYear\": \"5268\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"02\",\n      \"expirationYear\": \"9526\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7621b8ff-c272-4c1c-bf49-0f231e50c821",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments-vas",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": {\n    \"sourceType\": \"PaymentToken\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"27\",\n      \"expirationYear\": \"5268\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"02\",\n      \"expirationYear\": \"9526\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "2b2ffca0-3609-4e68-8acb-a04495c8bed8",
+      "name": "Verifications",
+      "description": {
+        "content": "Verify payment cards or tokens before processing a transaction.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eba912c5-3fae-443e-9d69-0750db195895",
+          "name": "Fiserv Verify a payment account",
+          "request": {
+            "name": "Fiserv Verify a payment account",
+            "description": {
+              "content": "Verifies a payment card or token to confirm it is valid before processing a transaction. This can include address verification (AVS) and card security code (CVV) validation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments-vas",
+                "v1",
+                "accounts",
+                "verification"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                "key": "Client-Request-Id",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The API key assigned to the merchant.",
+                "key": "Api-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                "key": "Timestamp",
+                "value": "<long>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source\": {\n    \"sourceType\": \"<string>\",\n    \"card\": {\n      \"cardData\": \"<string>\",\n      \"expirationMonth\": \"<string>\",\n      \"expirationYear\": \"<string>\",\n      \"securityCode\": \"<string>\"\n    },\n    \"token\": {\n      \"tokenData\": \"<string>\",\n      \"tokenSource\": \"<string>\",\n      \"expirationMonth\": \"<string>\",\n      \"expirationYear\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "43444fcd-707f-4b03-af1b-a9850a5f6832",
+              "name": "Verification completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments-vas",
+                    "v1",
+                    "accounts",
+                    "verification"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": {\n    \"sourceType\": \"ApplePay\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"58\",\n      \"expirationYear\": \"4652\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"36\",\n      \"expirationYear\": \"8635\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"gatewayResponse\": {\n    \"transactionType\": \"string\",\n    \"transactionState\": \"DECLINED\",\n    \"transactionProcessingDetails\": {\n      \"transactionId\": \"string\",\n      \"orderId\": \"string\",\n      \"transactionTimestamp\": \"2021-09-09T11:23:08.120Z\",\n      \"apiTraceId\": \"string\"\n    }\n  },\n  \"verificationStatus\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5d3facf-234f-4808-b9ed-f6b775bf5d5b",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments-vas",
+                    "v1",
+                    "accounts",
+                    "verification"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": {\n    \"sourceType\": \"ApplePay\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"58\",\n      \"expirationYear\": \"4652\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"36\",\n      \"expirationYear\": \"8635\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7b1251a-ba5a-4636-9229-1648571d9257",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments-vas",
+                    "v1",
+                    "accounts",
+                    "verification"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": {\n    \"sourceType\": \"ApplePay\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"58\",\n      \"expirationYear\": \"4652\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"36\",\n      \"expirationYear\": \"8635\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://connect-cert.fiservapis.com/ch",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2cbffb9e-7b73-428a-895f-666c9f4f0c4a",
+    "name": "Fiserv CommerceHub API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Fiserv CommerceHub API provides a unified RESTful interface for processing payments, managing tokens, verifying payment sources, and handling 3-D Secure authentication. CommerceHub enables merchants to accept payments through multiple channels including online, mobile, and in-app, with support for charges, pre-authorizations, captures, refunds, cancellations, and tokenization of payment credentials.\n\nContact Support:\n Name: Fiserv Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

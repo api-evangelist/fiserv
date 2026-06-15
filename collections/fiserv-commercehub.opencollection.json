@@ -1,0 +1,357 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv CommerceHub API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Api-Key",
+      "value": "{{Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Charges",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Process a payment charge",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://connect-cert.fiservapis.com/ch/payments/v1/charges",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Client-Request-Id",
+                "value": ""
+              },
+              {
+                "name": "Api-Key",
+                "value": ""
+              },
+              {
+                "name": "Timestamp",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a charge request to process a payment transaction. Supports authorization-only, sale (authorization and capture), and pre-authorization transaction types. The request can include payment source details such as card data, tokens, or encrypted payment data."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Captures",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Capture an authorized payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://connect-cert.fiservapis.com/ch/payments/v1/charges/:transactionId/capture",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Client-Request-Id",
+                "value": ""
+              },
+              {
+                "name": "Api-Key",
+                "value": ""
+              },
+              {
+                "name": "Timestamp",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the original transaction."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Captures a previously authorized transaction for settlement. The capture amount can be equal to or less than the original authorization amount."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Cancels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Cancel or void a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://connect-cert.fiservapis.com/ch/payments/v1/charges/:transactionId/cancel",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Client-Request-Id",
+                "value": ""
+              },
+              {
+                "name": "Api-Key",
+                "value": ""
+              },
+              {
+                "name": "Timestamp",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the original transaction."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancels or voids a previously authorized transaction. If the transaction has not yet been captured, it will be voided. If it has been captured but not yet settled, a reversal will be attempted."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Refunds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Refund a captured transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://connect-cert.fiservapis.com/ch/payments/v1/charges/:transactionId/refund",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Client-Request-Id",
+                "value": ""
+              },
+              {
+                "name": "Api-Key",
+                "value": ""
+              },
+              {
+                "name": "Timestamp",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the original transaction."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Processes a refund against a previously captured and settled transaction. Supports full and partial refunds. The refund amount must not exceed the original captured amount minus any previous refunds."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Create a payment token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://connect-cert.fiservapis.com/ch/payments-vas/v1/tokens",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Client-Request-Id",
+                "value": ""
+              },
+              {
+                "name": "Api-Key",
+                "value": ""
+              },
+              {
+                "name": "Timestamp",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Tokenizes a payment source such as a card number, creating a secure token that can be used in subsequent transactions. This eliminates the need to store sensitive payment data and reduces PCI compliance scope."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Verifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Verify a payment account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://connect-cert.fiservapis.com/ch/payments-vas/v1/accounts/verification",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Client-Request-Id",
+                "value": ""
+              },
+              {
+                "name": "Api-Key",
+                "value": ""
+              },
+              {
+                "name": "Timestamp",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verifies a payment card or token to confirm it is valid before processing a transaction. This can include address verification (AVS) and card security code (CVV) validation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "3-D Secure",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Initiate 3-D Secure authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://connect-cert.fiservapis.com/ch/payments-vas/v1/3ds/authentication",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Client-Request-Id",
+                "value": ""
+              },
+              {
+                "name": "Api-Key",
+                "value": ""
+              },
+              {
+                "name": "Timestamp",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a 3-D Secure authentication flow for cardholder verification. This step is used to authenticate the cardholder before processing a payment, enabling Strong Customer Authentication (SCA) compliance and potential liability shift."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

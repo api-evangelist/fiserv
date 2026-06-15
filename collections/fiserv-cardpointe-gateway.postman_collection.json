@@ -1,0 +1,3151 @@
+{
+  "item": [
+    {
+      "id": "cb59d7df-ce5d-40e7-acd7-2147f7eceb42",
+      "name": "Authorization",
+      "description": {
+        "content": "Authorize payment transactions against a cardholder account.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6d1b4089-3e3c-4f1f-b4dd-f559015da526",
+          "name": "Fiserv Authorize a payment transaction",
+          "request": {
+            "name": "Fiserv Authorize a payment transaction",
+            "description": {
+              "content": "Submits an authorization request to process a payment. The authorization verifies the cardholder account and places a hold on funds. The response includes a retref (retrieval reference number) used for subsequent capture, void, or refund operations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merchid\": \"<string>\",\n  \"account\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"expiry\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"cvv2\": \"<string>\",\n  \"orderid\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"region\": \"<string>\",\n  \"country\": \"<string>\",\n  \"postal\": \"<string>\",\n  \"capture\": \"<string>\",\n  \"profile\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5a02f7f0-4bd8-49c6-a1a3-569866cf6103",
+              "name": "Authorization processed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"account\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"expiry\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"cvv2\": \"<string>\",\n  \"orderid\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"region\": \"<string>\",\n  \"country\": \"<string>\",\n  \"postal\": \"<string>\",\n  \"capture\": \"<string>\",\n  \"profile\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"B\",\n  \"retref\": \"string\",\n  \"account\": \"string\",\n  \"token\": \"string\",\n  \"amount\": \"string\",\n  \"merchid\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\",\n  \"authcode\": \"string\",\n  \"avsresp\": \"string\",\n  \"cvvresp\": \"string\",\n  \"profileid\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c2abecc-8e68-43fa-96fb-e6c9de281be7",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"account\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"expiry\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"cvv2\": \"<string>\",\n  \"orderid\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"region\": \"<string>\",\n  \"country\": \"<string>\",\n  \"postal\": \"<string>\",\n  \"capture\": \"<string>\",\n  \"profile\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00fb38c9-d98e-4554-9acf-e73f46b6fbc2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"account\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"expiry\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"cvv2\": \"<string>\",\n  \"orderid\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"region\": \"<string>\",\n  \"country\": \"<string>\",\n  \"postal\": \"<string>\",\n  \"capture\": \"<string>\",\n  \"profile\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "76ba5c47-5e36-42c5-8855-6d58623dc6c0",
+      "name": "BIN",
+      "description": {
+        "content": "Look up Bank Identification Number (BIN) data for cards.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "88139137-f0a7-4027-af5e-4082c6713818",
+          "name": "Fiserv Look up BIN data",
+          "request": {
+            "name": "Fiserv Look up BIN data",
+            "description": {
+              "content": "Retrieves Bank Identification Number (BIN) data for a given token or card number, including card brand, card type, and issuing country information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bin",
+                ":token",
+                ":merchid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "token",
+                  "description": "(Required) The CardSecure token or card number to look up."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchid",
+                  "description": "(Required) The CardPointe merchant identifier."
+                },
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "62b97dcb-49f9-4d54-8707-b28d16740585",
+              "name": "BIN data returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bin",
+                    ":token",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "token",
+                      "description": "(Required) The CardSecure token or card number to look up."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"country\": \"string\",\n  \"product\": \"string\",\n  \"bin\": \"string\",\n  \"cardusestring\": \"string\",\n  \"corporate\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c915f31-6d7e-44ad-bf4f-b3a48cc8f669",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bin",
+                    ":token",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "token",
+                      "description": "(Required) The CardSecure token or card number to look up."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "5378ba54-ff1a-4c0f-ab40-637109a60770",
+      "name": "Capture",
+      "description": {
+        "content": "Capture previously authorized transactions for settlement.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "217d3006-6684-47f9-ba5a-87337fa560aa",
+          "name": "Fiserv Capture an authorized transaction",
+          "request": {
+            "name": "Fiserv Capture an authorized transaction",
+            "description": {
+              "content": "Captures a previously authorized transaction for settlement. The capture amount can be less than or equal to the original authorization amount.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "capture"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\",\n  \"amount\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1a1d7ae8-6773-4551-aa87-2dd695c33596",
+              "name": "Capture processed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\",\n  \"amount\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"merchid\": \"string\",\n  \"retref\": \"string\",\n  \"amount\": \"string\",\n  \"setlstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "414f3912-8581-45b9-8a60-943cc47349f1",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\",\n  \"amount\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae424a99-e7db-4b51-8afb-4409cc876dbc",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\",\n  \"amount\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "23b64ba0-3fba-4a9a-bc50-f657d7877617",
+      "name": "Funding",
+      "description": {
+        "content": "Retrieve funding information for settled transactions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "edbf51a2-d40a-4f5b-bcd5-280e78789ecd",
+          "name": "Fiserv Get funding information",
+          "request": {
+            "name": "Fiserv Get funding information",
+            "description": {
+              "content": "Retrieves funding information for settled transactions, including deposit amounts and dates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "funding"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "merchid",
+                  "value": "<string>",
+                  "description": "(Required) The CardPointe merchant ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<date>",
+                  "description": "(Required) The funding date in MMDD format."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "055c96c8-97ea-4e87-a0f6-9af13ad35290",
+              "name": "Funding information returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "funding"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fundingdate\": \"1965-05-09\",\n  \"fundingmasterid\": \"string\",\n  \"txns\": [\n    {\n      \"retref\": \"string\",\n      \"amount\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"retref\": \"string\",\n      \"amount\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "013a373f-2f10-4849-81b7-fca6e8937ab6",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "funding"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "8287e0ed-f6ae-4dbe-a016-10128884e77f",
+      "name": "Inquire",
+      "description": {
+        "content": "Inquire about the status of transactions and merchant information.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ac836bec-35e0-4669-958c-9636e03673ab",
+          "name": "Fiserv Inquire about a transaction",
+          "request": {
+            "name": "Fiserv Inquire about a transaction",
+            "description": {
+              "content": "Retrieves the current status and details of a previously processed transaction using its retrieval reference number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "inquire",
+                ":retref",
+                ":merchid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "retref",
+                  "description": "(Required) The retrieval reference number from the original transaction."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchid",
+                  "description": "(Required) The CardPointe merchant identifier."
+                },
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0b22cc01-9a2a-49ec-9cba-482b00d467e0",
+              "name": "Transaction details returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inquire",
+                    ":retref",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "retref",
+                      "description": "(Required) The retrieval reference number from the original transaction."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"merchid\": \"string\",\n  \"retref\": \"string\",\n  \"respstat\": \"string\",\n  \"account\": \"string\",\n  \"amount\": \"string\",\n  \"currency\": \"string\",\n  \"setlstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\",\n  \"authcode\": \"string\",\n  \"captureStatus\": \"string\",\n  \"voidable\": \"string\",\n  \"refundable\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8099b26a-c485-44e1-b9b0-5464cf8493ce",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inquire",
+                    ":retref",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "retref",
+                      "description": "(Required) The retrieval reference number from the original transaction."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1027fc6-fc7f-4522-a3ae-8ea376229937",
+              "name": "Transaction not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inquire",
+                    ":retref",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "retref",
+                      "description": "(Required) The retrieval reference number from the original transaction."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0796c727-d47f-4e0b-8ef7-0e0aedf7f7fa",
+          "name": "Fiserv Inquire about a transaction by order ID",
+          "request": {
+            "name": "Fiserv Inquire about a transaction by order ID",
+            "description": {
+              "content": "Retrieves the current status and details of a previously processed transaction using the merchant-assigned order identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "inquireByOrderid",
+                ":orderid",
+                ":merchid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderid",
+                  "description": "(Required) The merchant-assigned order identifier."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchid",
+                  "description": "(Required) The CardPointe merchant identifier."
+                },
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "88e16c0c-3633-4b24-9601-062e062ae8b1",
+              "name": "Transaction details returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inquireByOrderid",
+                    ":orderid",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderid",
+                      "description": "(Required) The merchant-assigned order identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"merchid\": \"string\",\n  \"retref\": \"string\",\n  \"respstat\": \"string\",\n  \"account\": \"string\",\n  \"amount\": \"string\",\n  \"currency\": \"string\",\n  \"setlstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\",\n  \"authcode\": \"string\",\n  \"captureStatus\": \"string\",\n  \"voidable\": \"string\",\n  \"refundable\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2f14d63-d848-4343-bc24-d033bafdf4b9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inquireByOrderid",
+                    ":orderid",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderid",
+                      "description": "(Required) The merchant-assigned order identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab8d27f2-7067-4390-b200-00a4b34fd4df",
+              "name": "Transaction not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inquireByOrderid",
+                    ":orderid",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderid",
+                      "description": "(Required) The merchant-assigned order identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "aa0f8ecb-727b-4245-a5ec-69c779050126",
+      "name": "Profile",
+      "description": {
+        "content": "Manage stored customer payment profiles for recurring or future transactions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bea928a9-d225-43e4-999c-9aea899a546c",
+          "name": "Fiserv Create or update a customer profile",
+          "request": {
+            "name": "Fiserv Create or update a customer profile",
+            "description": {
+              "content": "Creates or updates a stored customer payment profile. Profiles securely store payment credentials for recurring or future transactions without requiring the merchant to handle raw card data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merchid\": \"<string>\",\n  \"account\": \"<string>\",\n  \"profileid\": \"<string>\",\n  \"expiry\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"region\": \"<string>\",\n  \"country\": \"<string>\",\n  \"postal\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5e43f4b0-ca01-401d-94f8-4803764c4a2b",
+              "name": "Profile created or updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"account\": \"<string>\",\n  \"profileid\": \"<string>\",\n  \"expiry\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"region\": \"<string>\",\n  \"country\": \"<string>\",\n  \"postal\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"profileid\": \"string\",\n  \"acctid\": \"string\",\n  \"respstat\": \"string\",\n  \"account\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\",\n  \"token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27f94c4e-de11-466c-89aa-726d8102e4d1",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"account\": \"<string>\",\n  \"profileid\": \"<string>\",\n  \"expiry\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"region\": \"<string>\",\n  \"country\": \"<string>\",\n  \"postal\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f970371-a7b2-44de-a94f-ae5c7df9f54b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"account\": \"<string>\",\n  \"profileid\": \"<string>\",\n  \"expiry\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"region\": \"<string>\",\n  \"country\": \"<string>\",\n  \"postal\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "26554df8-0820-4a15-8800-e969eb4e00f2",
+          "name": "Fiserv Retrieve a customer profile",
+          "request": {
+            "name": "Fiserv Retrieve a customer profile",
+            "description": {
+              "content": "Retrieves a stored customer payment profile by profile ID and account ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profile",
+                ":profileid",
+                ":accountid",
+                ":merchid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profileid",
+                  "description": "(Required) The unique profile identifier."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountid",
+                  "description": "(Required) The account identifier within the profile."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchid",
+                  "description": "(Required) The CardPointe merchant identifier."
+                },
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9d7a3b3a-3d9c-4839-8de2-729f8eb3b5c7",
+              "name": "Profile returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profile",
+                    ":profileid",
+                    ":accountid",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileid",
+                      "description": "(Required) The unique profile identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountid",
+                      "description": "(Required) The account identifier within the profile."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"profileid\": \"string\",\n  \"acctid\": \"string\",\n  \"respstat\": \"string\",\n  \"account\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\",\n  \"token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b2e2b09-654a-433a-bcf0-e7e07f5525c1",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profile",
+                    ":profileid",
+                    ":accountid",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileid",
+                      "description": "(Required) The unique profile identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountid",
+                      "description": "(Required) The account identifier within the profile."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "701673fd-5372-4398-9e16-fdffb8733245",
+              "name": "Profile not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profile",
+                    ":profileid",
+                    ":accountid",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileid",
+                      "description": "(Required) The unique profile identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountid",
+                      "description": "(Required) The account identifier within the profile."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f846e97-3ef0-4ef5-a8c5-0e26876599cc",
+          "name": "Fiserv Delete a customer profile",
+          "request": {
+            "name": "Fiserv Delete a customer profile",
+            "description": {
+              "content": "Deletes a stored customer payment profile or a specific account within a profile.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profile",
+                ":profileid",
+                ":accountid",
+                ":merchid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profileid",
+                  "description": "(Required) The unique profile identifier."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountid",
+                  "description": "(Required) The account identifier within the profile."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "merchid",
+                  "description": "(Required) The CardPointe merchant identifier."
+                },
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ba52822-0985-40da-a1e4-c3dab26acd6c",
+              "name": "Profile deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profile",
+                    ":profileid",
+                    ":accountid",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileid",
+                      "description": "(Required) The unique profile identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountid",
+                      "description": "(Required) The account identifier within the profile."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"profileid\": \"string\",\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "078c2ff7-51e3-4991-954c-c9d9d74e3418",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profile",
+                    ":profileid",
+                    ":accountid",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileid",
+                      "description": "(Required) The unique profile identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountid",
+                      "description": "(Required) The account identifier within the profile."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2cf90a61-ee04-48d2-a825-a88531481986",
+              "name": "Profile not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profile",
+                    ":profileid",
+                    ":accountid",
+                    ":merchid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileid",
+                      "description": "(Required) The unique profile identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountid",
+                      "description": "(Required) The account identifier within the profile."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "merchid",
+                      "description": "(Required) The CardPointe merchant identifier."
+                    },
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "1fbee5f4-5e11-4630-833f-faa22a00f91f",
+      "name": "Refund",
+      "description": {
+        "content": "Refund previously captured and settled transactions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0d898bbb-1572-484c-8114-2101410da0d2",
+          "name": "Fiserv Refund a settled transaction",
+          "request": {
+            "name": "Fiserv Refund a settled transaction",
+            "description": {
+              "content": "Processes a refund for a previously captured and settled transaction. Supports full and partial refunds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "refund"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\",\n  \"amount\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c97f57ea-5bb9-4bba-ae98-3f4eff842a7b",
+              "name": "Refund processed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\",\n  \"amount\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"merchid\": \"string\",\n  \"retref\": \"string\",\n  \"amount\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42539968-a814-4b48-b9d1-7cf2efc28d03",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\",\n  \"amount\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9df29512-68f1-4906-a80b-91df199413d3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\",\n  \"amount\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "8e9cab02-4dd7-47c9-97d5-095bb1239f94",
+      "name": "Settlement",
+      "description": {
+        "content": "Retrieve settlement status for processed transactions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b09e7100-eac2-4839-be5e-133f339754f8",
+          "name": "Fiserv Get settlement status",
+          "request": {
+            "name": "Fiserv Get settlement status",
+            "description": {
+              "content": "Retrieves the settlement status for transactions processed on a given date for a specified merchant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "settlestat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "merchid",
+                  "value": "<string>",
+                  "description": "(Required) The CardPointe merchant ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<date>",
+                  "description": "(Required) The settlement date in MMDD format."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "44f035c0-b17b-48e0-8aef-183abb690631",
+              "name": "Settlement status returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settlestat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"merchid\": \"string\",\n    \"retref\": \"string\",\n    \"setlstat\": \"string\",\n    \"amount\": \"string\"\n  },\n  {\n    \"merchid\": \"string\",\n    \"retref\": \"string\",\n    \"setlstat\": \"string\",\n    \"amount\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4dc60ad6-daf3-4678-a18e-6b7db6421bb6",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "settlestat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "merchid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "ae69cf21-2b94-46ad-a144-fdc2bd85d008",
+      "name": "Signature Capture",
+      "description": {
+        "content": "Submit signature capture data for completed transactions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9b593363-0555-4d8a-86bc-ea2f48041ba6",
+          "name": "Fiserv Submit a signature capture",
+          "request": {
+            "name": "Fiserv Submit a signature capture",
+            "description": {
+              "content": "Submits a captured signature image for a completed transaction. The signature data is associated with the transaction for record-keeping and dispute resolution.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sigcap"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\",\n  \"signature\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "234620cf-0bbe-4c51-b297-264fa4297b66",
+              "name": "Signature captured",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sigcap"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\",\n  \"signature\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"retref\": \"string\",\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72d199e4-c8c9-45d5-a47b-48212c96851b",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sigcap"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\",\n  \"signature\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2f5e43c-f279-4682-9bce-5c29deaa8586",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sigcap"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\",\n  \"signature\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "77fd8e16-1736-4a5c-aaf2-455a8f4e78de",
+      "name": "Void",
+      "description": {
+        "content": "Void previously authorized transactions before settlement.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "780346b8-b4a9-4a4a-9e6d-6b94858d2bff",
+          "name": "Fiserv Void a transaction",
+          "request": {
+            "name": "Fiserv Void a transaction",
+            "description": {
+              "content": "Voids a previously authorized transaction that has not yet been settled. If the transaction has already been settled, use the refund endpoint instead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "void"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The site name provided during onboarding.",
+                  "type": "any",
+                  "value": "{{site}}",
+                  "key": "site"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3e06cf38-30e3-4009-8115-4a9be86c6c7e",
+              "name": "Void processed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"merchid\": \"string\",\n  \"retref\": \"string\",\n  \"amount\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\",\n  \"authcode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6975c619-59c1-4ad7-92c0-6b1c6fd1486c",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "397d33d4-7f20-4602-bb7e-469d02cdaf7f",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The site name provided during onboarding.",
+                      "type": "any",
+                      "value": "{{site}}",
+                      "key": "site"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchid\": \"<string>\",\n  \"retref\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"respstat\": \"string\",\n  \"respcode\": \"string\",\n  \"resptext\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The site name provided during onboarding.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "fts",
+      "key": "site"
+    },
+    {
+      "type": "string",
+      "value": "https://{{site}}-uat.cardconnect.com/cardconnect/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e3732df3-1a79-433d-bb2c-c5b9bfeedc44",
+    "name": "Fiserv CardPointe Gateway API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The CardPointe Gateway API provides a RESTful interface for integrating secure tokenization, payment processing, and reporting features into applications and websites. The API supports authorization, capture, void, refund, and inquiry operations, as well as customer profile management for storing payment credentials securely.\n\nContact Support:\n Name: Fiserv Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv CardDeveloper API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Create a new card account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/v2/accounts/account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new consumer or commercial card account. Supports credit account creation with configurable credit limits and billing preferences."
+        },
+        {
+          "info": {
+            "name": "Fiserv Retrieve account details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/v2/accounts/:accountNumber",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path",
+                "description": "The card account number."
+              }
+            ]
+          },
+          "docs": "Retrieves account-specific data including balances, limits, status, and billing information."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Cards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Issue a new card",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/v2/cards/card",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Issues a new card for an existing account. The card can be a primary card or an additional authorized user card."
+        },
+        {
+          "info": {
+            "name": "Fiserv Retrieve card details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/v2/cards/:cardNumber",
+            "params": [
+              {
+                "name": "cardNumber",
+                "value": "",
+                "type": "path",
+                "description": "The card number."
+              }
+            ]
+          },
+          "docs": "Retrieves card information including card status, expiration date, and card type."
+        },
+        {
+          "info": {
+            "name": "Fiserv Update card details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cert.api.fiservapps.com/v2/cards/:cardNumber",
+            "params": [
+              {
+                "name": "cardNumber",
+                "value": "",
+                "type": "path",
+                "description": "The card number."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates card attributes such as status (activate, deactivate, block), and PIN settings."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Authorizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Create an authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/v1/authorizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new authorization for an account or cancels an existing authorization using the card number."
+        },
+        {
+          "info": {
+            "name": "Fiserv Cancel an authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/v1/authorizations/:authorizationId/cancel",
+            "params": [
+              {
+                "name": "authorizationId",
+                "value": "",
+                "type": "path",
+                "description": "The authorization identifier to cancel."
+              }
+            ]
+          },
+          "docs": "Cancels a previously created authorization, releasing the hold on the account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv List account transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/v1/accounts/:accountNumber/transactions",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path",
+                "description": "The card account number."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for the transaction search."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for the transaction search."
+              },
+              {
+                "name": "transactionType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by transaction type."
+              }
+            ]
+          },
+          "docs": "Retrieves summary or detailed transaction history for a card account. Supports filtering by date range, merchant, and transaction type."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Limits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Get account limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/v1/limits",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "query",
+                "description": "The account number to retrieve limits for."
+              }
+            ]
+          },
+          "docs": "Retrieves account limits including credit limit, temporary credit limit, and cash advance limit."
+        },
+        {
+          "info": {
+            "name": "Fiserv Update account limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cert.api.fiservapps.com/v1/limits",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates account limits such as credit limit, temporary credit limit, or cash advance limit."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Statements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv List account statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/v1/accounts/:accountNumber/statements",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path",
+                "description": "The card account number."
+              },
+              {
+                "name": "statementDate",
+                "value": "",
+                "type": "query",
+                "description": "The statement date to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves statement information and statement transactions for a card account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
