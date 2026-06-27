@@ -114,7 +114,7 @@ common:
     url: https://www.fiserv.com/
   - type: Documentation
     url: https://developer.fiserv.com/
-  - type: SignUp
+  - type: Signup
     url: https://developer.fiserv.com/
   - type: JSONLD
     url: json-ld/fiserv-context.jsonld
@@ -130,7 +130,7 @@ common:
     sources:
       - https://developer.fiserv.com/
     updated: '2026-05-04'
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.fiserv.dev/llms.txt
 maintainers:
   - FN: Kin Lane
