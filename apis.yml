@@ -106,6 +106,10 @@ apis:
       webhooks to receive real-time notifications for key events including transaction status changes, settlement
       updates, dispute notifications, and checkout completions.
 common:
+  - type: DomainSecurity
+    url: security/fiserv-domain-security.yml
+  - type: Authentication
+    url: authentication/fiserv-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/Fiserv
   - type: LinkedIn
