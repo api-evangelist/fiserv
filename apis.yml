@@ -106,6 +106,8 @@ apis:
       webhooks to receive real-time notifications for key events including transaction status changes, settlement
       updates, dispute notifications, and checkout completions.
 common:
+  - type: AgenticAccess
+    url: agentic-access/fiserv-agentic-access.yml
   - type: DomainSecurity
     url: security/fiserv-domain-security.yml
   - type: Authentication
