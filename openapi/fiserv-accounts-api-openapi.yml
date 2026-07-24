@@ -1,0 +1,428 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Accounts API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Accounts
+  description: Create, retrieve, update, and manage deposit and loan accounts.
+paths:
+  /banking/accounts:
+    post:
+      operationId: addAccount
+      summary: Fiserv Create a new account
+      description: Creates a new deposit or loan account for an existing customer. Supports checking, savings, money market, certificate of deposit, and loan account types.
+      tags:
+      - Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountAddRequest'
+      responses:
+        '201':
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAddResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /banking/accounts/{accountId}:
+    get:
+      operationId: getAccount
+      summary: Fiserv Retrieve account details
+      description: Retrieves detailed information for a specific account including balance, status, and account attributes.
+      tags:
+      - Accounts
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      responses:
+        '200':
+          description: Account details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountInquiryResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      operationId: updateAccount
+      summary: Fiserv Update account details
+      description: Updates attributes of an existing account such as status, description, or other configurable fields.
+      tags:
+      - Accounts
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUpdateRequest'
+      responses:
+        '200':
+          description: Account updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountUpdateResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/accounts/account:
+    post:
+      operationId: addAccount
+      summary: Fiserv Create a new card account
+      description: Creates a new consumer or commercial card account. Supports credit account creation with configurable credit limits and billing preferences.
+      tags:
+      - Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountAddRequest_2'
+      responses:
+        '201':
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAddResponse_2'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+  /v2/accounts/{accountNumber}:
+    get:
+      operationId: getAccount
+      summary: Fiserv Retrieve account details
+      description: Retrieves account-specific data including balances, limits, status, and billing information.
+      tags:
+      - Accounts
+      parameters:
+      - $ref: '#/components/parameters/AccountNumber'
+      responses:
+        '200':
+          description: Account details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountInquiryResponse_2'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: string
+          description: The error status code.
+        statusDescription:
+          type: string
+          description: A human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
+              field:
+                type: string
+                description: The field that caused the error.
+          description: Detailed error information.
+    AccountInquiryResponse:
+      type: object
+      description: Response body for account inquiry.
+      properties:
+        accountId:
+          type: string
+          description: The account identifier.
+        accountType:
+          type: string
+          description: The account type.
+        status:
+          type: string
+          description: The account status.
+        balances:
+          type: object
+          description: Account balance information.
+          properties:
+            available:
+              type: number
+              format: double
+              description: The available balance.
+            current:
+              type: number
+              format: double
+              description: The current (ledger) balance.
+            pending:
+              type: number
+              format: double
+              description: The pending balance.
+        openDate:
+          type: string
+          format: date
+          description: The date the account was opened.
+        branchId:
+          type: string
+          description: The branch identifier.
+    AccountAddResponse:
+      type: object
+      description: Response body for account creation.
+      properties:
+        accountId:
+          type: string
+          description: The newly created account identifier.
+        accountType:
+          type: string
+          description: The account type.
+        status:
+          type: string
+          description: The account status.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+    ErrorResponse_2:
+      type: object
+      description: Standard error response.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
+    AccountAddRequest_2:
+      type: object
+      description: Request body for creating a card account.
+      required:
+      - accountType
+      properties:
+        accountType:
+          type: string
+          enum:
+          - CONSUMER_CREDIT
+          - COMMERCIAL_CREDIT
+          - CONSUMER_DEBIT
+          description: The type of card account.
+        creditLimit:
+          type: number
+          format: double
+          description: The credit limit for credit accounts.
+        billingCycleDay:
+          type: integer
+          minimum: 1
+          maximum: 28
+          description: The billing cycle day of the month.
+    AccountUpdateRequest:
+      type: object
+      description: Request body for updating account attributes.
+      properties:
+        status:
+          type: string
+          description: The updated account status.
+        description:
+          type: string
+          description: The updated account description.
+    AccountUpdateResponse:
+      type: object
+      description: Response body for account update.
+      properties:
+        accountId:
+          type: string
+          description: The account identifier.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+    AccountAddRequest:
+      type: object
+      description: Request body for creating a new account.
+      required:
+      - partyId
+      - accountType
+      properties:
+        partyId:
+          type: string
+          description: The party identifier for the account owner.
+        accountType:
+          type: string
+          enum:
+          - DDA
+          - SDA
+          - MMA
+          - CDA
+          - LOAN
+          description: The type of account to create.
+        productCode:
+          type: string
+          description: The product code for the account.
+        branchId:
+          type: string
+          description: The branch identifier where the account is opened.
+        initialDeposit:
+          type: number
+          format: double
+          description: The initial deposit amount.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 currency code.
+    AccountAddResponse_2:
+      type: object
+      description: Response body for account creation.
+      properties:
+        accountNumber:
+          type: string
+          description: The new account number.
+        status:
+          type: string
+          description: The account status.
+    AccountInquiryResponse_2:
+      type: object
+      description: Response body for account inquiry.
+      properties:
+        accountNumber:
+          type: string
+          description: The account number.
+        accountType:
+          type: string
+          description: The account type.
+        status:
+          type: string
+          description: The account status.
+        creditLimit:
+          type: number
+          format: double
+          description: The credit limit.
+        availableCredit:
+          type: number
+          format: double
+          description: The available credit.
+        currentBalance:
+          type: number
+          format: double
+          description: The current balance.
+        minimumPaymentDue:
+          type: number
+          format: double
+          description: The minimum payment due.
+        paymentDueDate:
+          type: string
+          format: date
+          description: The payment due date.
+  parameters:
+    AccountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique account identifier.
+    AccountNumber:
+      name: accountNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The card account number.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

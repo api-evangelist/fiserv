@@ -1,0 +1,179 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Limits API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Limits
+  description: Manage credit, temporary credit, and cash limits.
+paths:
+  /v1/limits:
+    get:
+      operationId: getLimits
+      summary: Fiserv Get account limits
+      description: Retrieves account limits including credit limit, temporary credit limit, and cash advance limit.
+      tags:
+      - Limits
+      parameters:
+      - name: accountNumber
+        in: query
+        required: true
+        schema:
+          type: string
+        description: The account number to retrieve limits for.
+      responses:
+        '200':
+          description: Limits returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LimitsResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      operationId: updateLimits
+      summary: Fiserv Update account limits
+      description: Updates account limits such as credit limit, temporary credit limit, or cash advance limit.
+      tags:
+      - Limits
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LimitsUpdateRequest'
+      responses:
+        '200':
+          description: Limits updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LimitsUpdateResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    LimitsUpdateRequest:
+      type: object
+      description: Request body for updating account limits.
+      required:
+      - accountNumber
+      properties:
+        accountNumber:
+          type: string
+          description: The account number.
+        creditLimit:
+          type: number
+          format: double
+          description: The new credit limit.
+        temporaryCreditLimit:
+          type: number
+          format: double
+          description: The new temporary credit limit.
+        temporaryCreditLimitExpiry:
+          type: string
+          format: date
+          description: The expiry date for the temporary limit.
+        cashLimit:
+          type: number
+          format: double
+          description: The new cash advance limit.
+    LimitsResponse:
+      type: object
+      description: Response body for account limits inquiry.
+      properties:
+        accountNumber:
+          type: string
+          description: The account number.
+        creditLimit:
+          type: number
+          format: double
+          description: The permanent credit limit.
+        temporaryCreditLimit:
+          type: number
+          format: double
+          description: The temporary credit limit.
+        cashLimit:
+          type: number
+          format: double
+          description: The cash advance limit.
+        availableCredit:
+          type: number
+          format: double
+          description: The available credit.
+        availableCash:
+          type: number
+          format: double
+          description: The available cash advance amount.
+    LimitsUpdateResponse:
+      type: object
+      description: Response body for limits update.
+      properties:
+        accountNumber:
+          type: string
+          description: The account number.
+        status:
+          type: string
+          description: The update status.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

@@ -1,0 +1,273 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Transactions API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Transactions
+  description: Retrieve and manage account transaction history and details.
+paths:
+  /banking/accounts/{accountId}/transactions:
+    get:
+      operationId: listTransactions
+      summary: Fiserv List account transactions
+      description: Retrieves transaction history for a specific account. Supports filtering by date range, transaction type, and amount range.
+      tags:
+      - Transactions
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+          format: date
+        description: Start date for the transaction search range.
+      - name: toDate
+        in: query
+        schema:
+          type: string
+          format: date
+        description: End date for the transaction search range.
+      - name: transactionType
+        in: query
+        schema:
+          type: string
+        description: Filter by transaction type.
+      responses:
+        '200':
+          description: Transactions returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionListResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/accounts/{accountNumber}/transactions:
+    get:
+      operationId: listTransactions
+      summary: Fiserv List account transactions
+      description: Retrieves summary or detailed transaction history for a card account. Supports filtering by date range, merchant, and transaction type.
+      tags:
+      - Transactions
+      parameters:
+      - $ref: '#/components/parameters/AccountNumber'
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+          format: date
+        description: Start date for the transaction search.
+      - name: toDate
+        in: query
+        schema:
+          type: string
+          format: date
+        description: End date for the transaction search.
+      - name: transactionType
+        in: query
+        schema:
+          type: string
+        description: Filter by transaction type.
+      responses:
+        '200':
+          description: Transactions returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionListResponse_2'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse_2'
+components:
+  schemas:
+    CardTransaction:
+      type: object
+      description: A single card transaction record.
+      properties:
+        transactionId:
+          type: string
+          description: The transaction identifier.
+        transactionDate:
+          type: string
+          format: date
+          description: The transaction date.
+        postDate:
+          type: string
+          format: date
+          description: The posting date.
+        amount:
+          type: number
+          format: double
+          description: The transaction amount.
+        currency:
+          type: string
+          description: The currency code.
+        merchantName:
+          type: string
+          description: The merchant name.
+        merchantCategoryCode:
+          type: string
+          description: The merchant category code.
+        transactionType:
+          type: string
+          description: The transaction type (purchase, refund, etc.).
+        description:
+          type: string
+          description: The transaction description.
+    TransactionListResponse:
+      type: object
+      description: Response body for transaction list inquiry.
+      properties:
+        accountId:
+          type: string
+          description: The account identifier.
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+          description: The list of transactions.
+    TransactionListResponse_2:
+      type: object
+      description: Response body for transaction list.
+      properties:
+        accountNumber:
+          type: string
+          description: The account number.
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardTransaction'
+          description: The list of transactions.
+    Transaction:
+      type: object
+      description: A single account transaction record.
+      properties:
+        transactionId:
+          type: string
+          description: The unique transaction identifier.
+        transactionType:
+          type: string
+          description: The type of transaction (e.g., debit, credit).
+        amount:
+          type: number
+          format: double
+          description: The transaction amount.
+        currency:
+          type: string
+          description: The ISO 4217 currency code.
+        description:
+          type: string
+          description: The transaction description.
+        postDate:
+          type: string
+          format: date
+          description: The posting date.
+        effectiveDate:
+          type: string
+          format: date
+          description: The effective date.
+        runningBalance:
+          type: number
+          format: double
+          description: The running balance after the transaction.
+    ErrorResponse_2:
+      type: object
+      description: Standard error response.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: string
+          description: The error status code.
+        statusDescription:
+          type: string
+          description: A human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
+              field:
+                type: string
+                description: The field that caused the error.
+          description: Detailed error information.
+  parameters:
+    AccountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique account identifier.
+    AccountNumber:
+      name: accountNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The card account number.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

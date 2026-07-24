@@ -1,0 +1,343 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Parties API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Parties
+  description: Manage customer and party information including personal details and contact information.
+paths:
+  /banking/parties:
+    post:
+      operationId: addParty
+      summary: Fiserv Create a customer party
+      description: Creates a new customer party record including personal information, contact details, and identification data.
+      tags:
+      - Parties
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartyAddRequest'
+      responses:
+        '201':
+          description: Party created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyAddResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /banking/parties/{partyId}:
+    get:
+      operationId: getParty
+      summary: Fiserv Retrieve party details
+      description: Retrieves detailed information for a specific customer party including personal data, addresses, and contact information.
+      tags:
+      - Parties
+      parameters:
+      - name: partyId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique party identifier.
+      responses:
+        '200':
+          description: Party details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyInquiryResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Party not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      operationId: updateParty
+      summary: Fiserv Update party details
+      description: Updates attributes of an existing customer party record.
+      tags:
+      - Parties
+      parameters:
+      - name: partyId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique party identifier.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartyUpdateRequest'
+      responses:
+        '200':
+          description: Party updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyUpdateResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Party not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    PartyAddRequest:
+      type: object
+      description: Request body for creating a customer party.
+      required:
+      - partyType
+      - name
+      properties:
+        partyType:
+          type: string
+          enum:
+          - INDIVIDUAL
+          - ORGANIZATION
+          description: The type of party.
+        name:
+          type: object
+          description: The party name.
+          properties:
+            firstName:
+              type: string
+              description: The first name (for individuals).
+            lastName:
+              type: string
+              description: The last name (for individuals).
+            organizationName:
+              type: string
+              description: The organization name (for organizations).
+        taxId:
+          type: string
+          description: The tax identification number (SSN or EIN).
+        dateOfBirth:
+          type: string
+          format: date
+          description: The date of birth (for individuals).
+        contact:
+          type: object
+          description: Contact information.
+          properties:
+            email:
+              type: string
+              format: email
+              description: The email address.
+            phone:
+              type: string
+              description: The phone number.
+        address:
+          type: object
+          description: The physical address.
+          properties:
+            line1:
+              type: string
+              description: Address line 1.
+            line2:
+              type: string
+              description: Address line 2.
+            city:
+              type: string
+              description: The city.
+            state:
+              type: string
+              description: The state or province.
+            postalCode:
+              type: string
+              description: The postal code.
+            country:
+              type: string
+              description: The country code.
+    PartyUpdateResponse:
+      type: object
+      description: Response body for party update.
+      properties:
+        partyId:
+          type: string
+          description: The party identifier.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+    PartyInquiryResponse:
+      type: object
+      description: Response body for party inquiry.
+      properties:
+        partyId:
+          type: string
+          description: The party identifier.
+        partyType:
+          type: string
+          description: The party type.
+        name:
+          type: object
+          description: The party name.
+          properties:
+            firstName:
+              type: string
+              description: The first name.
+            lastName:
+              type: string
+              description: The last name.
+            organizationName:
+              type: string
+              description: The organization name.
+        contact:
+          type: object
+          description: Contact information.
+          properties:
+            email:
+              type: string
+              description: The email address.
+            phone:
+              type: string
+              description: The phone number.
+        address:
+          type: object
+          description: The physical address.
+          properties:
+            line1:
+              type: string
+              description: Address line 1.
+            city:
+              type: string
+              description: The city.
+            state:
+              type: string
+              description: The state or province.
+            postalCode:
+              type: string
+              description: The postal code.
+            country:
+              type: string
+              description: The country code.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: string
+          description: The error status code.
+        statusDescription:
+          type: string
+          description: A human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
+              field:
+                type: string
+                description: The field that caused the error.
+          description: Detailed error information.
+    PartyUpdateRequest:
+      type: object
+      description: Request body for updating party details.
+      properties:
+        contact:
+          type: object
+          description: Updated contact information.
+          properties:
+            email:
+              type: string
+              format: email
+              description: The updated email address.
+            phone:
+              type: string
+              description: The updated phone number.
+        address:
+          type: object
+          description: Updated address information.
+          properties:
+            line1:
+              type: string
+              description: Address line 1.
+            city:
+              type: string
+              description: The city.
+            state:
+              type: string
+              description: The state or province.
+            postalCode:
+              type: string
+              description: The postal code.
+            country:
+              type: string
+              description: The country code.
+    PartyAddResponse:
+      type: object
+      description: Response body for party creation.
+      properties:
+        partyId:
+          type: string
+          description: The unique party identifier.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

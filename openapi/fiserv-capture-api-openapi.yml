@@ -1,0 +1,114 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Capture API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Capture
+  description: Capture previously authorized transactions for settlement.
+paths:
+  /capture:
+    put:
+      operationId: captureTransaction
+      summary: Fiserv Capture an authorized transaction
+      description: Captures a previously authorized transaction for settlement. The capture amount can be less than or equal to the original authorization amount.
+      tags:
+      - Capture
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaptureRequest'
+      responses:
+        '200':
+          description: Capture processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaptureResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    CaptureResponse:
+      type: object
+      description: Capture response payload.
+      properties:
+        merchid:
+          type: string
+          description: The merchant identifier.
+        retref:
+          type: string
+          description: The retrieval reference number.
+        amount:
+          type: string
+          description: The captured amount.
+        setlstat:
+          type: string
+          description: The settlement status.
+        respcode:
+          type: string
+          description: The response code.
+        resptext:
+          type: string
+          description: The response text.
+    CaptureRequest:
+      type: object
+      description: Capture request payload.
+      required:
+      - merchid
+      - retref
+      properties:
+        merchid:
+          type: string
+          description: The CardPointe merchant ID.
+        retref:
+          type: string
+          description: The retrieval reference number of the authorization.
+        amount:
+          type: string
+          description: The capture amount. If omitted, the full authorization amount is captured.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

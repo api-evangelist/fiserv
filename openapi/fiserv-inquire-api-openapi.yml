@@ -1,0 +1,165 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Inquire API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Inquire
+  description: Inquire about the status of transactions and merchant information.
+paths:
+  /inquire/{retref}/{merchid}:
+    get:
+      operationId: inquireTransaction
+      summary: Fiserv Inquire about a transaction
+      description: Retrieves the current status and details of a previously processed transaction using its retrieval reference number.
+      tags:
+      - Inquire
+      parameters:
+      - $ref: '#/components/parameters/Retref'
+      - $ref: '#/components/parameters/MerchantId'
+      responses:
+        '200':
+          description: Transaction details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InquireResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /inquireByOrderid/{orderid}/{merchid}:
+    get:
+      operationId: inquireTransactionByOrderId
+      summary: Fiserv Inquire about a transaction by order ID
+      description: Retrieves the current status and details of a previously processed transaction using the merchant-assigned order identifier.
+      tags:
+      - Inquire
+      parameters:
+      - name: orderid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The merchant-assigned order identifier.
+      - $ref: '#/components/parameters/MerchantId'
+      responses:
+        '200':
+          description: Transaction details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InquireResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    Retref:
+      name: retref
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The retrieval reference number from the original transaction.
+    MerchantId:
+      name: merchid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The CardPointe merchant identifier.
+  schemas:
+    InquireResponse:
+      type: object
+      description: Transaction inquiry response payload.
+      properties:
+        merchid:
+          type: string
+          description: The merchant identifier.
+        retref:
+          type: string
+          description: The retrieval reference number.
+        respstat:
+          type: string
+          description: The response status.
+        account:
+          type: string
+          description: The masked account number.
+        amount:
+          type: string
+          description: The transaction amount.
+        currency:
+          type: string
+          description: The currency code.
+        setlstat:
+          type: string
+          description: The settlement status.
+        respcode:
+          type: string
+          description: The response code.
+        resptext:
+          type: string
+          description: The response text.
+        authcode:
+          type: string
+          description: The authorization code.
+        captureStatus:
+          type: string
+          description: The capture status of the transaction.
+        voidable:
+          type: string
+          description: Whether the transaction can be voided.
+        refundable:
+          type: string
+          description: Whether the transaction can be refunded.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

@@ -1,0 +1,182 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Authorization API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Authorization
+  description: Authorize payment transactions against a cardholder account.
+paths:
+  /auth:
+    put:
+      operationId: authorizeTransaction
+      summary: Fiserv Authorize a payment transaction
+      description: Submits an authorization request to process a payment. The authorization verifies the cardholder account and places a hold on funds. The response includes a retref (retrieval reference number) used for subsequent capture, void, or refund operations.
+      tags:
+      - Authorization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: Authorization processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    AuthResponse:
+      type: object
+      description: Authorization response payload.
+      properties:
+        respstat:
+          type: string
+          enum:
+          - A
+          - B
+          - C
+          description: 'Response status: A=Approved, B=Retry, C=Declined.'
+        retref:
+          type: string
+          description: The retrieval reference number for the transaction.
+        account:
+          type: string
+          description: The masked account number or token.
+        token:
+          type: string
+          description: The CardSecure token for the account.
+        amount:
+          type: string
+          description: The authorized amount.
+        merchid:
+          type: string
+          description: The merchant identifier.
+        respcode:
+          type: string
+          description: The processor response code.
+        resptext:
+          type: string
+          description: The human-readable response text.
+        authcode:
+          type: string
+          description: The authorization code from the issuer.
+        avsresp:
+          type: string
+          description: The AVS response code.
+        cvvresp:
+          type: string
+          description: The CVV response code.
+        profileid:
+          type: string
+          description: The stored profile ID if profile creation was requested.
+    AuthRequest:
+      type: object
+      description: Authorization request payload.
+      required:
+      - merchid
+      - account
+      - amount
+      properties:
+        merchid:
+          type: string
+          description: The CardPointe merchant ID.
+        account:
+          type: string
+          description: The card number or CardSecure token.
+        expiry:
+          type: string
+          pattern: ^\d{4}$
+          description: Card expiration date in MMYY format.
+        amount:
+          type: string
+          description: The transaction amount in the smallest currency unit.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 currency code.
+        cvv2:
+          type: string
+          description: The card verification value.
+        orderid:
+          type: string
+          maxLength: 19
+          description: The merchant-assigned order identifier.
+        name:
+          type: string
+          description: The cardholder name.
+        address:
+          type: string
+          description: The cardholder billing street address.
+        city:
+          type: string
+          description: The cardholder billing city.
+        region:
+          type: string
+          description: The cardholder billing state or province.
+        country:
+          type: string
+          description: The cardholder billing country.
+        postal:
+          type: string
+          description: The cardholder billing postal code.
+        capture:
+          type: string
+          enum:
+          - Y
+          - N
+          description: Set to Y to capture the transaction immediately (sale).
+        profile:
+          type: string
+          enum:
+          - Y
+          - N
+          description: Set to Y to create a stored profile for the account.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

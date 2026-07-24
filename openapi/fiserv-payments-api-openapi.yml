@@ -1,0 +1,214 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Payments API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Payments
+  description: Process payment transactions including credits, debits, and bill payments.
+paths:
+  /banking/payments:
+    post:
+      operationId: createPayment
+      summary: Fiserv Process a payment
+      description: Processes a payment transaction including credits, debits, bill payments, and disbursements through the enterprise payments hub.
+      tags:
+      - Payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentAddRequest'
+      responses:
+        '201':
+          description: Payment processed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentAddResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /banking/payments/{paymentId}/reverse:
+    post:
+      operationId: reversePayment
+      summary: Fiserv Reverse a payment
+      description: Reverses a previously processed payment transaction.
+      tags:
+      - Payments
+      parameters:
+      - name: paymentId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique payment identifier.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentReversalRequest'
+      responses:
+        '200':
+          description: Payment reversed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentReversalResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Payment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    PaymentReversalResponse:
+      type: object
+      description: Response body for payment reversal.
+      properties:
+        paymentId:
+          type: string
+          description: The reversed payment identifier.
+        status:
+          type: string
+          description: The reversal status.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+    PaymentAddResponse:
+      type: object
+      description: Response body for payment processing.
+      properties:
+        paymentId:
+          type: string
+          description: The unique payment identifier.
+        status:
+          type: string
+          description: The payment status.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+    PaymentAddRequest:
+      type: object
+      description: Request body for processing a payment.
+      required:
+      - paymentType
+      - amount
+      properties:
+        paymentType:
+          type: string
+          enum:
+          - CREDIT
+          - DEBIT
+          - BILL_PAYMENT
+          - DISBURSEMENT
+          description: The type of payment.
+        accountId:
+          type: string
+          description: The account to debit or credit.
+        amount:
+          type: number
+          format: double
+          description: The payment amount.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 currency code.
+        payee:
+          type: object
+          description: The payment recipient details.
+          properties:
+            name:
+              type: string
+              description: The payee name.
+            accountNumber:
+              type: string
+              description: The payee account number.
+            routingNumber:
+              type: string
+              description: The payee routing number.
+        memo:
+          type: string
+          description: A memo or description for the payment.
+    PaymentReversalRequest:
+      type: object
+      description: Request body for reversing a payment.
+      properties:
+        reason:
+          type: string
+          description: The reason for the reversal.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: string
+          description: The error status code.
+        statusDescription:
+          type: string
+          description: A human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
+              field:
+                type: string
+                description: The field that caused the error.
+          description: Detailed error information.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

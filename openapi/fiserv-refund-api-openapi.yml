@@ -1,0 +1,111 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Refund API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Refund
+  description: Refund previously captured and settled transactions.
+paths:
+  /refund:
+    put:
+      operationId: refundTransaction
+      summary: Fiserv Refund a settled transaction
+      description: Processes a refund for a previously captured and settled transaction. Supports full and partial refunds.
+      tags:
+      - Refund
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundRequest'
+      responses:
+        '200':
+          description: Refund processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    RefundRequest:
+      type: object
+      description: Refund request payload.
+      required:
+      - merchid
+      - retref
+      properties:
+        merchid:
+          type: string
+          description: The CardPointe merchant ID.
+        retref:
+          type: string
+          description: The retrieval reference number of the transaction to refund.
+        amount:
+          type: string
+          description: The refund amount. If omitted, a full refund is processed.
+    RefundResponse:
+      type: object
+      description: Refund response payload.
+      properties:
+        merchid:
+          type: string
+          description: The merchant identifier.
+        retref:
+          type: string
+          description: The retrieval reference number.
+        amount:
+          type: string
+          description: The refunded amount.
+        respcode:
+          type: string
+          description: The response code.
+        resptext:
+          type: string
+          description: The response text.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

@@ -1,0 +1,139 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Statements API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Statements
+  description: Retrieve account statements and statement transactions.
+paths:
+  /v1/accounts/{accountNumber}/statements:
+    get:
+      operationId: listStatements
+      summary: Fiserv List account statements
+      description: Retrieves statement information and statement transactions for a card account.
+      tags:
+      - Statements
+      parameters:
+      - $ref: '#/components/parameters/AccountNumber'
+      - name: statementDate
+        in: query
+        schema:
+          type: string
+          format: date
+        description: The statement date to retrieve.
+      responses:
+        '200':
+          description: Statements returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatementListResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    StatementListResponse:
+      type: object
+      description: Response body for statement list.
+      properties:
+        accountNumber:
+          type: string
+          description: The account number.
+        statements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+          description: The list of statements.
+    Statement:
+      type: object
+      description: A single account statement record.
+      properties:
+        statementDate:
+          type: string
+          format: date
+          description: The statement date.
+        openingBalance:
+          type: number
+          format: double
+          description: The opening balance.
+        closingBalance:
+          type: number
+          format: double
+          description: The closing balance.
+        minimumPaymentDue:
+          type: number
+          format: double
+          description: The minimum payment due.
+        paymentDueDate:
+          type: string
+          format: date
+          description: The payment due date.
+        totalDebits:
+          type: number
+          format: double
+          description: Total debits for the statement period.
+        totalCredits:
+          type: number
+          format: double
+          description: Total credits for the statement period.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
+  parameters:
+    AccountNumber:
+      name: accountNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The card account number.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

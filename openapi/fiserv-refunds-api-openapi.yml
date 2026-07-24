@@ -1,0 +1,218 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Refunds API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Refunds
+  description: Process refunds against previously captured transactions.
+paths:
+  /payments/v1/charges/{transactionId}/refund:
+    post:
+      operationId: refundCharge
+      summary: Fiserv Refund a captured transaction
+      description: Processes a refund against a previously captured and settled transaction. Supports full and partial refunds. The refund amount must not exceed the original captured amount minus any previous refunds.
+      tags:
+      - Refunds
+      parameters:
+      - $ref: '#/components/parameters/ContentType'
+      - $ref: '#/components/parameters/ClientRequestId'
+      - $ref: '#/components/parameters/ApiKey'
+      - $ref: '#/components/parameters/Timestamp'
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/TransactionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundRequest'
+      responses:
+        '200':
+          description: Refund processed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    RefundResponse:
+      type: object
+      description: Response body for a refund transaction.
+      properties:
+        gatewayResponse:
+          $ref: '#/components/schemas/GatewayResponse'
+        transactionProcessingDetails:
+          $ref: '#/components/schemas/TransactionProcessingDetails'
+    RefundRequest:
+      type: object
+      description: Request body for refunding a captured transaction.
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        transactionDetails:
+          $ref: '#/components/schemas/TransactionDetails'
+    Amount:
+      type: object
+      description: Represents a monetary amount with currency.
+      properties:
+        total:
+          type: number
+          format: double
+          description: The total transaction amount.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 three-letter currency code.
+    GatewayResponse:
+      type: object
+      description: The gateway processing response details.
+      properties:
+        transactionType:
+          type: string
+          description: The type of transaction that was processed.
+        transactionState:
+          type: string
+          enum:
+          - AUTHORIZED
+          - CAPTURED
+          - DECLINED
+          - VOIDED
+          - REFUNDED
+          description: The current state of the transaction.
+        transactionProcessingDetails:
+          $ref: '#/components/schemas/TransactionProcessingDetails'
+    TransactionDetails:
+      type: object
+      description: Additional details about the transaction.
+      properties:
+        captureFlag:
+          type: boolean
+          description: When true, the transaction is captured immediately (sale). When false, the transaction is authorized only.
+        merchantOrderId:
+          type: string
+          description: The merchant-assigned order identifier.
+        merchantTransactionId:
+          type: string
+          description: The merchant-assigned transaction identifier.
+    ErrorResponse:
+      type: object
+      description: Error response returned when a request fails.
+      properties:
+        error:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The error type classification.
+              code:
+                type: string
+                description: The error code.
+              message:
+                type: string
+                description: A human-readable error message.
+              field:
+                type: string
+                description: The field that caused the error, if applicable.
+    TransactionProcessingDetails:
+      type: object
+      description: Transaction processing identifiers and details.
+      properties:
+        transactionId:
+          type: string
+          description: The gateway-assigned transaction identifier.
+        orderId:
+          type: string
+          description: The order identifier associated with the transaction.
+        transactionTimestamp:
+          type: string
+          format: date-time
+          description: The timestamp when the transaction was processed.
+        apiTraceId:
+          type: string
+          description: A unique trace identifier for the API request.
+  parameters:
+    ApiKey:
+      name: Api-Key
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The API key assigned to the merchant.
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: HMAC authorization token for request authentication.
+    TransactionId:
+      name: transactionId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the original transaction.
+    Timestamp:
+      name: Timestamp
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Epoch timestamp in milliseconds of the request.
+    ClientRequestId:
+      name: Client-Request-Id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: A unique identifier for the request, used for idempotency and troubleshooting.
+    ContentType:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+      description: The media type of the request body.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

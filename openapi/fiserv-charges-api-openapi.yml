@@ -1,0 +1,292 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Charges API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Charges
+  description: Process payment charges including authorizations, sales, and pre-authorizations.
+paths:
+  /payments/v1/charges:
+    post:
+      operationId: createCharge
+      summary: Fiserv Process a payment charge
+      description: Submits a charge request to process a payment transaction. Supports authorization-only, sale (authorization and capture), and pre-authorization transaction types. The request can include payment source details such as card data, tokens, or encrypted payment data.
+      tags:
+      - Charges
+      parameters:
+      - $ref: '#/components/parameters/ContentType'
+      - $ref: '#/components/parameters/ClientRequestId'
+      - $ref: '#/components/parameters/ApiKey'
+      - $ref: '#/components/parameters/Timestamp'
+      - $ref: '#/components/parameters/Authorization'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChargeRequest'
+      responses:
+        '200':
+          description: Charge processed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChargeResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    PaymentSource:
+      type: object
+      description: The payment source for the transaction, such as a card or token.
+      properties:
+        sourceType:
+          type: string
+          enum:
+          - PaymentCard
+          - PaymentToken
+          - PaymentSession
+          - GooglePay
+          - ApplePay
+          description: The type of payment source being used.
+        card:
+          $ref: '#/components/schemas/Card'
+        token:
+          $ref: '#/components/schemas/Token'
+    Card:
+      type: object
+      description: Payment card details.
+      properties:
+        cardData:
+          type: string
+          description: The card number (PAN) or encrypted card data.
+        expirationMonth:
+          type: string
+          pattern: ^\d{2}$
+          description: Card expiration month in MM format.
+        expirationYear:
+          type: string
+          pattern: ^\d{4}$
+          description: Card expiration year in YYYY format.
+        securityCode:
+          type: string
+          description: The card verification value (CVV/CVC).
+    ErrorResponse:
+      type: object
+      description: Error response returned when a request fails.
+      properties:
+        error:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The error type classification.
+              code:
+                type: string
+                description: The error code.
+              message:
+                type: string
+                description: A human-readable error message.
+              field:
+                type: string
+                description: The field that caused the error, if applicable.
+    Amount:
+      type: object
+      description: Represents a monetary amount with currency.
+      properties:
+        total:
+          type: number
+          format: double
+          description: The total transaction amount.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 three-letter currency code.
+    GatewayResponse:
+      type: object
+      description: The gateway processing response details.
+      properties:
+        transactionType:
+          type: string
+          description: The type of transaction that was processed.
+        transactionState:
+          type: string
+          enum:
+          - AUTHORIZED
+          - CAPTURED
+          - DECLINED
+          - VOIDED
+          - REFUNDED
+          description: The current state of the transaction.
+        transactionProcessingDetails:
+          $ref: '#/components/schemas/TransactionProcessingDetails'
+    Token:
+      type: object
+      description: Payment token details.
+      properties:
+        tokenData:
+          type: string
+          description: The token value representing the stored payment credential.
+        tokenSource:
+          type: string
+          description: The source or provider of the token.
+        expirationMonth:
+          type: string
+          pattern: ^\d{2}$
+          description: Token expiration month in MM format.
+        expirationYear:
+          type: string
+          pattern: ^\d{4}$
+          description: Token expiration year in YYYY format.
+    ChargeRequest:
+      type: object
+      description: Request body for creating a charge transaction.
+      required:
+      - amount
+      - source
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        source:
+          $ref: '#/components/schemas/PaymentSource'
+        transactionDetails:
+          $ref: '#/components/schemas/TransactionDetails'
+    TransactionDetails:
+      type: object
+      description: Additional details about the transaction.
+      properties:
+        captureFlag:
+          type: boolean
+          description: When true, the transaction is captured immediately (sale). When false, the transaction is authorized only.
+        merchantOrderId:
+          type: string
+          description: The merchant-assigned order identifier.
+        merchantTransactionId:
+          type: string
+          description: The merchant-assigned transaction identifier.
+    PaymentReceipt:
+      type: object
+      description: Payment receipt details including processor response.
+      properties:
+        approvedAmount:
+          $ref: '#/components/schemas/Amount'
+        processorResponseDetails:
+          type: object
+          description: Response details from the payment processor.
+          properties:
+            approvalStatus:
+              type: string
+              enum:
+              - APPROVED
+              - DECLINED
+              - PROCESSING_FAILED
+              description: The approval status from the processor.
+            approvalCode:
+              type: string
+              description: The approval code from the issuer.
+            responseCode:
+              type: string
+              description: The processor response code.
+            responseMessage:
+              type: string
+              description: The processor response message.
+    ChargeResponse:
+      type: object
+      description: Response body for a charge transaction.
+      properties:
+        gatewayResponse:
+          $ref: '#/components/schemas/GatewayResponse'
+        source:
+          $ref: '#/components/schemas/PaymentSource'
+        transactionProcessingDetails:
+          $ref: '#/components/schemas/TransactionProcessingDetails'
+        paymentReceipt:
+          $ref: '#/components/schemas/PaymentReceipt'
+    TransactionProcessingDetails:
+      type: object
+      description: Transaction processing identifiers and details.
+      properties:
+        transactionId:
+          type: string
+          description: The gateway-assigned transaction identifier.
+        orderId:
+          type: string
+          description: The order identifier associated with the transaction.
+        transactionTimestamp:
+          type: string
+          format: date-time
+          description: The timestamp when the transaction was processed.
+        apiTraceId:
+          type: string
+          description: A unique trace identifier for the API request.
+  parameters:
+    ApiKey:
+      name: Api-Key
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The API key assigned to the merchant.
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: HMAC authorization token for request authentication.
+    Timestamp:
+      name: Timestamp
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Epoch timestamp in milliseconds of the request.
+    ClientRequestId:
+      name: Client-Request-Id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: A unique identifier for the request, used for idempotency and troubleshooting.
+    ContentType:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+      description: The media type of the request body.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

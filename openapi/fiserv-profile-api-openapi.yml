@@ -1,0 +1,242 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Profile API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Profile
+  description: Manage stored customer payment profiles for recurring or future transactions.
+paths:
+  /profile:
+    put:
+      operationId: createOrUpdateProfile
+      summary: Fiserv Create or update a customer profile
+      description: Creates or updates a stored customer payment profile. Profiles securely store payment credentials for recurring or future transactions without requiring the merchant to handle raw card data.
+      tags:
+      - Profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileRequest'
+      responses:
+        '200':
+          description: Profile created or updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /profile/{profileid}/{accountid}/{merchid}:
+    get:
+      operationId: getProfile
+      summary: Fiserv Retrieve a customer profile
+      description: Retrieves a stored customer payment profile by profile ID and account ID.
+      tags:
+      - Profile
+      parameters:
+      - name: profileid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique profile identifier.
+      - name: accountid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The account identifier within the profile.
+      - $ref: '#/components/parameters/MerchantIdPath'
+      responses:
+        '200':
+          description: Profile returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Profile not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      operationId: deleteProfile
+      summary: Fiserv Delete a customer profile
+      description: Deletes a stored customer payment profile or a specific account within a profile.
+      tags:
+      - Profile
+      parameters:
+      - name: profileid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique profile identifier.
+      - name: accountid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The account identifier within the profile.
+      - $ref: '#/components/parameters/MerchantIdPath'
+      responses:
+        '200':
+          description: Profile deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileDeleteResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Profile not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    MerchantIdPath:
+      name: merchid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The CardPointe merchant identifier.
+  schemas:
+    ProfileRequest:
+      type: object
+      description: Profile creation or update request.
+      required:
+      - merchid
+      - account
+      properties:
+        merchid:
+          type: string
+          description: The CardPointe merchant ID.
+        profileid:
+          type: string
+          description: The profile ID to update. Omit to create a new profile.
+        account:
+          type: string
+          description: The card number or CardSecure token.
+        expiry:
+          type: string
+          pattern: ^\d{4}$
+          description: Card expiration date in MMYY format.
+        name:
+          type: string
+          description: The cardholder name.
+        address:
+          type: string
+          description: The billing street address.
+        city:
+          type: string
+          description: The billing city.
+        region:
+          type: string
+          description: The billing state or province.
+        country:
+          type: string
+          description: The billing country.
+        postal:
+          type: string
+          description: The billing postal code.
+    ProfileResponse:
+      type: object
+      description: Profile response payload.
+      properties:
+        profileid:
+          type: string
+          description: The unique profile identifier.
+        acctid:
+          type: string
+          description: The account identifier within the profile.
+        respstat:
+          type: string
+          description: The response status.
+        account:
+          type: string
+          description: The masked account number or token.
+        respcode:
+          type: string
+          description: The response code.
+        resptext:
+          type: string
+          description: The response text.
+        token:
+          type: string
+          description: The CardSecure token for the account.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
+    ProfileDeleteResponse:
+      type: object
+      description: Profile deletion response.
+      properties:
+        profileid:
+          type: string
+          description: The deleted profile identifier.
+        respstat:
+          type: string
+          description: The response status.
+        respcode:
+          type: string
+          description: The response code.
+        resptext:
+          type: string
+          description: The response text.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

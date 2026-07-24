@@ -1,0 +1,104 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Funding API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Funding
+  description: Retrieve funding information for settled transactions.
+paths:
+  /funding:
+    get:
+      operationId: getFundingInfo
+      summary: Fiserv Get funding information
+      description: Retrieves funding information for settled transactions, including deposit amounts and dates.
+      tags:
+      - Funding
+      parameters:
+      - name: merchid
+        in: query
+        required: true
+        schema:
+          type: string
+        description: The CardPointe merchant ID.
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: The funding date in MMDD format.
+      responses:
+        '200':
+          description: Funding information returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FundingResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    FundingResponse:
+      type: object
+      description: Funding information response.
+      properties:
+        fundingdate:
+          type: string
+          format: date
+          description: The funding date.
+        fundingmasterid:
+          type: string
+          description: The master funding identifier.
+        txns:
+          type: array
+          items:
+            type: object
+            properties:
+              retref:
+                type: string
+                description: The retrieval reference number.
+              amount:
+                type: string
+                description: The transaction amount.
+              type:
+                type: string
+                description: The transaction type.
+          description: The funded transactions.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

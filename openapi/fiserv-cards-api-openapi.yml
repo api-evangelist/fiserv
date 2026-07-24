@@ -1,0 +1,236 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Cards API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Cards
+  description: Issue, activate, manage, and retrieve card details.
+paths:
+  /v2/cards/card:
+    post:
+      operationId: issueCard
+      summary: Fiserv Issue a new card
+      description: Issues a new card for an existing account. The card can be a primary card or an additional authorized user card.
+      tags:
+      - Cards
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardIssueRequest'
+      responses:
+        '201':
+          description: Card issued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardIssueResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/cards/{cardNumber}:
+    get:
+      operationId: getCard
+      summary: Fiserv Retrieve card details
+      description: Retrieves card information including card status, expiration date, and card type.
+      tags:
+      - Cards
+      parameters:
+      - $ref: '#/components/parameters/CardNumber'
+      responses:
+        '200':
+          description: Card details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardInquiryResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Card not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      operationId: updateCard
+      summary: Fiserv Update card details
+      description: Updates card attributes such as status (activate, deactivate, block), and PIN settings.
+      tags:
+      - Cards
+      parameters:
+      - $ref: '#/components/parameters/CardNumber'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardUpdateRequest'
+      responses:
+        '200':
+          description: Card updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardUpdateResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Card not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    CardUpdateRequest:
+      type: object
+      description: Request body for updating card attributes.
+      properties:
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - BLOCKED
+          - LOST
+          - STOLEN
+          description: The updated card status.
+    CardInquiryResponse:
+      type: object
+      description: Response body for card inquiry.
+      properties:
+        cardNumber:
+          type: string
+          description: The masked card number.
+        accountNumber:
+          type: string
+          description: The associated account number.
+        status:
+          type: string
+          description: The card status.
+        expirationDate:
+          type: string
+          description: The card expiration date.
+        cardType:
+          type: string
+          description: The card type.
+        nameOnCard:
+          type: string
+          description: The name on the card.
+    CardIssueResponse:
+      type: object
+      description: Response body for card issuance.
+      properties:
+        cardNumber:
+          type: string
+          description: The issued card number (masked).
+        expirationDate:
+          type: string
+          description: The card expiration date.
+        status:
+          type: string
+          description: The card status.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
+    CardIssueRequest:
+      type: object
+      description: Request body for issuing a card.
+      required:
+      - accountNumber
+      properties:
+        accountNumber:
+          type: string
+          description: The account to issue the card for.
+        cardType:
+          type: string
+          enum:
+          - PRIMARY
+          - AUTHORIZED_USER
+          description: The card type.
+        nameOnCard:
+          type: string
+          description: The name to emboss on the card.
+    CardUpdateResponse:
+      type: object
+      description: Response body for card update.
+      properties:
+        cardNumber:
+          type: string
+          description: The card number.
+        status:
+          type: string
+          description: The updated status.
+  parameters:
+    CardNumber:
+      name: cardNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The card number.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

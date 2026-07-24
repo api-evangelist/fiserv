@@ -1,0 +1,168 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Authorizations API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Authorizations
+  description: Create and manage transaction authorizations.
+paths:
+  /v1/authorizations:
+    post:
+      operationId: createAuthorization
+      summary: Fiserv Create an authorization
+      description: Creates a new authorization for an account or cancels an existing authorization using the card number.
+      tags:
+      - Authorizations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizationRequest'
+      responses:
+        '201':
+          description: Authorization created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/authorizations/{authorizationId}/cancel:
+    post:
+      operationId: cancelAuthorization
+      summary: Fiserv Cancel an authorization
+      description: Cancels a previously created authorization, releasing the hold on the account.
+      tags:
+      - Authorizations
+      parameters:
+      - name: authorizationId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The authorization identifier to cancel.
+      responses:
+        '200':
+          description: Authorization cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationCancelResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Authorization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    AuthorizationResponse:
+      type: object
+      description: Response body for authorization creation.
+      properties:
+        authorizationId:
+          type: string
+          description: The authorization identifier.
+        status:
+          type: string
+          enum:
+          - APPROVED
+          - DECLINED
+          description: The authorization status.
+        approvalCode:
+          type: string
+          description: The approval code if authorized.
+    AuthorizationCancelResponse:
+      type: object
+      description: Response body for authorization cancellation.
+      properties:
+        authorizationId:
+          type: string
+          description: The cancelled authorization identifier.
+        status:
+          type: string
+          description: The cancellation status.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
+    AuthorizationRequest:
+      type: object
+      description: Request body for creating a transaction authorization.
+      required:
+      - cardNumber
+      - amount
+      properties:
+        cardNumber:
+          type: string
+          description: The card number.
+        amount:
+          type: number
+          format: double
+          description: The authorization amount.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 currency code.
+        merchantName:
+          type: string
+          description: The merchant name.
+        merchantCategoryCode:
+          type: string
+          description: The merchant category code (MCC).
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

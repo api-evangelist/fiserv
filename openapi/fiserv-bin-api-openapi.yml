@@ -1,0 +1,99 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure BIN API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: BIN
+  description: Look up Bank Identification Number (BIN) data for cards.
+paths:
+  /bin/{token}/{merchid}:
+    get:
+      operationId: lookupBIN
+      summary: Fiserv Look up BIN data
+      description: Retrieves Bank Identification Number (BIN) data for a given token or card number, including card brand, card type, and issuing country information.
+      tags:
+      - BIN
+      parameters:
+      - name: token
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The CardSecure token or card number to look up.
+      - $ref: '#/components/parameters/MerchantIdPath'
+      responses:
+        '200':
+          description: BIN data returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BINResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    BINResponse:
+      type: object
+      description: BIN lookup response payload.
+      properties:
+        country:
+          type: string
+          description: The issuing country.
+        product:
+          type: string
+          description: The card product type (e.g., Visa, Mastercard).
+        bin:
+          type: string
+          description: The Bank Identification Number.
+        cardusestring:
+          type: string
+          description: The card use description (e.g., Credit, Debit).
+        corporate:
+          type: string
+          description: Whether the card is a corporate card.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
+  parameters:
+    MerchantIdPath:
+      name: merchid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The CardPointe merchant identifier.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

@@ -1,0 +1,109 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Signature Capture API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Signature Capture
+  description: Submit signature capture data for completed transactions.
+paths:
+  /sigcap:
+    put:
+      operationId: submitSignatureCapture
+      summary: Fiserv Submit a signature capture
+      description: Submits a captured signature image for a completed transaction. The signature data is associated with the transaction for record-keeping and dispute resolution.
+      tags:
+      - Signature Capture
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignatureCaptureRequest'
+      responses:
+        '200':
+          description: Signature captured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignatureCaptureResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    SignatureCaptureResponse:
+      type: object
+      description: Signature capture response payload.
+      properties:
+        retref:
+          type: string
+          description: The retrieval reference number.
+        respstat:
+          type: string
+          description: The response status.
+        respcode:
+          type: string
+          description: The response code.
+        resptext:
+          type: string
+          description: The response text.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
+    SignatureCaptureRequest:
+      type: object
+      description: Signature capture request payload.
+      required:
+      - merchid
+      - retref
+      - signature
+      properties:
+        merchid:
+          type: string
+          description: The CardPointe merchant ID.
+        retref:
+          type: string
+          description: The retrieval reference number of the transaction.
+        signature:
+          type: string
+          description: The base64-encoded signature image data.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md

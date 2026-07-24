@@ -1,0 +1,197 @@
+openapi: 3.1.0
+info:
+  title: Fiserv BankingHub 3-D Secure Transfers API
+  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  version: 1.0.0
+  contact:
+    name: Fiserv Developer Support
+    url: https://developer.fiserv.com/product/BankingHub
+  termsOfService: https://www.fiserv.com/en/legal.html
+servers:
+- url: https://cert.api.fiservapps.com
+  description: Certification Environment
+- url: https://prod.api.fiservapps.com
+  description: Production Environment
+security:
+- bearerAuth: []
+tags:
+- name: Transfers
+  description: Initiate and manage fund transfers between accounts.
+paths:
+  /banking/transfers:
+    post:
+      operationId: createTransfer
+      summary: Fiserv Initiate a fund transfer
+      description: Initiates a fund transfer between accounts. Supports internal transfers between accounts at the same institution and external transfers via ACH or wire.
+      tags:
+      - Transfers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferAddRequest'
+      responses:
+        '201':
+          description: Transfer initiated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferAddResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /banking/transfers/{transferId}:
+    get:
+      operationId: getTransfer
+      summary: Fiserv Retrieve transfer details
+      description: Retrieves the status and details of a previously initiated fund transfer.
+      tags:
+      - Transfers
+      parameters:
+      - name: transferId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique transfer identifier.
+      responses:
+        '200':
+          description: Transfer details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferInquiryResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Transfer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    TransferAddRequest:
+      type: object
+      description: Request body for initiating a fund transfer.
+      required:
+      - fromAccountId
+      - toAccountId
+      - amount
+      properties:
+        fromAccountId:
+          type: string
+          description: The source account identifier.
+        toAccountId:
+          type: string
+          description: The destination account identifier.
+        amount:
+          type: number
+          format: double
+          description: The transfer amount.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 currency code.
+        transferType:
+          type: string
+          enum:
+          - INTERNAL
+          - ACH
+          - WIRE
+          description: The type of transfer.
+        memo:
+          type: string
+          description: A memo or description for the transfer.
+        scheduledDate:
+          type: string
+          format: date
+          description: The scheduled date for the transfer.
+    TransferInquiryResponse:
+      type: object
+      description: Response body for transfer inquiry.
+      properties:
+        transferId:
+          type: string
+          description: The transfer identifier.
+        fromAccountId:
+          type: string
+          description: The source account.
+        toAccountId:
+          type: string
+          description: The destination account.
+        amount:
+          type: number
+          format: double
+          description: The transfer amount.
+        status:
+          type: string
+          description: The current transfer status.
+        createdDate:
+          type: string
+          format: date-time
+          description: The date and time the transfer was created.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: string
+          description: The error status code.
+        statusDescription:
+          type: string
+          description: A human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
+              field:
+                type: string
+                description: The field that caused the error.
+          description: Detailed error information.
+    TransferAddResponse:
+      type: object
+      description: Response body for transfer initiation.
+      properties:
+        transferId:
+          type: string
+          description: The unique transfer identifier.
+        status:
+          type: string
+          description: The transfer status.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token for API authentication.
+externalDocs:
+  description: BankingHub API Documentation
+  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md
