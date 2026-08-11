@@ -1,0 +1,58 @@
+# Fiserv Developer Studio Documentation
+# Overview
+- [Home](https://dev-developerstudio.fiserv.com/llms/home.md): Developer Studio Home Page.
+https://devstudio.fiserv.com/docs/overview 	 Introduction to Fiserv Developer Studio
+https://devstudio.fiserv.com/docs/getting-started 	 Getting started guide
+https://devstudio.fiserv.com/docs/platform-capabilities 	 Platform capabilities
+
+# Authentication
+https://devstudio.fiserv.com/docs/authentication/api-keys 	 API key management
+https://devstudio.fiserv.com/docs/authentication/oauth 	 OAuth 2.0 flows
+https://devstudio.fiserv.com/docs/authentication/mid-provisioning 	 MID provisioning
+
+# Payments
+-[CommerceHub](https://dev-developerstudio.fiserv.com/llms/products/CommerceHub_Authorization_Type.md): CommerceHub Authorization Type
+-[CommerceHub](https://dev-developerstudio.fiserv.com/llms/products/CommerceHub_Incremental_Authorization.md): CommerceHub Incremental Authorization
+https://devstudio.fiserv.com/products/cardpointe 	 CardPointe Integrated Payments
+https://devstudio.fiserv.com/products/snappay 	 SnapPay
+https://devstudio.fiserv.com/products/ipg-na 	 Internet Payment Gateway NA
+https://devstudio.fiserv.com/products/payfac 	 Managed PayFac
+https://devstudio.fiserv.com/products/merchant-latam 	 Merchant Acquiring LATAM
+
+# Banking
+https://devstudio.fiserv.com/products/banking-hub 	 Banking Hub
+https://devstudio.fiserv.com/products/banking-as-a-service 	 Banking-as-a-Service
+https://devstudio.fiserv.com/products/emfi 	 EmFi
+https://devstudio.fiserv.com/products/transfernow 	 TransferNow®
+https://devstudio.fiserv.com/products/treasury-api 	 Treasury API
+
+# Issuing
+https://devstudio.fiserv.com/products/issuer-solutions 	 Issuer Solutions
+https://devstudio.fiserv.com/products/card-issuing 	 Card issuing APIs
+https://devstudio.fiserv.com/products/bnpl 	 Buy Now Pay Later
+
+# Risk & Fraud
+https://devstudio.fiserv.com/products/exchange 	 Exchange
+https://devstudio.fiserv.com/products/fraud-orchestration 	 Fraud Orchestration Director
+https://devstudio.fiserv.com/products/verifynow 	 VerifyNow™
+
+# Webhooks
+https://devstudio.fiserv.com/docs/webhooks/payment-status 	 Payment status updates
+https://devstudio.fiserv.com/docs/webhooks/transaction-events 	 Transaction events
+https://devstudio.fiserv.com/docs/webhooks/fraud-alerts 	 Fraud alerts
+
+# SDKs
+https://devstudio.fiserv.com/sdk/wallet 	 Wallet as a Service SDK
+https://devstudio.fiserv.com/sdk/mobile 	 Mobile SDKs
+
+# Use Cases
+https://devstudio.fiserv.com/use-cases/embed-payments 	 Embed payments in mobile apps
+https://devstudio.fiserv.com/use-cases/b2b-payments 	 B2B payment flows
+https://devstudio.fiserv.com/use-cases/open-banking 	 Open banking integrations
+
+# Glossary
+https://devstudio.fiserv.com/docs/glossary 	 Glossary of fintech terms
+
+
+## Optional
+- [Support](https://localhost:3000/support)
