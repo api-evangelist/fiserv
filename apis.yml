@@ -570,6 +570,12 @@ apis:
     url: >-
       https://developer.fiserv.com/product/CardDeveloper/docs/?path=docs/gettingstarted/getting-started.md
 common:
+  - type: Community
+    url: https://www.fiserv.com/en/forum
+  - type: PrivacyPolicy
+    url: https://www.fiserv.com/en/about-fiserv/privacy-notice.html
+  - type: TermsOfService
+    url: https://www.fiserv.com/en/about-fiserv/terms-of-use.html
   - type: AgenticAccess
     url: agentic-access/fiserv-agentic-access.yml
   - type: DomainSecurity
