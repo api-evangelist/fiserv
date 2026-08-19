@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Charges API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Charges",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Process a payment charge",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/payments/v1/charges",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Client-Request-Id",
+                "value": ""
+              },
+              {
+                "name": "Api-Key",
+                "value": ""
+              },
+              {
+                "name": "Timestamp",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a charge request to process a payment transaction. Supports authorization-only, sale (authorization and capture), and pre-authorization transaction types. The request can include payment source details such as card data, tokens, or encrypted payment data."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

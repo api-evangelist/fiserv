@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Authorization API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authorization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Authorize a payment transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cert.api.fiservapps.com/auth",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits an authorization request to process a payment. The authorization verifies the cardholder account and places a hold on funds. The response includes a retref (retrieval reference number) used for subsequent capture, void, or refund operations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

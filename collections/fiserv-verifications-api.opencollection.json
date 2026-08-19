@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Verifications API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Verifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Verify a payment account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/payments-vas/v1/accounts/verification",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Client-Request-Id",
+                "value": ""
+              },
+              {
+                "name": "Api-Key",
+                "value": ""
+              },
+              {
+                "name": "Timestamp",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verifies a payment card or token to confirm it is valid before processing a transaction. This can include address verification (AVS) and card security code (CVV) validation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

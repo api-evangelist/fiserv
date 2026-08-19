@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Captures API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Captures",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Capture an authorized payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/payments/v1/charges/:transactionId/capture",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Client-Request-Id",
+                "value": ""
+              },
+              {
+                "name": "Api-Key",
+                "value": ""
+              },
+              {
+                "name": "Timestamp",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the original transaction."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Captures a previously authorized transaction for settlement. The capture amount can be equal to or less than the original authorization amount."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

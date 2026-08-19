@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Refund API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Refund",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Refund a settled transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cert.api.fiservapps.com/refund",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Processes a refund for a previously captured and settled transaction. Supports full and partial refunds."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

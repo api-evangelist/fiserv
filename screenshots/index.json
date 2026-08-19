@@ -6,5 +6,14 @@
     "source_type": "Website",
     "file": "fiserv-2026-06-20T181247.png",
     "bytes": 5002
+  },
+  {
+    "repo": "fiserv",
+    "captured_at": "2026-08-17T083418",
+    "source_url": "https://www.fiserv.com/",
+    "source_type": "Website",
+    "file": "fiserv-2026-08-17T083418.png",
+    "bytes": 697280,
+    "capture": "playwright-local"
   }
 ]

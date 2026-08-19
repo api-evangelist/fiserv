@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Inquire API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Inquire",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Inquire about a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/inquire/:retref/:merchid",
+            "params": [
+              {
+                "name": "retref",
+                "value": "",
+                "type": "path",
+                "description": "The retrieval reference number from the original transaction."
+              },
+              {
+                "name": "merchid",
+                "value": "",
+                "type": "path",
+                "description": "The CardPointe merchant identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and details of a previously processed transaction using its retrieval reference number."
+        },
+        {
+          "info": {
+            "name": "Fiserv Inquire about a transaction by order ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/inquireByOrderid/:orderid/:merchid",
+            "params": [
+              {
+                "name": "orderid",
+                "value": "",
+                "type": "path",
+                "description": "The merchant-assigned order identifier."
+              },
+              {
+                "name": "merchid",
+                "value": "",
+                "type": "path",
+                "description": "The CardPointe merchant identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves the current status and details of a previously processed transaction using the merchant-assigned order identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

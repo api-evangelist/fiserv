@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Limits API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Limits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Get account limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/v1/limits",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "query",
+                "description": "The account number to retrieve limits for."
+              }
+            ]
+          },
+          "docs": "Retrieves account limits including credit limit, temporary credit limit, and cash advance limit."
+        },
+        {
+          "info": {
+            "name": "Fiserv Update account limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cert.api.fiservapps.com/v1/limits",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates account limits such as credit limit, temporary credit limit, or cash advance limit."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "3-D Secure",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Initiate 3-D Secure authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/payments-vas/v1/3ds/authentication",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Client-Request-Id",
+                "value": ""
+              },
+              {
+                "name": "Api-Key",
+                "value": ""
+              },
+              {
+                "name": "Timestamp",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a 3-D Secure authentication flow for cardholder verification. This step is used to authenticate the cardholder before processing a payment, enabling Strong Customer Authentication (SCA) compliance and potential liability shift."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

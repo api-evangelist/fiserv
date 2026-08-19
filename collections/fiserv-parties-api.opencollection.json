@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Parties API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Parties",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Create a customer party",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/banking/parties",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new customer party record including personal information, contact details, and identification data."
+        },
+        {
+          "info": {
+            "name": "Fiserv Retrieve party details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/banking/parties/:partyId",
+            "params": [
+              {
+                "name": "partyId",
+                "value": "",
+                "type": "path",
+                "description": "The unique party identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information for a specific customer party including personal data, addresses, and contact information."
+        },
+        {
+          "info": {
+            "name": "Fiserv Update party details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cert.api.fiservapps.com/banking/parties/:partyId",
+            "params": [
+              {
+                "name": "partyId",
+                "value": "",
+                "type": "path",
+                "description": "The unique party identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates attributes of an existing customer party record."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

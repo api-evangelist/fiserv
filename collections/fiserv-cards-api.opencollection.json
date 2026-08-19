@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Cards API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Issue a new card",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://cert.api.fiservapps.com/v2/cards/card",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Issues a new card for an existing account. The card can be a primary card or an additional authorized user card."
+        },
+        {
+          "info": {
+            "name": "Fiserv Retrieve card details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/v2/cards/:cardNumber",
+            "params": [
+              {
+                "name": "cardNumber",
+                "value": "",
+                "type": "path",
+                "description": "The card number."
+              }
+            ]
+          },
+          "docs": "Retrieves card information including card status, expiration date, and card type."
+        },
+        {
+          "info": {
+            "name": "Fiserv Update card details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://cert.api.fiservapps.com/v2/cards/:cardNumber",
+            "params": [
+              {
+                "name": "cardNumber",
+                "value": "",
+                "type": "path",
+                "description": "The card number."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates card attributes such as status (activate, deactivate, block), and PIN settings."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

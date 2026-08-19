@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Signature Capture API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Signature Capture",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Submit a signature capture",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://cert.api.fiservapps.com/sigcap",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a captured signature image for a completed transaction. The signature data is associated with the transaction for record-keeping and dispute resolution."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

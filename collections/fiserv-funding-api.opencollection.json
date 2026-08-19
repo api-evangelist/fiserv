@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Funding API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Funding",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Get funding information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/funding",
+            "params": [
+              {
+                "name": "merchid",
+                "value": "",
+                "type": "query",
+                "description": "The CardPointe merchant ID."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "The funding date in MMDD format."
+              }
+            ]
+          },
+          "docs": "Retrieves funding information for settled transactions, including deposit amounts and dates."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

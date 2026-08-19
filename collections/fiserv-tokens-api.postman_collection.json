@@ -1,0 +1,358 @@
+{
+  "item": [
+    {
+      "id": "2ea5f4b2-927a-4ab8-b836-a9e4e5e80630",
+      "name": "Tokens",
+      "description": {
+        "content": "Create, manage, and use payment tokens for secure storage of payment credentials.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e3b25cb0-ee7b-4d0e-9a9e-ef2a3d0fa0cc",
+          "name": "Fiserv Create a payment token",
+          "request": {
+            "name": "Fiserv Create a payment token",
+            "description": {
+              "content": "Tokenizes a payment source such as a card number, creating a secure token that can be used in subsequent transactions. This eliminates the need to store sensitive payment data and reduces PCI compliance scope.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments-vas",
+                "v1",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                "key": "Client-Request-Id",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) The API key assigned to the merchant.",
+                "key": "Api-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                "key": "Timestamp",
+                "value": "<long>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source\": {\n    \"sourceType\": \"<string>\",\n    \"card\": {\n      \"cardData\": \"<string>\",\n      \"expirationMonth\": \"<string>\",\n      \"expirationYear\": \"<string>\",\n      \"securityCode\": \"<string>\"\n    },\n    \"token\": {\n      \"tokenData\": \"<string>\",\n      \"tokenSource\": \"<string>\",\n      \"expirationMonth\": \"<string>\",\n      \"expirationYear\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f311b335-1a77-40f9-b017-67e956e9ebb5",
+              "name": "Token created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments-vas",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": {\n    \"sourceType\": \"PaymentCard\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"05\",\n      \"expirationYear\": \"1536\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"06\",\n      \"expirationYear\": \"6047\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"gatewayResponse\": {\n    \"transactionType\": \"string\",\n    \"transactionState\": \"CAPTURED\",\n    \"transactionProcessingDetails\": {\n      \"transactionId\": \"string\",\n      \"orderId\": \"string\",\n      \"transactionTimestamp\": \"2001-05-17T11:20:52.810Z\",\n      \"apiTraceId\": \"string\"\n    }\n  },\n  \"source\": {\n    \"sourceType\": \"ApplePay\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"57\",\n      \"expirationYear\": \"9452\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"02\",\n      \"expirationYear\": \"6774\"\n    }\n  },\n  \"paymentTokens\": [\n    {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"63\",\n      \"expirationYear\": \"6228\"\n    },\n    {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"52\",\n      \"expirationYear\": \"0003\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49fde608-3df7-4aeb-81e1-cad0ec533b30",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments-vas",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": {\n    \"sourceType\": \"PaymentCard\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"05\",\n      \"expirationYear\": \"1536\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"06\",\n      \"expirationYear\": \"6047\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c102e52-4f5c-4238-ae17-b39528e0b957",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments-vas",
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The media type of the request body.",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique identifier for the request, used for idempotency and troubleshooting.",
+                    "key": "Client-Request-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The API key assigned to the merchant.",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Epoch timestamp in milliseconds of the request.",
+                    "key": "Timestamp",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) HMAC authorization token for request authentication.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"source\": {\n    \"sourceType\": \"PaymentCard\",\n    \"card\": {\n      \"cardData\": \"string\",\n      \"expirationMonth\": \"05\",\n      \"expirationYear\": \"1536\",\n      \"securityCode\": \"string\"\n    },\n    \"token\": {\n      \"tokenData\": \"string\",\n      \"tokenSource\": \"string\",\n      \"expirationMonth\": \"06\",\n      \"expirationYear\": \"6047\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cert.api.fiservapps.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d4a79bb0-6022-4ccd-abc7-26259174065a",
+    "name": "Fiserv BankingHub 3-D Secure Tokens API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.\n\nContact Support:\n Name: Fiserv Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

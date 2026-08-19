@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Settlement API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Settlement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Get settlement status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/settlestat",
+            "params": [
+              {
+                "name": "merchid",
+                "value": "",
+                "type": "query",
+                "description": "The CardPointe merchant ID."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "The settlement date in MMDD format."
+              }
+            ]
+          },
+          "docs": "Retrieves the settlement status for transactions processed on a given date for a specified merchant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

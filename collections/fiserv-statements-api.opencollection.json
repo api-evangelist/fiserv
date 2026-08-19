@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure Statements API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Statements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv List account statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/v1/accounts/:accountNumber/statements",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path",
+                "description": "The card account number."
+              },
+              {
+                "name": "statementDate",
+                "value": "",
+                "type": "query",
+                "description": "The statement date to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves statement information and statement transactions for a card account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

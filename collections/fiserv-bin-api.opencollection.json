@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fiserv BankingHub 3-D Secure BIN API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "BIN",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fiserv Look up BIN data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cert.api.fiservapps.com/bin/:token/:merchid",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "path",
+                "description": "The CardSecure token or card number to look up."
+              },
+              {
+                "name": "merchid",
+                "value": "",
+                "type": "path",
+                "description": "The CardPointe merchant identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves Bank Identification Number (BIN) data for a given token or card number, including card brand, card type, and issuing country information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
