@@ -41,7 +41,7 @@ tags:
   - Wealth Management
   - Fortune 500
 url: https://raw.githubusercontent.com/api-evangelist/fiserv/refs/heads/main/apis.yml
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: fiserv:payment-events
   name: Fiserv Payment Events
