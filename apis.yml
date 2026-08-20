@@ -47,6 +47,11 @@ apis:
   name: Fiserv Payment Events
   tags:
   - Disputes
+  - Event
+  - Payments
+  - Webhook
+  tags_raw:
+  - Disputes
   - Events
   - Payments
   - Webhooks
@@ -65,6 +70,8 @@ apis:
   description: Manage 3-D Secure authentication flows for cardholder verification.
   humanURL: https://developer.fiserv.com/product/CommerceHub
   tags:
+  - 3D Secure
+  tags_raw:
   - 3-D Secure
   properties:
   - type: OpenAPI
@@ -85,6 +92,8 @@ apis:
   description: Create, retrieve, update, and manage deposit and loan accounts.
   humanURL: https://developer.fiserv.com/product/CommerceHub
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -205,6 +214,8 @@ apis:
   description: Capture previously authorized transactions for settlement.
   humanURL: https://developer.fiserv.com/product/CommerceHub
   tags:
+  - Capture
+  tags_raw:
   - Captures
   properties:
   - type: OpenAPI
@@ -506,6 +517,8 @@ apis:
   description: Retrieve and manage account transaction history and details.
   humanURL: https://developer.fiserv.com/product/CommerceHub
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
@@ -546,6 +559,8 @@ apis:
   description: Verify payment cards or tokens before processing a transaction.
   humanURL: https://developer.fiserv.com/product/CommerceHub
   tags:
+  - Verification
+  tags_raw:
   - Verifications
   properties:
   - type: OpenAPI
