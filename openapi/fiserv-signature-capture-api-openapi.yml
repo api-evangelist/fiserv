@@ -1,19 +1,27 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Fiserv BankingHub 3-D Secure Signature Capture API
-  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  title: Fiserv CardPointe Gateway Signature Capture API
+  description: The CardPointe Gateway API provides a RESTful interface for integrating secure tokenization, payment processing, and reporting features into applications and websites. The API supports authorization, capture, void, refund, and inquiry operations, as well as customer profile management for storing payment credentials securely.
   version: 1.0.0
   contact:
     name: Fiserv Developer Support
-    url: https://developer.fiserv.com/product/BankingHub
+    url: https://developer.fiserv.com/product/CardPointe
   termsOfService: https://www.fiserv.com/en/legal.html
 servers:
-- url: https://cert.api.fiservapps.com
-  description: Certification Environment
-- url: https://prod.api.fiservapps.com
+- url: https://{site}-uat.cardconnect.com/cardconnect/rest
+  description: UAT Environment
+  variables:
+    site:
+      default: fts
+      description: The site name provided during onboarding.
+- url: https://{site}.cardconnect.com/cardconnect/rest
   description: Production Environment
+  variables:
+    site:
+      default: fts
+      description: The site name provided during onboarding.
 security:
-- bearerAuth: []
+- basicAuth: []
 tags:
 - name: Signature Capture
   description: Submit signature capture data for completed transactions.
@@ -52,6 +60,19 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
     SignatureCaptureResponse:
       type: object
       description: Signature capture response payload.
@@ -68,19 +89,6 @@ components:
         resptext:
           type: string
           description: The response text.
-    ErrorResponse:
-      type: object
-      description: Error response payload.
-      properties:
-        respstat:
-          type: string
-          description: The response status (C for declined/error).
-        respcode:
-          type: string
-          description: The error response code.
-        resptext:
-          type: string
-          description: A human-readable error message.
     SignatureCaptureRequest:
       type: object
       description: Signature capture request payload.
@@ -99,11 +107,10 @@ components:
           type: string
           description: The base64-encoded signature image data.
   securitySchemes:
-    bearerAuth:
+    basicAuth:
       type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: OAuth 2.0 Bearer token for API authentication.
+      scheme: basic
+      description: HTTP Basic authentication using the CardPointe Gateway credentials.
 externalDocs:
-  description: BankingHub API Documentation
-  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md
+  description: CardPointe Gateway API Documentation
+  url: https://developer.fiserv.com/product/CardPointe/docs/?path=docs%2FAPIs%2FCardPointeGatewayAPI.md

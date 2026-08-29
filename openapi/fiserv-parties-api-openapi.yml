@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Fiserv BankingHub 3-D Secure Parties API
+  title: Fiserv BankingHub Parties API
   description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
   version: 1.0.0
   contact:
@@ -129,6 +129,44 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: string
+          description: The error status code.
+        statusDescription:
+          type: string
+          description: A human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
+              field:
+                type: string
+                description: The field that caused the error.
+          description: Detailed error information.
+    PartyUpdateResponse:
+      type: object
+      description: Response body for party update.
+      properties:
+        partyId:
+          type: string
+          description: The party identifier.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
     PartyAddRequest:
       type: object
       description: Request body for creating a customer party.
@@ -195,19 +233,40 @@ components:
             country:
               type: string
               description: The country code.
-    PartyUpdateResponse:
+    PartyUpdateRequest:
       type: object
-      description: Response body for party update.
+      description: Request body for updating party details.
       properties:
-        partyId:
-          type: string
-          description: The party identifier.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
+        contact:
+          type: object
+          description: Updated contact information.
+          properties:
+            email:
+              type: string
+              format: email
+              description: The updated email address.
+            phone:
+              type: string
+              description: The updated phone number.
+        address:
+          type: object
+          description: Updated address information.
+          properties:
+            line1:
+              type: string
+              description: Address line 1.
+            city:
+              type: string
+              description: The city.
+            state:
+              type: string
+              description: The state or province.
+            postalCode:
+              type: string
+              description: The postal code.
+            country:
+              type: string
+              description: The country code.
     PartyInquiryResponse:
       type: object
       description: Response body for party inquiry.
@@ -244,65 +303,6 @@ components:
         address:
           type: object
           description: The physical address.
-          properties:
-            line1:
-              type: string
-              description: Address line 1.
-            city:
-              type: string
-              description: The city.
-            state:
-              type: string
-              description: The state or province.
-            postalCode:
-              type: string
-              description: The postal code.
-            country:
-              type: string
-              description: The country code.
-    ErrorResponse:
-      type: object
-      description: Standard error response.
-      properties:
-        statusCode:
-          type: string
-          description: The error status code.
-        statusDescription:
-          type: string
-          description: A human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: The specific error code.
-              message:
-                type: string
-                description: The error message.
-              field:
-                type: string
-                description: The field that caused the error.
-          description: Detailed error information.
-    PartyUpdateRequest:
-      type: object
-      description: Request body for updating party details.
-      properties:
-        contact:
-          type: object
-          description: Updated contact information.
-          properties:
-            email:
-              type: string
-              format: email
-              description: The updated email address.
-            phone:
-              type: string
-              description: The updated phone number.
-        address:
-          type: object
-          description: Updated address information.
           properties:
             line1:
               type: string

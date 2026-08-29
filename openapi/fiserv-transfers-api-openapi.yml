@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Fiserv BankingHub 3-D Secure Transfers API
+  title: Fiserv BankingHub Transfers API
   description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
   version: 1.0.0
   contact:
@@ -85,6 +85,71 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: string
+          description: The error status code.
+        statusDescription:
+          type: string
+          description: A human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
+              field:
+                type: string
+                description: The field that caused the error.
+          description: Detailed error information.
+    TransferInquiryResponse:
+      type: object
+      description: Response body for transfer inquiry.
+      properties:
+        transferId:
+          type: string
+          description: The transfer identifier.
+        fromAccountId:
+          type: string
+          description: The source account.
+        toAccountId:
+          type: string
+          description: The destination account.
+        amount:
+          type: number
+          format: double
+          description: The transfer amount.
+        status:
+          type: string
+          description: The current transfer status.
+        createdDate:
+          type: string
+          format: date-time
+          description: The date and time the transfer was created.
+    TransferAddResponse:
+      type: object
+      description: Response body for transfer initiation.
+      properties:
+        transferId:
+          type: string
+          description: The unique transfer identifier.
+        status:
+          type: string
+          description: The transfer status.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
     TransferAddRequest:
       type: object
       description: Request body for initiating a fund transfer.
@@ -121,71 +186,6 @@ components:
           type: string
           format: date
           description: The scheduled date for the transfer.
-    TransferInquiryResponse:
-      type: object
-      description: Response body for transfer inquiry.
-      properties:
-        transferId:
-          type: string
-          description: The transfer identifier.
-        fromAccountId:
-          type: string
-          description: The source account.
-        toAccountId:
-          type: string
-          description: The destination account.
-        amount:
-          type: number
-          format: double
-          description: The transfer amount.
-        status:
-          type: string
-          description: The current transfer status.
-        createdDate:
-          type: string
-          format: date-time
-          description: The date and time the transfer was created.
-    ErrorResponse:
-      type: object
-      description: Standard error response.
-      properties:
-        statusCode:
-          type: string
-          description: The error status code.
-        statusDescription:
-          type: string
-          description: A human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: The specific error code.
-              message:
-                type: string
-                description: The error message.
-              field:
-                type: string
-                description: The field that caused the error.
-          description: Detailed error information.
-    TransferAddResponse:
-      type: object
-      description: Response body for transfer initiation.
-      properties:
-        transferId:
-          type: string
-          description: The unique transfer identifier.
-        status:
-          type: string
-          description: The transfer status.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,11 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Fiserv BankingHub 3-D Secure Cards API
-  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  title: Fiserv CardDeveloper Cards API
+  description: The Fiserv CardDeveloper API enables financial institutions and cardholders to manage card and account information through various touchpoints. The API supports account creation, card management, authorization management, transaction inquiry, limit management, and statement retrieval for credit and debit card programs.
   version: 1.0.0
   contact:
     name: Fiserv Developer Support
-    url: https://developer.fiserv.com/product/BankingHub
+    url: https://developer.fiserv.com/product/CardDeveloper
   termsOfService: https://www.fiserv.com/en/legal.html
 servers:
 - url: https://cert.api.fiservapps.com
@@ -119,54 +119,16 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    CardUpdateRequest:
+    CardUpdateResponse:
       type: object
-      description: Request body for updating card attributes.
-      properties:
-        status:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - BLOCKED
-          - LOST
-          - STOLEN
-          description: The updated card status.
-    CardInquiryResponse:
-      type: object
-      description: Response body for card inquiry.
+      description: Response body for card update.
       properties:
         cardNumber:
           type: string
-          description: The masked card number.
-        accountNumber:
-          type: string
-          description: The associated account number.
+          description: The card number.
         status:
           type: string
-          description: The card status.
-        expirationDate:
-          type: string
-          description: The card expiration date.
-        cardType:
-          type: string
-          description: The card type.
-        nameOnCard:
-          type: string
-          description: The name on the card.
-    CardIssueResponse:
-      type: object
-      description: Response body for card issuance.
-      properties:
-        cardNumber:
-          type: string
-          description: The issued card number (masked).
-        expirationDate:
-          type: string
-          description: The card expiration date.
-        status:
-          type: string
-          description: The card status.
+          description: The updated status.
     ErrorResponse:
       type: object
       description: Standard error response.
@@ -189,6 +151,19 @@ components:
                 type: string
                 description: The field-level error message.
           description: Detailed field-level errors.
+    CardIssueResponse:
+      type: object
+      description: Response body for card issuance.
+      properties:
+        cardNumber:
+          type: string
+          description: The issued card number (masked).
+        expirationDate:
+          type: string
+          description: The card expiration date.
+        status:
+          type: string
+          description: The card status.
     CardIssueRequest:
       type: object
       description: Request body for issuing a card.
@@ -207,16 +182,41 @@ components:
         nameOnCard:
           type: string
           description: The name to emboss on the card.
-    CardUpdateResponse:
+    CardInquiryResponse:
       type: object
-      description: Response body for card update.
+      description: Response body for card inquiry.
       properties:
         cardNumber:
           type: string
-          description: The card number.
+          description: The masked card number.
+        accountNumber:
+          type: string
+          description: The associated account number.
         status:
           type: string
-          description: The updated status.
+          description: The card status.
+        expirationDate:
+          type: string
+          description: The card expiration date.
+        cardType:
+          type: string
+          description: The card type.
+        nameOnCard:
+          type: string
+          description: The name on the card.
+    CardUpdateRequest:
+      type: object
+      description: Request body for updating card attributes.
+      properties:
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - BLOCKED
+          - LOST
+          - STOLEN
+          description: The updated card status.
   parameters:
     CardNumber:
       name: cardNumber
@@ -232,5 +232,5 @@ components:
       bearerFormat: JWT
       description: OAuth 2.0 Bearer token for API authentication.
 externalDocs:
-  description: BankingHub API Documentation
-  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md
+  description: CardDeveloper API Documentation
+  url: https://developer.fiserv.com/product/CardDeveloper/docs/?path=docs/gettingstarted/getting-started.md

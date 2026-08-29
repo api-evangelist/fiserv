@@ -1,19 +1,20 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Fiserv BankingHub 3-D Secure Tokens API
-  description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+  title: Fiserv CommerceHub Tokens API
+  description: The Fiserv CommerceHub API provides a unified RESTful interface for processing payments, managing tokens, verifying payment sources, and handling 3-D Secure authentication. CommerceHub enables merchants to accept payments through multiple channels including online, mobile, and in-app, with support for charges, pre-authorizations, captures, refunds, cancellations, and tokenization of payment credentials.
   version: 1.0.0
   contact:
     name: Fiserv Developer Support
-    url: https://developer.fiserv.com/product/BankingHub
+    url: https://developer.fiserv.com/support
   termsOfService: https://www.fiserv.com/en/legal.html
 servers:
-- url: https://cert.api.fiservapps.com
+- url: https://connect-cert.fiservapis.com/ch
   description: Certification Environment
-- url: https://prod.api.fiservapps.com
+- url: https://connect.fiservapis.com/ch
   description: Production Environment
 security:
-- bearerAuth: []
+- apiKeyAuth: []
+  hmacAuth: []
 tags:
 - name: Tokens
   description: Create, manage, and use payment tokens for secure storage of payment credentials.
@@ -57,42 +58,53 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: HMAC authorization token for request authentication.
+    Timestamp:
+      name: Timestamp
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Epoch timestamp in milliseconds of the request.
+    ContentType:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+      description: The media type of the request body.
+    ApiKey:
+      name: Api-Key
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The API key assigned to the merchant.
+    ClientRequestId:
+      name: Client-Request-Id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: A unique identifier for the request, used for idempotency and troubleshooting.
   schemas:
-    PaymentSource:
+    TokenRequest:
       type: object
-      description: The payment source for the transaction, such as a card or token.
+      description: Request body for creating a payment token.
+      required:
+      - source
       properties:
-        sourceType:
-          type: string
-          enum:
-          - PaymentCard
-          - PaymentToken
-          - PaymentSession
-          - GooglePay
-          - ApplePay
-          description: The type of payment source being used.
-        card:
-          $ref: '#/components/schemas/Card'
-        token:
-          $ref: '#/components/schemas/Token'
-    Card:
-      type: object
-      description: Payment card details.
-      properties:
-        cardData:
-          type: string
-          description: The card number (PAN) or encrypted card data.
-        expirationMonth:
-          type: string
-          pattern: ^\d{2}$
-          description: Card expiration month in MM format.
-        expirationYear:
-          type: string
-          pattern: ^\d{4}$
-          description: Card expiration year in YYYY format.
-        securityCode:
-          type: string
-          description: The card verification value (CVV/CVC).
+        source:
+          $ref: '#/components/schemas/PaymentSource'
     TokenResponse:
       type: object
       description: Response body for token creation.
@@ -106,32 +118,6 @@ components:
           items:
             $ref: '#/components/schemas/Token'
           description: The generated payment tokens.
-    TokenRequest:
-      type: object
-      description: Request body for creating a payment token.
-      required:
-      - source
-      properties:
-        source:
-          $ref: '#/components/schemas/PaymentSource'
-    GatewayResponse:
-      type: object
-      description: The gateway processing response details.
-      properties:
-        transactionType:
-          type: string
-          description: The type of transaction that was processed.
-        transactionState:
-          type: string
-          enum:
-          - AUTHORIZED
-          - CAPTURED
-          - DECLINED
-          - VOIDED
-          - REFUNDED
-          description: The current state of the transaction.
-        transactionProcessingDetails:
-          $ref: '#/components/schemas/TransactionProcessingDetails'
     Token:
       type: object
       description: Payment token details.
@@ -150,6 +136,40 @@ components:
           type: string
           pattern: ^\d{4}$
           description: Token expiration year in YYYY format.
+    PaymentSource:
+      type: object
+      description: The payment source for the transaction, such as a card or token.
+      properties:
+        sourceType:
+          type: string
+          enum:
+          - PaymentCard
+          - PaymentToken
+          - PaymentSession
+          - GooglePay
+          - ApplePay
+          description: The type of payment source being used.
+        card:
+          $ref: '#/components/schemas/Card'
+        token:
+          $ref: '#/components/schemas/Token'
+    TransactionProcessingDetails:
+      type: object
+      description: Transaction processing identifiers and details.
+      properties:
+        transactionId:
+          type: string
+          description: The gateway-assigned transaction identifier.
+        orderId:
+          type: string
+          description: The order identifier associated with the transaction.
+        transactionTimestamp:
+          type: string
+          format: date-time
+          description: The timestamp when the transaction was processed.
+        apiTraceId:
+          type: string
+          description: A unique trace identifier for the API request.
     ErrorResponse:
       type: object
       description: Error response returned when a request fails.
@@ -171,67 +191,53 @@ components:
               field:
                 type: string
                 description: The field that caused the error, if applicable.
-    TransactionProcessingDetails:
+    Card:
       type: object
-      description: Transaction processing identifiers and details.
+      description: Payment card details.
       properties:
-        transactionId:
+        cardData:
           type: string
-          description: The gateway-assigned transaction identifier.
-        orderId:
+          description: The card number (PAN) or encrypted card data.
+        expirationMonth:
           type: string
-          description: The order identifier associated with the transaction.
-        transactionTimestamp:
+          pattern: ^\d{2}$
+          description: Card expiration month in MM format.
+        expirationYear:
           type: string
-          format: date-time
-          description: The timestamp when the transaction was processed.
-        apiTraceId:
+          pattern: ^\d{4}$
+          description: Card expiration year in YYYY format.
+        securityCode:
           type: string
-          description: A unique trace identifier for the API request.
-  parameters:
-    ApiKey:
-      name: Api-Key
-      in: header
-      required: true
-      schema:
-        type: string
-      description: The API key assigned to the merchant.
-    Authorization:
-      name: Authorization
-      in: header
-      required: true
-      schema:
-        type: string
-      description: HMAC authorization token for request authentication.
-    Timestamp:
-      name: Timestamp
-      in: header
-      required: true
-      schema:
-        type: integer
-        format: int64
-      description: Epoch timestamp in milliseconds of the request.
-    ClientRequestId:
-      name: Client-Request-Id
-      in: header
-      required: true
-      schema:
-        type: string
-      description: A unique identifier for the request, used for idempotency and troubleshooting.
-    ContentType:
-      name: Content-Type
-      in: header
-      required: true
-      schema:
-        type: string
-        default: application/json
-      description: The media type of the request body.
+          description: The card verification value (CVV/CVC).
+    GatewayResponse:
+      type: object
+      description: The gateway processing response details.
+      properties:
+        transactionType:
+          type: string
+          description: The type of transaction that was processed.
+        transactionState:
+          type: string
+          enum:
+          - AUTHORIZED
+          - CAPTURED
+          - DECLINED
+          - VOIDED
+          - REFUNDED
+          description: The current state of the transaction.
+        transactionProcessingDetails:
+          $ref: '#/components/schemas/TransactionProcessingDetails'
   securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: OAuth 2.0 Bearer token for API authentication.
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Api-Key
+      description: API key provided by Fiserv for authenticating requests.
+    hmacAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: HMAC signature generated using the API secret, request timestamp, and request payload for message integrity verification.
 externalDocs:
-  description: BankingHub API Documentation
-  url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md
+  description: CommerceHub API Documentation
+  url: https://developer.fiserv.com/product/CommerceHub/docs/?path=docs/Resources/API-Documents/Use-Our-APIs.md

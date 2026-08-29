@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Fiserv BankingHub 3-D Secure Payments API
+  title: Fiserv BankingHub Payments API
   description: The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
   version: 1.0.0
   contact:
@@ -97,22 +97,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    PaymentReversalResponse:
-      type: object
-      description: Response body for payment reversal.
-      properties:
-        paymentId:
-          type: string
-          description: The reversed payment identifier.
-        status:
-          type: string
-          description: The reversal status.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
     PaymentAddResponse:
       type: object
       description: Response body for payment processing.
@@ -129,6 +113,54 @@ components:
         statusDescription:
           type: string
           description: The response status description.
+    PaymentReversalResponse:
+      type: object
+      description: Response body for payment reversal.
+      properties:
+        paymentId:
+          type: string
+          description: The reversed payment identifier.
+        status:
+          type: string
+          description: The reversal status.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: string
+          description: The error status code.
+        statusDescription:
+          type: string
+          description: A human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
+              field:
+                type: string
+                description: The field that caused the error.
+          description: Detailed error information.
+    PaymentReversalRequest:
+      type: object
+      description: Request body for reversing a payment.
+      properties:
+        reason:
+          type: string
+          description: The reason for the reversal.
     PaymentAddRequest:
       type: object
       description: Request body for processing a payment.
@@ -171,38 +203,6 @@ components:
         memo:
           type: string
           description: A memo or description for the payment.
-    PaymentReversalRequest:
-      type: object
-      description: Request body for reversing a payment.
-      properties:
-        reason:
-          type: string
-          description: The reason for the reversal.
-    ErrorResponse:
-      type: object
-      description: Standard error response.
-      properties:
-        statusCode:
-          type: string
-          description: The error status code.
-        statusDescription:
-          type: string
-          description: A human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: The specific error code.
-              message:
-                type: string
-                description: The error message.
-              field:
-                type: string
-                description: The field that caused the error.
-          description: Detailed error information.
   securitySchemes:
     bearerAuth:
       type: http
