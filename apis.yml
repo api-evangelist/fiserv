@@ -599,6 +599,9 @@ apis:
     url: >-
       https://developer.fiserv.com/product/CardDeveloper/docs/?path=docs/gettingstarted/getting-started.md
 common:
+  - type: CapabilityMap
+    url: capabilities/fiserv-capability-edges.yml
+    name: Fiserv Business Capability Map
   - type: Community
     url: https://www.fiserv.com/en/forum
   - type: PrivacyPolicy

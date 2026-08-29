@@ -1,0 +1,152 @@
+slug: fiserv
+provider: Fiserv
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 16
+edges:
+- tag: Authorization
+  spec_file: fiserv-authorization-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.9
+  evidence: PUT /auth authorizeTransaction  Fiserv Authorize a payment transaction
+  reason: Card gateway authorisation of a payment transaction — card transaction processing (authorisation).
+- tag: Authorizations
+  spec_file: fiserv-authorizations-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.85
+  evidence: POST /v1/authorizations createAuthorization ... POST /v1/authorizations/{authorizationId}/cancel
+  reason: Card program authorisation management (create/cancel authorisations) for credit and debit card
+    programs — card transaction authorisation processing.
+- tag: Capture
+  spec_file: fiserv-capture-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.85
+  evidence: PUT /capture captureTransaction  Fiserv Capture an authorized transaction
+  reason: Capture of an authorised card transaction — core card transaction processing.
+- tag: Captures
+  spec_file: fiserv-captures-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.85
+  evidence: POST /payments/v1/charges/{transactionId}/capture captureCharge  Fiserv Capture an authorized
+    payment
+  reason: Capture of authorised card payment via CommerceHub — card transaction processing.
+- tag: Cards
+  spec_file: fiserv-cards-api-openapi.yml
+  capability_id: BC-1340.60
+  capability_id_l1: BC-1340
+  capability_name: Card Issuance Management
+  confidence: 0.85
+  evidence: POST /v2/cards/card issueCard  Fiserv Issue a new card
+  reason: Card issuance and card record maintenance for credit/debit card programs.
+- tag: Charges
+  spec_file: fiserv-charges-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.85
+  evidence: POST /payments/v1/charges createCharge  Fiserv Process a payment charge
+  reason: Processing a card payment charge through the merchant gateway.
+- tag: 3-D Secure
+  spec_file: fiserv-3-d-secure-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.8
+  evidence: 'POST /payments-vas/v1/3ds/authentication  authenticate3DS  Initiate 3-D Secure authentication;
+    schemas: Card, PaymentSource, TransactionProcessingDetails'
+  reason: 3-D Secure cardholder authentication sits within card transaction processing (authorisation
+    and fraud screening) for card payments.
+- tag: Cancels
+  spec_file: fiserv-cancels-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.8
+  evidence: POST /payments/v1/charges/{transactionId}/cancel cancelCharge  Fiserv Cancel or void a transaction
+  reason: Voiding a card payment transaction in the CommerceHub payment processing flow.
+- tag: Parties
+  spec_file: fiserv-parties-api-openapi.yml
+  capability_id: BC-1300.40
+  capability_id_l1: BC-1300
+  capability_name: Customer Information Management
+  confidence: 0.8
+  evidence: POST /banking/parties addParty  Fiserv Create a customer party ... party (customer) management
+  reason: Core banking customer/party record creation and maintenance — banking customer information management.
+- tag: Payments
+  spec_file: fiserv-payments-api-openapi.yml
+  capability_id: BC-1340.20
+  capability_id_l1: BC-1340
+  capability_name: Payment Processing Management
+  confidence: 0.8
+  evidence: POST /banking/payments createPayment "Process a payment"; POST /banking/payments/{paymentId}/reverse
+    "Reverse a payment"
+  reason: Core banking payment execution and reversal — plainly Payments & Card Management; operation
+    wording ('Process a payment') points to payment processing, though initiation is an adjacent reading.
+- tag: Transfers
+  spec_file: fiserv-transfers-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.75
+  evidence: POST /banking/transfers createTransfer "Initiate a fund transfer"
+  reason: Fund transfer initiation and inquiry in core banking is payment initiation.
+- tag: Refund
+  spec_file: fiserv-refund-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.72
+  evidence: PUT /refund refundTransaction "Refund a settled transaction"
+  reason: Card gateway refund of a settled transaction is card transaction processing (authorisation/refund/chargeback
+    flows).
+- tag: Refunds
+  spec_file: fiserv-refunds-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.72
+  evidence: POST /payments/v1/charges/{transactionId}/refund refundCharge "Refund a captured transaction"
+  reason: Merchant acquiring refund of a captured card charge — card transaction processing.
+- tag: BIN
+  spec_file: fiserv-bin-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.7
+  evidence: GET /bin/{token}/{merchid} lookupBIN  Fiserv Look up BIN data
+  reason: BIN lookup for a tokenised card in a payment gateway supports card transaction routing/authorisation
+    decisions; narrow but clearly card-payment processing.
+- tag: Inquire
+  spec_file: fiserv-inquire-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.7
+  evidence: GET /inquire/{retref}/{merchid} inquireTransaction  Fiserv Inquire about a transaction
+  reason: Transaction status inquiry within the card payment gateway; supports card transaction processing
+    operations rather than a distinct business capability.
+- tag: Void
+  spec_file: fiserv-void-api-openapi.yml
+  capability_id: BC-1340.70
+  capability_id_l1: BC-1340
+  capability_name: Card Transaction Processing Management
+  confidence: 0.7
+  evidence: PUT /void voidTransaction "Void a transaction"
+  reason: Voiding an authorised card gateway transaction is card transaction processing.
