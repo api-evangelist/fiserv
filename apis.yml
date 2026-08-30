@@ -561,7 +561,7 @@ apis:
   description: Verify payment cards or tokens before processing a transaction.
   humanURL: https://developer.fiserv.com/product/CommerceHub
   tags:
-  - Verification
+  - Verifications
   tags_raw:
   - Verifications
   properties:
