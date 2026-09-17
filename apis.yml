@@ -67,28 +67,6 @@ apis:
     Fiserv provides webhook-based event notifications across the payments lifecycle. Merchants can subscribe
     to webhooks to receive real-time notifications for key events including transaction status changes,
     settlement updates, dispute notifications, and checkout completions.
-- aid: fiserv:fiserv-3-d-secure-api
-  name: Fiserv 3-D Secure API
-  description: Manage 3-D Secure authentication flows for cardholder verification.
-  humanURL: https://developer.fiserv.com/product/CommerceHub
-  tags:
-  - 3D Secure
-  tags_raw:
-  - 3-D Secure
-  properties:
-  - type: OpenAPI
-    url: openapi/fiserv-3-d-secure-api-openapi.yml
-  - type: Documentation
-    url: >-
-      https://developer.fiserv.com/product/CommerceHub/docs/?path=docs/Resources/API-Documents/Use-Our-APIs.md
-  - type: Documentation
-    url: >-
-      https://developer.fiserv.com/product/CardPointe/docs/?path=docs%2FAPIs%2FCardPointeGatewayAPI.md
-  - type: Documentation
-    url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md
-  - type: Documentation
-    url: >-
-      https://developer.fiserv.com/product/CardDeveloper/docs/?path=docs/gettingstarted/getting-started.md
 - aid: fiserv:fiserv-accounts-api
   name: Fiserv Accounts API
   description: Create, retrieve, update, and manage deposit and loan accounts.
@@ -587,6 +565,26 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/fiserv-void-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://developer.fiserv.com/product/CommerceHub/docs/?path=docs/Resources/API-Documents/Use-Our-APIs.md
+  - type: Documentation
+    url: >-
+      https://developer.fiserv.com/product/CardPointe/docs/?path=docs%2FAPIs%2FCardPointeGatewayAPI.md
+  - type: Documentation
+    url: https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md
+  - type: Documentation
+    url: >-
+      https://developer.fiserv.com/product/CardDeveloper/docs/?path=docs/gettingstarted/getting-started.md
+- aid: fiserv:fiserv-3d-secure-api
+  name: Fiserv 3D Secure API
+  description: Manage 3-D Secure authentication flows for cardholder verification.
+  humanURL: https://docs.fiserv.dev/public/docs/webhooks-and-status-updates-checkout
+  tags:
+  - 3D Secure
+  properties:
+  - type: OpenAPI
+    url: openapi/fiserv-3d-secure-api-openapi.yml
   - type: Documentation
     url: >-
       https://developer.fiserv.com/product/CommerceHub/docs/?path=docs/Resources/API-Documents/Use-Our-APIs.md
