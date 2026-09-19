@@ -114,6 +114,8 @@ apis:
   description: Create and manage transaction authorizations.
   humanURL: https://developer.fiserv.com/product/CommerceHub
   tags:
+  - Authorization
+  tags_raw:
   - Authorizations
   properties:
   - type: OpenAPI
@@ -357,6 +359,8 @@ apis:
   description: Manage stored customer payment profiles for recurring or future transactions.
   humanURL: https://developer.fiserv.com/product/CommerceHub
   tags:
+  - Profiles
+  tags_raw:
   - Profile
   properties:
   - type: OpenAPI
