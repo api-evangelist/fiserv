@@ -84,6 +84,38 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    LimitsUpdateResponse:
+      type: object
+      description: Response body for limits update.
+      properties:
+        accountNumber:
+          type: string
+          description: The account number.
+        status:
+          type: string
+          description: The update status.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
     LimitsUpdateRequest:
       type: object
       description: Request body for updating account limits.
@@ -109,28 +141,6 @@ components:
           type: number
           format: double
           description: The new cash advance limit.
-    ErrorResponse:
-      type: object
-      description: Standard error response.
-      properties:
-        code:
-          type: string
-          description: The error code.
-        message:
-          type: string
-          description: The error message.
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: The field that caused the error.
-              message:
-                type: string
-                description: The field-level error message.
-          description: Detailed field-level errors.
     LimitsResponse:
       type: object
       description: Response body for account limits inquiry.
@@ -158,16 +168,6 @@ components:
           type: number
           format: double
           description: The available cash advance amount.
-    LimitsUpdateResponse:
-      type: object
-      description: Response body for limits update.
-      properties:
-        accountNumber:
-          type: string
-          description: The account number.
-        status:
-          type: string
-          description: The update status.
   securitySchemes:
     bearerAuth:
       type: http

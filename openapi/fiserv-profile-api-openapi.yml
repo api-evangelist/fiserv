@@ -139,22 +139,19 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ProfileDeleteResponse:
+    ErrorResponse:
       type: object
-      description: Profile deletion response.
+      description: Error response payload.
       properties:
-        profileid:
-          type: string
-          description: The deleted profile identifier.
         respstat:
           type: string
-          description: The response status.
+          description: The response status (C for declined/error).
         respcode:
           type: string
-          description: The response code.
+          description: The error response code.
         resptext:
           type: string
-          description: The response text.
+          description: A human-readable error message.
     ProfileResponse:
       type: object
       description: Profile response payload.
@@ -180,19 +177,22 @@ components:
         token:
           type: string
           description: The CardSecure token for the account.
-    ErrorResponse:
+    ProfileDeleteResponse:
       type: object
-      description: Error response payload.
+      description: Profile deletion response.
       properties:
+        profileid:
+          type: string
+          description: The deleted profile identifier.
         respstat:
           type: string
-          description: The response status (C for declined/error).
+          description: The response status.
         respcode:
           type: string
-          description: The error response code.
+          description: The response code.
         resptext:
           type: string
-          description: A human-readable error message.
+          description: The response text.
     ProfileRequest:
       type: object
       description: Profile creation or update request.

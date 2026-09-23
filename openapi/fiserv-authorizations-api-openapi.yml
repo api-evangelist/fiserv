@@ -85,6 +85,28 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
     AuthorizationRequest:
       type: object
       description: Request body for creating a transaction authorization.
@@ -109,38 +131,6 @@ components:
         merchantCategoryCode:
           type: string
           description: The merchant category code (MCC).
-    AuthorizationCancelResponse:
-      type: object
-      description: Response body for authorization cancellation.
-      properties:
-        authorizationId:
-          type: string
-          description: The cancelled authorization identifier.
-        status:
-          type: string
-          description: The cancellation status.
-    ErrorResponse:
-      type: object
-      description: Standard error response.
-      properties:
-        code:
-          type: string
-          description: The error code.
-        message:
-          type: string
-          description: The error message.
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: The field that caused the error.
-              message:
-                type: string
-                description: The field-level error message.
-          description: Detailed field-level errors.
     AuthorizationResponse:
       type: object
       description: Response body for authorization creation.
@@ -157,6 +147,16 @@ components:
         approvalCode:
           type: string
           description: The approval code if authorized.
+    AuthorizationCancelResponse:
+      type: object
+      description: Response body for authorization cancellation.
+      properties:
+        authorizationId:
+          type: string
+          description: The cancelled authorization identifier.
+        status:
+          type: string
+          description: The cancellation status.
   securitySchemes:
     bearerAuth:
       type: http

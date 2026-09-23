@@ -16,7 +16,7 @@ security:
 - apiKeyAuth: []
   hmacAuth: []
 tags:
-- name: 3-D Secure
+- name: 3D Secure
   description: Manage 3-D Secure authentication flows for cardholder verification.
 paths:
   /payments-vas/v1/3ds/authentication:
@@ -25,7 +25,7 @@ paths:
       summary: Fiserv Initiate 3-D Secure authentication
       description: Initiates a 3-D Secure authentication flow for cardholder verification. This step is used to authenticate the cardholder before processing a payment, enabling Strong Customer Authentication (SCA) compliance and potential liability shift.
       tags:
-      - 3-D Secure
+      - 3D Secure
       parameters:
       - $ref: '#/components/parameters/ContentType'
       - $ref: '#/components/parameters/ClientRequestId'
@@ -59,28 +59,13 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   parameters:
-    Authorization:
-      name: Authorization
+    ClientRequestId:
+      name: Client-Request-Id
       in: header
       required: true
       schema:
         type: string
-      description: HMAC authorization token for request authentication.
-    ApiKey:
-      name: Api-Key
-      in: header
-      required: true
-      schema:
-        type: string
-      description: The API key assigned to the merchant.
-    Timestamp:
-      name: Timestamp
-      in: header
-      required: true
-      schema:
-        type: integer
-        format: int64
-      description: Epoch timestamp in milliseconds of the request.
+      description: A unique identifier for the request, used for idempotency and troubleshooting.
     ContentType:
       name: Content-Type
       in: header
@@ -89,32 +74,29 @@ components:
         type: string
         default: application/json
       description: The media type of the request body.
-    ClientRequestId:
-      name: Client-Request-Id
+    Timestamp:
+      name: Timestamp
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Epoch timestamp in milliseconds of the request.
+    ApiKey:
+      name: Api-Key
       in: header
       required: true
       schema:
         type: string
-      description: A unique identifier for the request, used for idempotency and troubleshooting.
+      description: The API key assigned to the merchant.
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: HMAC authorization token for request authentication.
   schemas:
-    Token:
-      type: object
-      description: Payment token details.
-      properties:
-        tokenData:
-          type: string
-          description: The token value representing the stored payment credential.
-        tokenSource:
-          type: string
-          description: The source or provider of the token.
-        expirationMonth:
-          type: string
-          pattern: ^\d{2}$
-          description: Token expiration month in MM format.
-        expirationYear:
-          type: string
-          pattern: ^\d{4}$
-          description: Token expiration year in YYYY format.
     PaymentSource:
       type: object
       description: The payment source for the transaction, such as a card or token.
@@ -132,23 +114,6 @@ components:
           $ref: '#/components/schemas/Card'
         token:
           $ref: '#/components/schemas/Token'
-    TransactionProcessingDetails:
-      type: object
-      description: Transaction processing identifiers and details.
-      properties:
-        transactionId:
-          type: string
-          description: The gateway-assigned transaction identifier.
-        orderId:
-          type: string
-          description: The order identifier associated with the transaction.
-        transactionTimestamp:
-          type: string
-          format: date-time
-          description: The timestamp when the transaction was processed.
-        apiTraceId:
-          type: string
-          description: A unique trace identifier for the API request.
     ErrorResponse:
       type: object
       description: Error response returned when a request fails.
@@ -170,6 +135,53 @@ components:
               field:
                 type: string
                 description: The field that caused the error, if applicable.
+    Token:
+      type: object
+      description: Payment token details.
+      properties:
+        tokenData:
+          type: string
+          description: The token value representing the stored payment credential.
+        tokenSource:
+          type: string
+          description: The source or provider of the token.
+        expirationMonth:
+          type: string
+          pattern: ^\d{2}$
+          description: Token expiration month in MM format.
+        expirationYear:
+          type: string
+          pattern: ^\d{4}$
+          description: Token expiration year in YYYY format.
+    TransactionProcessingDetails:
+      type: object
+      description: Transaction processing identifiers and details.
+      properties:
+        transactionId:
+          type: string
+          description: The gateway-assigned transaction identifier.
+        orderId:
+          type: string
+          description: The order identifier associated with the transaction.
+        transactionTimestamp:
+          type: string
+          format: date-time
+          description: The timestamp when the transaction was processed.
+        apiTraceId:
+          type: string
+          description: A unique trace identifier for the API request.
+    ThreeDSAuthenticationResponse:
+      type: object
+      description: Response body for 3-D Secure authentication.
+      properties:
+        gatewayResponse:
+          $ref: '#/components/schemas/GatewayResponse'
+        authenticationStatus:
+          type: string
+          description: The status of the 3-D Secure authentication.
+        authenticationValue:
+          type: string
+          description: The authentication value (CAVV/AAV) from the issuer.
     ThreeDSAuthenticationRequest:
       type: object
       description: Request body for initiating 3-D Secure authentication.
@@ -198,30 +210,6 @@ components:
         securityCode:
           type: string
           description: The card verification value (CVV/CVC).
-    ThreeDSAuthenticationResponse:
-      type: object
-      description: Response body for 3-D Secure authentication.
-      properties:
-        gatewayResponse:
-          $ref: '#/components/schemas/GatewayResponse'
-        authenticationStatus:
-          type: string
-          description: The status of the 3-D Secure authentication.
-        authenticationValue:
-          type: string
-          description: The authentication value (CAVV/AAV) from the issuer.
-    Amount:
-      type: object
-      description: Represents a monetary amount with currency.
-      properties:
-        total:
-          type: number
-          format: double
-          description: The total transaction amount.
-        currency:
-          type: string
-          pattern: ^[A-Z]{3}$
-          description: The ISO 4217 three-letter currency code.
     GatewayResponse:
       type: object
       description: The gateway processing response details.
@@ -240,6 +228,18 @@ components:
           description: The current state of the transaction.
         transactionProcessingDetails:
           $ref: '#/components/schemas/TransactionProcessingDetails'
+    Amount:
+      type: object
+      description: Represents a monetary amount with currency.
+      properties:
+        total:
+          type: number
+          format: double
+          description: The total transaction amount.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 three-letter currency code.
   securitySchemes:
     apiKeyAuth:
       type: apiKey

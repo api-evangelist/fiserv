@@ -119,16 +119,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    CardUpdateResponse:
-      type: object
-      description: Response body for card update.
-      properties:
-        cardNumber:
-          type: string
-          description: The card number.
-        status:
-          type: string
-          description: The updated status.
     ErrorResponse:
       type: object
       description: Standard error response.
@@ -151,19 +141,6 @@ components:
                 type: string
                 description: The field-level error message.
           description: Detailed field-level errors.
-    CardIssueResponse:
-      type: object
-      description: Response body for card issuance.
-      properties:
-        cardNumber:
-          type: string
-          description: The issued card number (masked).
-        expirationDate:
-          type: string
-          description: The card expiration date.
-        status:
-          type: string
-          description: The card status.
     CardIssueRequest:
       type: object
       description: Request body for issuing a card.
@@ -182,6 +159,42 @@ components:
         nameOnCard:
           type: string
           description: The name to emboss on the card.
+    CardUpdateResponse:
+      type: object
+      description: Response body for card update.
+      properties:
+        cardNumber:
+          type: string
+          description: The card number.
+        status:
+          type: string
+          description: The updated status.
+    CardIssueResponse:
+      type: object
+      description: Response body for card issuance.
+      properties:
+        cardNumber:
+          type: string
+          description: The issued card number (masked).
+        expirationDate:
+          type: string
+          description: The card expiration date.
+        status:
+          type: string
+          description: The card status.
+    CardUpdateRequest:
+      type: object
+      description: Request body for updating card attributes.
+      properties:
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - BLOCKED
+          - LOST
+          - STOLEN
+          description: The updated card status.
     CardInquiryResponse:
       type: object
       description: Response body for card inquiry.
@@ -204,19 +217,6 @@ components:
         nameOnCard:
           type: string
           description: The name on the card.
-    CardUpdateRequest:
-      type: object
-      description: Request body for updating card attributes.
-      properties:
-        status:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - BLOCKED
-          - LOST
-          - STOLEN
-          description: The updated card status.
   parameters:
     CardNumber:
       name: cardNumber

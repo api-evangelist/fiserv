@@ -55,28 +55,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  parameters:
-    MerchantIdPath:
-      name: merchid
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The CardPointe merchant identifier.
   schemas:
-    ErrorResponse:
-      type: object
-      description: Error response payload.
-      properties:
-        respstat:
-          type: string
-          description: The response status (C for declined/error).
-        respcode:
-          type: string
-          description: The error response code.
-        resptext:
-          type: string
-          description: A human-readable error message.
     BINResponse:
       type: object
       description: BIN lookup response payload.
@@ -96,6 +75,27 @@ components:
         corporate:
           type: string
           description: Whether the card is a corporate card.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
+  parameters:
+    MerchantIdPath:
+      name: merchid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The CardPointe merchant identifier.
   securitySchemes:
     basicAuth:
       type: http

@@ -97,70 +97,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    PaymentAddResponse:
-      type: object
-      description: Response body for payment processing.
-      properties:
-        paymentId:
-          type: string
-          description: The unique payment identifier.
-        status:
-          type: string
-          description: The payment status.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
-    PaymentReversalResponse:
-      type: object
-      description: Response body for payment reversal.
-      properties:
-        paymentId:
-          type: string
-          description: The reversed payment identifier.
-        status:
-          type: string
-          description: The reversal status.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
-    ErrorResponse:
-      type: object
-      description: Standard error response.
-      properties:
-        statusCode:
-          type: string
-          description: The error status code.
-        statusDescription:
-          type: string
-          description: A human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: The specific error code.
-              message:
-                type: string
-                description: The error message.
-              field:
-                type: string
-                description: The field that caused the error.
-          description: Detailed error information.
-    PaymentReversalRequest:
-      type: object
-      description: Request body for reversing a payment.
-      properties:
-        reason:
-          type: string
-          description: The reason for the reversal.
     PaymentAddRequest:
       type: object
       description: Request body for processing a payment.
@@ -203,6 +139,70 @@ components:
         memo:
           type: string
           description: A memo or description for the payment.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: string
+          description: The error status code.
+        statusDescription:
+          type: string
+          description: A human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
+              field:
+                type: string
+                description: The field that caused the error.
+          description: Detailed error information.
+    PaymentReversalRequest:
+      type: object
+      description: Request body for reversing a payment.
+      properties:
+        reason:
+          type: string
+          description: The reason for the reversal.
+    PaymentAddResponse:
+      type: object
+      description: Response body for payment processing.
+      properties:
+        paymentId:
+          type: string
+          description: The unique payment identifier.
+        status:
+          type: string
+          description: The payment status.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+    PaymentReversalResponse:
+      type: object
+      description: Response body for payment reversal.
+      properties:
+        paymentId:
+          type: string
+          description: The reversed payment identifier.
+        status:
+          type: string
+          description: The reversal status.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
   securitySchemes:
     bearerAuth:
       type: http

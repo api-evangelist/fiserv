@@ -66,28 +66,13 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   parameters:
-    Authorization:
-      name: Authorization
+    ClientRequestId:
+      name: Client-Request-Id
       in: header
       required: true
       schema:
         type: string
-      description: HMAC authorization token for request authentication.
-    ApiKey:
-      name: Api-Key
-      in: header
-      required: true
-      schema:
-        type: string
-      description: The API key assigned to the merchant.
-    Timestamp:
-      name: Timestamp
-      in: header
-      required: true
-      schema:
-        type: integer
-        format: int64
-      description: Epoch timestamp in milliseconds of the request.
+      description: A unique identifier for the request, used for idempotency and troubleshooting.
     ContentType:
       name: Content-Type
       in: header
@@ -96,13 +81,28 @@ components:
         type: string
         default: application/json
       description: The media type of the request body.
-    ClientRequestId:
-      name: Client-Request-Id
+    Timestamp:
+      name: Timestamp
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Epoch timestamp in milliseconds of the request.
+    ApiKey:
+      name: Api-Key
       in: header
       required: true
       schema:
         type: string
-      description: A unique identifier for the request, used for idempotency and troubleshooting.
+      description: The API key assigned to the merchant.
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: HMAC authorization token for request authentication.
     TransactionId:
       name: transactionId
       in: path
@@ -111,14 +111,35 @@ components:
         type: string
       description: The unique identifier of the original transaction.
   schemas:
-    CaptureResponse:
+    ErrorResponse:
       type: object
-      description: Response body for a capture transaction.
+      description: Error response returned when a request fails.
       properties:
-        gatewayResponse:
-          $ref: '#/components/schemas/GatewayResponse'
-        transactionProcessingDetails:
-          $ref: '#/components/schemas/TransactionProcessingDetails'
+        error:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The error type classification.
+              code:
+                type: string
+                description: The error code.
+              message:
+                type: string
+                description: A human-readable error message.
+              field:
+                type: string
+                description: The field that caused the error, if applicable.
+    CaptureRequest:
+      type: object
+      description: Request body for capturing an authorized transaction.
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        transactionDetails:
+          $ref: '#/components/schemas/TransactionDetails'
     TransactionProcessingDetails:
       type: object
       description: Transaction processing identifiers and details.
@@ -149,35 +170,6 @@ components:
         merchantTransactionId:
           type: string
           description: The merchant-assigned transaction identifier.
-    ErrorResponse:
-      type: object
-      description: Error response returned when a request fails.
-      properties:
-        error:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: The error type classification.
-              code:
-                type: string
-                description: The error code.
-              message:
-                type: string
-                description: A human-readable error message.
-              field:
-                type: string
-                description: The field that caused the error, if applicable.
-    CaptureRequest:
-      type: object
-      description: Request body for capturing an authorized transaction.
-      properties:
-        amount:
-          $ref: '#/components/schemas/Amount'
-        transactionDetails:
-          $ref: '#/components/schemas/TransactionDetails'
     Amount:
       type: object
       description: Represents a monetary amount with currency.
@@ -206,6 +198,14 @@ components:
           - VOIDED
           - REFUNDED
           description: The current state of the transaction.
+        transactionProcessingDetails:
+          $ref: '#/components/schemas/TransactionProcessingDetails'
+    CaptureResponse:
+      type: object
+      description: Response body for a capture transaction.
+      properties:
+        gatewayResponse:
+          $ref: '#/components/schemas/GatewayResponse'
         transactionProcessingDetails:
           $ref: '#/components/schemas/TransactionProcessingDetails'
   securitySchemes:

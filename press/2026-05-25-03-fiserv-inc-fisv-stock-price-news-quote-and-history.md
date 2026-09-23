@@ -1,7 +1,9 @@
 ---
 title: Fiserv, Inc. (FISV) Stock Price, News, Quote & History
 url: https://finance.yahoo.com/quote/FISV/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Fiserv" press release artificial intelligence'
 position: 3
 source: serpapi-google

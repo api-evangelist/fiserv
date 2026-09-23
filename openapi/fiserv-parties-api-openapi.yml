@@ -167,72 +167,6 @@ components:
         statusDescription:
           type: string
           description: The response status description.
-    PartyAddRequest:
-      type: object
-      description: Request body for creating a customer party.
-      required:
-      - partyType
-      - name
-      properties:
-        partyType:
-          type: string
-          enum:
-          - INDIVIDUAL
-          - ORGANIZATION
-          description: The type of party.
-        name:
-          type: object
-          description: The party name.
-          properties:
-            firstName:
-              type: string
-              description: The first name (for individuals).
-            lastName:
-              type: string
-              description: The last name (for individuals).
-            organizationName:
-              type: string
-              description: The organization name (for organizations).
-        taxId:
-          type: string
-          description: The tax identification number (SSN or EIN).
-        dateOfBirth:
-          type: string
-          format: date
-          description: The date of birth (for individuals).
-        contact:
-          type: object
-          description: Contact information.
-          properties:
-            email:
-              type: string
-              format: email
-              description: The email address.
-            phone:
-              type: string
-              description: The phone number.
-        address:
-          type: object
-          description: The physical address.
-          properties:
-            line1:
-              type: string
-              description: Address line 1.
-            line2:
-              type: string
-              description: Address line 2.
-            city:
-              type: string
-              description: The city.
-            state:
-              type: string
-              description: The state or province.
-            postalCode:
-              type: string
-              description: The postal code.
-            country:
-              type: string
-              description: The country code.
     PartyUpdateRequest:
       type: object
       description: Request body for updating party details.
@@ -307,6 +241,72 @@ components:
             line1:
               type: string
               description: Address line 1.
+            city:
+              type: string
+              description: The city.
+            state:
+              type: string
+              description: The state or province.
+            postalCode:
+              type: string
+              description: The postal code.
+            country:
+              type: string
+              description: The country code.
+    PartyAddRequest:
+      type: object
+      description: Request body for creating a customer party.
+      required:
+      - partyType
+      - name
+      properties:
+        partyType:
+          type: string
+          enum:
+          - INDIVIDUAL
+          - ORGANIZATION
+          description: The type of party.
+        name:
+          type: object
+          description: The party name.
+          properties:
+            firstName:
+              type: string
+              description: The first name (for individuals).
+            lastName:
+              type: string
+              description: The last name (for individuals).
+            organizationName:
+              type: string
+              description: The organization name (for organizations).
+        taxId:
+          type: string
+          description: The tax identification number (SSN or EIN).
+        dateOfBirth:
+          type: string
+          format: date
+          description: The date of birth (for individuals).
+        contact:
+          type: object
+          description: Contact information.
+          properties:
+            email:
+              type: string
+              format: email
+              description: The email address.
+            phone:
+              type: string
+              description: The phone number.
+        address:
+          type: object
+          description: The physical address.
+          properties:
+            line1:
+              type: string
+              description: Address line 1.
+            line2:
+              type: string
+              description: Address line 2.
             city:
               type: string
               description: The city.

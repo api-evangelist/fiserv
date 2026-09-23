@@ -34,7 +34,9 @@
     "fiserv-tokens-api-openapi.yml",
     "fiserv-verifications-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -44,10 +46,12 @@
     "fiserv-cardpointe-gateway-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "fiserv-commercehub-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "tag 'Accounts' spans 2 source specs (fiserv-bankinghub-openapi.yml, fiserv-carddeveloper-openapi.yml): per-path servers applied",
-    "tag 'Transactions' spans 2 source specs (fiserv-bankinghub-openapi.yml, fiserv-carddeveloper-openapi.yml): per-path servers applied"
+    "tag 'Transactions' spans 2 source specs (fiserv-bankinghub-openapi.yml, fiserv-carddeveloper-openapi.yml): per-path servers applied",
+    "superseded outputs removed: fiserv-3d-secure-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 27 total)"
   ],
   "skipped": [
-    "fiserv-3-d-secure-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fiserv-3d-secure-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "fiserv-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "fiserv-authorization-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "fiserv-authorizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",

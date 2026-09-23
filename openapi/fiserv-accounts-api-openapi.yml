@@ -196,49 +196,19 @@ paths:
       description: Production Environment
 components:
   schemas:
-    AccountAddRequest:
+    AccountUpdateResponse:
       type: object
-      description: Request body for creating a new account.
-      required:
-      - partyId
-      - accountType
+      description: Response body for account update.
       properties:
-        partyId:
+        accountId:
           type: string
-          description: The party identifier for the account owner.
-        accountType:
+          description: The account identifier.
+        statusCode:
           type: string
-          enum:
-          - DDA
-          - SDA
-          - MMA
-          - CDA
-          - LOAN
-          description: The type of account to create.
-        productCode:
+          description: The response status code.
+        statusDescription:
           type: string
-          description: The product code for the account.
-        branchId:
-          type: string
-          description: The branch identifier where the account is opened.
-        initialDeposit:
-          type: number
-          format: double
-          description: The initial deposit amount.
-        currency:
-          type: string
-          pattern: ^[A-Z]{3}$
-          description: The ISO 4217 currency code.
-    AccountUpdateRequest:
-      type: object
-      description: Request body for updating account attributes.
-      properties:
-        status:
-          type: string
-          description: The updated account status.
-        description:
-          type: string
-          description: The updated account description.
+          description: The response status description.
     ErrorResponse:
       type: object
       description: Standard error response.
@@ -264,6 +234,35 @@ components:
                 type: string
                 description: The field that caused the error.
           description: Detailed error information.
+    AccountAddResponse:
+      type: object
+      description: Response body for account creation.
+      properties:
+        accountId:
+          type: string
+          description: The newly created account identifier.
+        accountType:
+          type: string
+          description: The account type.
+        status:
+          type: string
+          description: The account status.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+    AccountUpdateRequest:
+      type: object
+      description: Request body for updating account attributes.
+      properties:
+        status:
+          type: string
+          description: The updated account status.
+        description:
+          type: string
+          description: The updated account description.
     AccountInquiryResponse:
       type: object
       description: Response body for account inquiry.
@@ -300,60 +299,39 @@ components:
         branchId:
           type: string
           description: The branch identifier.
-    AccountAddResponse:
+    AccountAddRequest:
       type: object
-      description: Response body for account creation.
-      properties:
-        accountId:
-          type: string
-          description: The newly created account identifier.
-        accountType:
-          type: string
-          description: The account type.
-        status:
-          type: string
-          description: The account status.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
-    AccountUpdateResponse:
-      type: object
-      description: Response body for account update.
-      properties:
-        accountId:
-          type: string
-          description: The account identifier.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
-    AccountAddRequest_2:
-      type: object
-      description: Request body for creating a card account.
+      description: Request body for creating a new account.
       required:
+      - partyId
       - accountType
       properties:
+        partyId:
+          type: string
+          description: The party identifier for the account owner.
         accountType:
           type: string
           enum:
-          - CONSUMER_CREDIT
-          - COMMERCIAL_CREDIT
-          - CONSUMER_DEBIT
-          description: The type of card account.
-        creditLimit:
+          - DDA
+          - SDA
+          - MMA
+          - CDA
+          - LOAN
+          description: The type of account to create.
+        productCode:
+          type: string
+          description: The product code for the account.
+        branchId:
+          type: string
+          description: The branch identifier where the account is opened.
+        initialDeposit:
           type: number
           format: double
-          description: The credit limit for credit accounts.
-        billingCycleDay:
-          type: integer
-          minimum: 1
-          maximum: 28
-          description: The billing cycle day of the month.
+          description: The initial deposit amount.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 currency code.
     ErrorResponse_2:
       type: object
       description: Standard error response.
@@ -376,6 +354,16 @@ components:
                 type: string
                 description: The field-level error message.
           description: Detailed field-level errors.
+    AccountAddResponse_2:
+      type: object
+      description: Response body for account creation.
+      properties:
+        accountNumber:
+          type: string
+          description: The new account number.
+        status:
+          type: string
+          description: The account status.
     AccountInquiryResponse_2:
       type: object
       description: Response body for account inquiry.
@@ -409,16 +397,28 @@ components:
           type: string
           format: date
           description: The payment due date.
-    AccountAddResponse_2:
+    AccountAddRequest_2:
       type: object
-      description: Response body for account creation.
+      description: Request body for creating a card account.
+      required:
+      - accountType
       properties:
-        accountNumber:
+        accountType:
           type: string
-          description: The new account number.
-        status:
-          type: string
-          description: The account status.
+          enum:
+          - CONSUMER_CREDIT
+          - COMMERCIAL_CREDIT
+          - CONSUMER_DEBIT
+          description: The type of card account.
+        creditLimit:
+          type: number
+          format: double
+          description: The credit limit for credit accounts.
+        billingCycleDay:
+          type: integer
+          minimum: 1
+          maximum: 28
+          description: The billing cycle day of the month.
   parameters:
     AccountId:
       name: accountId

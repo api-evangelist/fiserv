@@ -85,6 +85,22 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    TransferAddResponse:
+      type: object
+      description: Response body for transfer initiation.
+      properties:
+        transferId:
+          type: string
+          description: The unique transfer identifier.
+        status:
+          type: string
+          description: The transfer status.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
     ErrorResponse:
       type: object
       description: Standard error response.
@@ -110,46 +126,6 @@ components:
                 type: string
                 description: The field that caused the error.
           description: Detailed error information.
-    TransferInquiryResponse:
-      type: object
-      description: Response body for transfer inquiry.
-      properties:
-        transferId:
-          type: string
-          description: The transfer identifier.
-        fromAccountId:
-          type: string
-          description: The source account.
-        toAccountId:
-          type: string
-          description: The destination account.
-        amount:
-          type: number
-          format: double
-          description: The transfer amount.
-        status:
-          type: string
-          description: The current transfer status.
-        createdDate:
-          type: string
-          format: date-time
-          description: The date and time the transfer was created.
-    TransferAddResponse:
-      type: object
-      description: Response body for transfer initiation.
-      properties:
-        transferId:
-          type: string
-          description: The unique transfer identifier.
-        status:
-          type: string
-          description: The transfer status.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
     TransferAddRequest:
       type: object
       description: Request body for initiating a fund transfer.
@@ -186,6 +162,30 @@ components:
           type: string
           format: date
           description: The scheduled date for the transfer.
+    TransferInquiryResponse:
+      type: object
+      description: Response body for transfer inquiry.
+      properties:
+        transferId:
+          type: string
+          description: The transfer identifier.
+        fromAccountId:
+          type: string
+          description: The source account.
+        toAccountId:
+          type: string
+          description: The destination account.
+        amount:
+          type: number
+          format: double
+          description: The transfer amount.
+        status:
+          type: string
+          description: The current transfer status.
+        createdDate:
+          type: string
+          format: date-time
+          description: The date and time the transfer was created.
   securitySchemes:
     bearerAuth:
       type: http
