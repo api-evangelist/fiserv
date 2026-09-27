@@ -73,14 +73,6 @@ components:
       schema:
         type: string
       description: A unique identifier for the request, used for idempotency and troubleshooting.
-    ContentType:
-      name: Content-Type
-      in: header
-      required: true
-      schema:
-        type: string
-        default: application/json
-      description: The media type of the request body.
     Timestamp:
       name: Timestamp
       in: header
@@ -96,13 +88,6 @@ components:
       schema:
         type: string
       description: The API key assigned to the merchant.
-    Authorization:
-      name: Authorization
-      in: header
-      required: true
-      schema:
-        type: string
-      description: HMAC authorization token for request authentication.
     TransactionId:
       name: transactionId
       in: path
@@ -110,7 +95,55 @@ components:
       schema:
         type: string
       description: The unique identifier of the original transaction.
+    ContentType:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+      description: The media type of the request body.
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: HMAC authorization token for request authentication.
   schemas:
+    TransactionDetails:
+      type: object
+      description: Additional details about the transaction.
+      properties:
+        captureFlag:
+          type: boolean
+          description: When true, the transaction is captured immediately (sale). When false, the transaction is authorized only.
+        merchantOrderId:
+          type: string
+          description: The merchant-assigned order identifier.
+        merchantTransactionId:
+          type: string
+          description: The merchant-assigned transaction identifier.
+    RefundRequest:
+      type: object
+      description: Request body for refunding a captured transaction.
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        transactionDetails:
+          $ref: '#/components/schemas/TransactionDetails'
+    Amount:
+      type: object
+      description: Represents a monetary amount with currency.
+      properties:
+        total:
+          type: number
+          format: double
+          description: The total transaction amount.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 three-letter currency code.
     ErrorResponse:
       type: object
       description: Error response returned when a request fails.
@@ -132,36 +165,6 @@ components:
               field:
                 type: string
                 description: The field that caused the error, if applicable.
-    TransactionProcessingDetails:
-      type: object
-      description: Transaction processing identifiers and details.
-      properties:
-        transactionId:
-          type: string
-          description: The gateway-assigned transaction identifier.
-        orderId:
-          type: string
-          description: The order identifier associated with the transaction.
-        transactionTimestamp:
-          type: string
-          format: date-time
-          description: The timestamp when the transaction was processed.
-        apiTraceId:
-          type: string
-          description: A unique trace identifier for the API request.
-    TransactionDetails:
-      type: object
-      description: Additional details about the transaction.
-      properties:
-        captureFlag:
-          type: boolean
-          description: When true, the transaction is captured immediately (sale). When false, the transaction is authorized only.
-        merchantOrderId:
-          type: string
-          description: The merchant-assigned order identifier.
-        merchantTransactionId:
-          type: string
-          description: The merchant-assigned transaction identifier.
     GatewayResponse:
       type: object
       description: The gateway processing response details.
@@ -180,18 +183,23 @@ components:
           description: The current state of the transaction.
         transactionProcessingDetails:
           $ref: '#/components/schemas/TransactionProcessingDetails'
-    Amount:
+    TransactionProcessingDetails:
       type: object
-      description: Represents a monetary amount with currency.
+      description: Transaction processing identifiers and details.
       properties:
-        total:
-          type: number
-          format: double
-          description: The total transaction amount.
-        currency:
+        transactionId:
           type: string
-          pattern: ^[A-Z]{3}$
-          description: The ISO 4217 three-letter currency code.
+          description: The gateway-assigned transaction identifier.
+        orderId:
+          type: string
+          description: The order identifier associated with the transaction.
+        transactionTimestamp:
+          type: string
+          format: date-time
+          description: The timestamp when the transaction was processed.
+        apiTraceId:
+          type: string
+          description: A unique trace identifier for the API request.
     RefundResponse:
       type: object
       description: Response body for a refund transaction.
@@ -200,14 +208,6 @@ components:
           $ref: '#/components/schemas/GatewayResponse'
         transactionProcessingDetails:
           $ref: '#/components/schemas/TransactionProcessingDetails'
-    RefundRequest:
-      type: object
-      description: Request body for refunding a captured transaction.
-      properties:
-        amount:
-          $ref: '#/components/schemas/Amount'
-        transactionDetails:
-          $ref: '#/components/schemas/TransactionDetails'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

@@ -101,6 +101,30 @@ components:
         statusDescription:
           type: string
           description: The response status description.
+    TransferInquiryResponse:
+      type: object
+      description: Response body for transfer inquiry.
+      properties:
+        transferId:
+          type: string
+          description: The transfer identifier.
+        fromAccountId:
+          type: string
+          description: The source account.
+        toAccountId:
+          type: string
+          description: The destination account.
+        amount:
+          type: number
+          format: double
+          description: The transfer amount.
+        status:
+          type: string
+          description: The current transfer status.
+        createdDate:
+          type: string
+          format: date-time
+          description: The date and time the transfer was created.
     ErrorResponse:
       type: object
       description: Standard error response.
@@ -162,30 +186,6 @@ components:
           type: string
           format: date
           description: The scheduled date for the transfer.
-    TransferInquiryResponse:
-      type: object
-      description: Response body for transfer inquiry.
-      properties:
-        transferId:
-          type: string
-          description: The transfer identifier.
-        fromAccountId:
-          type: string
-          description: The source account.
-        toAccountId:
-          type: string
-          description: The destination account.
-        amount:
-          type: number
-          format: double
-          description: The transfer amount.
-        status:
-          type: string
-          description: The current transfer status.
-        createdDate:
-          type: string
-          format: date-time
-          description: The date and time the transfer was created.
   securitySchemes:
     bearerAuth:
       type: http

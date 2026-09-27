@@ -139,60 +139,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      description: Error response payload.
-      properties:
-        respstat:
-          type: string
-          description: The response status (C for declined/error).
-        respcode:
-          type: string
-          description: The error response code.
-        resptext:
-          type: string
-          description: A human-readable error message.
-    ProfileResponse:
-      type: object
-      description: Profile response payload.
-      properties:
-        profileid:
-          type: string
-          description: The unique profile identifier.
-        acctid:
-          type: string
-          description: The account identifier within the profile.
-        respstat:
-          type: string
-          description: The response status.
-        account:
-          type: string
-          description: The masked account number or token.
-        respcode:
-          type: string
-          description: The response code.
-        resptext:
-          type: string
-          description: The response text.
-        token:
-          type: string
-          description: The CardSecure token for the account.
-    ProfileDeleteResponse:
-      type: object
-      description: Profile deletion response.
-      properties:
-        profileid:
-          type: string
-          description: The deleted profile identifier.
-        respstat:
-          type: string
-          description: The response status.
-        respcode:
-          type: string
-          description: The response code.
-        resptext:
-          type: string
-          description: The response text.
     ProfileRequest:
       type: object
       description: Profile creation or update request.
@@ -231,6 +177,60 @@ components:
         postal:
           type: string
           description: The billing postal code.
+    ProfileDeleteResponse:
+      type: object
+      description: Profile deletion response.
+      properties:
+        profileid:
+          type: string
+          description: The deleted profile identifier.
+        respstat:
+          type: string
+          description: The response status.
+        respcode:
+          type: string
+          description: The response code.
+        resptext:
+          type: string
+          description: The response text.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
+    ProfileResponse:
+      type: object
+      description: Profile response payload.
+      properties:
+        profileid:
+          type: string
+          description: The unique profile identifier.
+        acctid:
+          type: string
+          description: The account identifier within the profile.
+        respstat:
+          type: string
+          description: The response status.
+        account:
+          type: string
+          description: The masked account number or token.
+        respcode:
+          type: string
+          description: The response code.
+        resptext:
+          type: string
+          description: The response text.
+        token:
+          type: string
+          description: The CardSecure token for the account.
   parameters:
     MerchantIdPath:
       name: merchid

@@ -118,57 +118,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    CardNumber:
+      name: cardNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The card number.
   schemas:
-    ErrorResponse:
-      type: object
-      description: Standard error response.
-      properties:
-        code:
-          type: string
-          description: The error code.
-        message:
-          type: string
-          description: The error message.
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: The field that caused the error.
-              message:
-                type: string
-                description: The field-level error message.
-          description: Detailed field-level errors.
-    CardIssueRequest:
-      type: object
-      description: Request body for issuing a card.
-      required:
-      - accountNumber
-      properties:
-        accountNumber:
-          type: string
-          description: The account to issue the card for.
-        cardType:
-          type: string
-          enum:
-          - PRIMARY
-          - AUTHORIZED_USER
-          description: The card type.
-        nameOnCard:
-          type: string
-          description: The name to emboss on the card.
-    CardUpdateResponse:
-      type: object
-      description: Response body for card update.
-      properties:
-        cardNumber:
-          type: string
-          description: The card number.
-        status:
-          type: string
-          description: The updated status.
     CardIssueResponse:
       type: object
       description: Response body for card issuance.
@@ -217,14 +175,56 @@ components:
         nameOnCard:
           type: string
           description: The name on the card.
-  parameters:
-    CardNumber:
-      name: cardNumber
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The card number.
+    CardIssueRequest:
+      type: object
+      description: Request body for issuing a card.
+      required:
+      - accountNumber
+      properties:
+        accountNumber:
+          type: string
+          description: The account to issue the card for.
+        cardType:
+          type: string
+          enum:
+          - PRIMARY
+          - AUTHORIZED_USER
+          description: The card type.
+        nameOnCard:
+          type: string
+          description: The name to emboss on the card.
+    CardUpdateResponse:
+      type: object
+      description: Response body for card update.
+      properties:
+        cardNumber:
+          type: string
+          description: The card number.
+        status:
+          type: string
+          description: The updated status.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
   securitySchemes:
     bearerAuth:
       type: http

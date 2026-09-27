@@ -67,7 +67,7 @@ paths:
       description: Production Environment
   /v1/accounts/{accountNumber}/transactions:
     get:
-      operationId: listTransactions
+      operationId: getV1AccountsByAccountNumberTransactions
       summary: Fiserv List account transactions
       description: Retrieves summary or detailed transaction history for a card account. Supports filtering by date range, merchant, and transaction type.
       tags:
@@ -110,6 +110,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: listTransactions
     servers:
     - url: https://cert.api.fiservapps.com
       description: Certification Environment
@@ -117,6 +119,18 @@ paths:
       description: Production Environment
 components:
   schemas:
+    TransactionListResponse:
+      type: object
+      description: Response body for transaction list inquiry.
+      properties:
+        accountId:
+          type: string
+          description: The account identifier.
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+          description: The list of transactions.
     Transaction:
       type: object
       description: A single account transaction record.
@@ -174,17 +188,17 @@ components:
                 type: string
                 description: The field that caused the error.
           description: Detailed error information.
-    TransactionListResponse:
+    TransactionListResponse_2:
       type: object
-      description: Response body for transaction list inquiry.
+      description: Response body for transaction list.
       properties:
-        accountId:
+        accountNumber:
           type: string
-          description: The account identifier.
+          description: The account number.
         transactions:
           type: array
           items:
-            $ref: '#/components/schemas/Transaction'
+            $ref: '#/components/schemas/CardTransaction'
           description: The list of transactions.
     CardTransaction:
       type: object
@@ -242,18 +256,6 @@ components:
                 type: string
                 description: The field-level error message.
           description: Detailed field-level errors.
-    TransactionListResponse_2:
-      type: object
-      description: Response body for transaction list.
-      properties:
-        accountNumber:
-          type: string
-          description: The account number.
-        transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/CardTransaction'
-          description: The list of transactions.
   parameters:
     AccountId:
       name: accountId

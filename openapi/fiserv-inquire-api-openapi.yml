@@ -90,6 +90,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    Retref:
+      name: retref
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The retrieval reference number from the original transaction.
+    MerchantId:
+      name: merchid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The CardPointe merchant identifier.
   schemas:
     ErrorResponse:
       type: object
@@ -147,21 +162,6 @@ components:
         refundable:
           type: string
           description: Whether the transaction can be refunded.
-  parameters:
-    MerchantId:
-      name: merchid
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The CardPointe merchant identifier.
-    Retref:
-      name: retref
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The retrieval reference number from the original transaction.
   securitySchemes:
     basicAuth:
       type: http

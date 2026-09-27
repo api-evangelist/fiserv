@@ -60,19 +60,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      description: Error response payload.
-      properties:
-        respstat:
-          type: string
-          description: The response status (C for declined/error).
-        respcode:
-          type: string
-          description: The error response code.
-        resptext:
-          type: string
-          description: A human-readable error message.
     RefundResponse:
       type: object
       description: Refund response payload.
@@ -92,6 +79,19 @@ components:
         resptext:
           type: string
           description: The response text.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
     RefundRequest:
       type: object
       description: Refund request payload.

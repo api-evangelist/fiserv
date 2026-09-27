@@ -60,6 +60,22 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    SignatureCaptureResponse:
+      type: object
+      description: Signature capture response payload.
+      properties:
+        retref:
+          type: string
+          description: The retrieval reference number.
+        respstat:
+          type: string
+          description: The response status.
+        respcode:
+          type: string
+          description: The response code.
+        resptext:
+          type: string
+          description: The response text.
     SignatureCaptureRequest:
       type: object
       description: Signature capture request payload.
@@ -90,22 +106,6 @@ components:
         resptext:
           type: string
           description: A human-readable error message.
-    SignatureCaptureResponse:
-      type: object
-      description: Signature capture response payload.
-      properties:
-        retref:
-          type: string
-          description: The retrieval reference number.
-        respstat:
-          type: string
-          description: The response status.
-        respcode:
-          type: string
-          description: The response code.
-        resptext:
-          type: string
-          description: The response text.
   securitySchemes:
     basicAuth:
       type: http

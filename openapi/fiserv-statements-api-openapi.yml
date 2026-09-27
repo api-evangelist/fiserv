@@ -53,7 +53,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    AccountNumber:
+      name: accountNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The card account number.
   schemas:
+    StatementListResponse:
+      type: object
+      description: Response body for statement list.
+      properties:
+        accountNumber:
+          type: string
+          description: The account number.
+        statements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+          description: The list of statements.
     ErrorResponse:
       type: object
       description: Standard error response.
@@ -76,18 +96,6 @@ components:
                 type: string
                 description: The field-level error message.
           description: Detailed field-level errors.
-    StatementListResponse:
-      type: object
-      description: Response body for statement list.
-      properties:
-        accountNumber:
-          type: string
-          description: The account number.
-        statements:
-          type: array
-          items:
-            $ref: '#/components/schemas/Statement'
-          description: The list of statements.
     Statement:
       type: object
       description: A single account statement record.
@@ -120,14 +128,6 @@ components:
           type: number
           format: double
           description: Total credits for the statement period.
-  parameters:
-    AccountNumber:
-      name: accountNumber
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The card account number.
   securitySchemes:
     bearerAuth:
       type: http

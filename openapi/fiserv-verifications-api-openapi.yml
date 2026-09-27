@@ -66,14 +66,6 @@ components:
       schema:
         type: string
       description: A unique identifier for the request, used for idempotency and troubleshooting.
-    ContentType:
-      name: Content-Type
-      in: header
-      required: true
-      schema:
-        type: string
-        default: application/json
-      description: The media type of the request body.
     Timestamp:
       name: Timestamp
       in: header
@@ -89,6 +81,14 @@ components:
       schema:
         type: string
       description: The API key assigned to the merchant.
+    ContentType:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+      description: The media type of the request body.
     Authorization:
       name: Authorization
       in: header
@@ -97,15 +97,24 @@ components:
         type: string
       description: HMAC authorization token for request authentication.
   schemas:
-    VerificationResponse:
+    Card:
       type: object
-      description: Response body for account verification.
+      description: Payment card details.
       properties:
-        gatewayResponse:
-          $ref: '#/components/schemas/GatewayResponse'
-        verificationStatus:
+        cardData:
           type: string
-          description: The outcome of the verification check.
+          description: The card number (PAN) or encrypted card data.
+        expirationMonth:
+          type: string
+          pattern: ^\d{2}$
+          description: Card expiration month in MM format.
+        expirationYear:
+          type: string
+          pattern: ^\d{4}$
+          description: Card expiration year in YYYY format.
+        securityCode:
+          type: string
+          description: The card verification value (CVV/CVC).
     PaymentSource:
       type: object
       description: The payment source for the transaction, such as a card or token.
@@ -123,6 +132,42 @@ components:
           $ref: '#/components/schemas/Card'
         token:
           $ref: '#/components/schemas/Token'
+    Token:
+      type: object
+      description: Payment token details.
+      properties:
+        tokenData:
+          type: string
+          description: The token value representing the stored payment credential.
+        tokenSource:
+          type: string
+          description: The source or provider of the token.
+        expirationMonth:
+          type: string
+          pattern: ^\d{2}$
+          description: Token expiration month in MM format.
+        expirationYear:
+          type: string
+          pattern: ^\d{4}$
+          description: Token expiration year in YYYY format.
+    GatewayResponse:
+      type: object
+      description: The gateway processing response details.
+      properties:
+        transactionType:
+          type: string
+          description: The type of transaction that was processed.
+        transactionState:
+          type: string
+          enum:
+          - AUTHORIZED
+          - CAPTURED
+          - DECLINED
+          - VOIDED
+          - REFUNDED
+          description: The current state of the transaction.
+        transactionProcessingDetails:
+          $ref: '#/components/schemas/TransactionProcessingDetails'
     ErrorResponse:
       type: object
       description: Error response returned when a request fails.
@@ -144,24 +189,6 @@ components:
               field:
                 type: string
                 description: The field that caused the error, if applicable.
-    Token:
-      type: object
-      description: Payment token details.
-      properties:
-        tokenData:
-          type: string
-          description: The token value representing the stored payment credential.
-        tokenSource:
-          type: string
-          description: The source or provider of the token.
-        expirationMonth:
-          type: string
-          pattern: ^\d{2}$
-          description: Token expiration month in MM format.
-        expirationYear:
-          type: string
-          pattern: ^\d{4}$
-          description: Token expiration year in YYYY format.
     TransactionProcessingDetails:
       type: object
       description: Transaction processing identifiers and details.
@@ -179,42 +206,6 @@ components:
         apiTraceId:
           type: string
           description: A unique trace identifier for the API request.
-    Card:
-      type: object
-      description: Payment card details.
-      properties:
-        cardData:
-          type: string
-          description: The card number (PAN) or encrypted card data.
-        expirationMonth:
-          type: string
-          pattern: ^\d{2}$
-          description: Card expiration month in MM format.
-        expirationYear:
-          type: string
-          pattern: ^\d{4}$
-          description: Card expiration year in YYYY format.
-        securityCode:
-          type: string
-          description: The card verification value (CVV/CVC).
-    GatewayResponse:
-      type: object
-      description: The gateway processing response details.
-      properties:
-        transactionType:
-          type: string
-          description: The type of transaction that was processed.
-        transactionState:
-          type: string
-          enum:
-          - AUTHORIZED
-          - CAPTURED
-          - DECLINED
-          - VOIDED
-          - REFUNDED
-          description: The current state of the transaction.
-        transactionProcessingDetails:
-          $ref: '#/components/schemas/TransactionProcessingDetails'
     VerificationRequest:
       type: object
       description: Request body for verifying a payment account.
@@ -223,6 +214,15 @@ components:
       properties:
         source:
           $ref: '#/components/schemas/PaymentSource'
+    VerificationResponse:
+      type: object
+      description: Response body for account verification.
+      properties:
+        gatewayResponse:
+          $ref: '#/components/schemas/GatewayResponse'
+        verificationStatus:
+          type: string
+          description: The outcome of the verification check.
   securitySchemes:
     apiKeyAuth:
       type: apiKey

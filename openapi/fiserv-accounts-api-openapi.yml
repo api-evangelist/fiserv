@@ -126,7 +126,7 @@ paths:
       description: Production Environment
   /v2/accounts/account:
     post:
-      operationId: addAccount
+      operationId: postV2AccountsAccount
       summary: Fiserv Create a new card account
       description: Creates a new consumer or commercial card account. Supports credit account creation with configurable credit limits and billing preferences.
       tags:
@@ -156,6 +156,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: addAccount
     servers:
     - url: https://cert.api.fiservapps.com
       description: Certification Environment
@@ -163,7 +165,7 @@ paths:
       description: Production Environment
   /v2/accounts/{accountNumber}:
     get:
-      operationId: getAccount
+      operationId: getV2AccountsByAccountNumber
       summary: Fiserv Retrieve account details
       description: Retrieves account-specific data including balances, limits, status, and billing information.
       tags:
@@ -189,6 +191,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse_2'
+      x-operation-id-source: normalized
+      x-operation-id-original: getAccount
     servers:
     - url: https://cert.api.fiservapps.com
       description: Certification Environment
@@ -196,44 +200,49 @@ paths:
       description: Production Environment
 components:
   schemas:
-    AccountUpdateResponse:
+    AccountUpdateRequest:
       type: object
-      description: Response body for account update.
+      description: Request body for updating account attributes.
       properties:
-        accountId:
+        status:
           type: string
-          description: The account identifier.
-        statusCode:
+          description: The updated account status.
+        description:
           type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
-    ErrorResponse:
+          description: The updated account description.
+    AccountAddRequest:
       type: object
-      description: Standard error response.
+      description: Request body for creating a new account.
+      required:
+      - partyId
+      - accountType
       properties:
-        statusCode:
+        partyId:
           type: string
-          description: The error status code.
-        statusDescription:
+          description: The party identifier for the account owner.
+        accountType:
           type: string
-          description: A human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: The specific error code.
-              message:
-                type: string
-                description: The error message.
-              field:
-                type: string
-                description: The field that caused the error.
-          description: Detailed error information.
+          enum:
+          - DDA
+          - SDA
+          - MMA
+          - CDA
+          - LOAN
+          description: The type of account to create.
+        productCode:
+          type: string
+          description: The product code for the account.
+        branchId:
+          type: string
+          description: The branch identifier where the account is opened.
+        initialDeposit:
+          type: number
+          format: double
+          description: The initial deposit amount.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 currency code.
     AccountAddResponse:
       type: object
       description: Response body for account creation.
@@ -253,16 +262,19 @@ components:
         statusDescription:
           type: string
           description: The response status description.
-    AccountUpdateRequest:
+    AccountUpdateResponse:
       type: object
-      description: Request body for updating account attributes.
+      description: Response body for account update.
       properties:
-        status:
+        accountId:
           type: string
-          description: The updated account status.
-        description:
+          description: The account identifier.
+        statusCode:
           type: string
-          description: The updated account description.
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
     AccountInquiryResponse:
       type: object
       description: Response body for account inquiry.
@@ -299,61 +311,53 @@ components:
         branchId:
           type: string
           description: The branch identifier.
-    AccountAddRequest:
-      type: object
-      description: Request body for creating a new account.
-      required:
-      - partyId
-      - accountType
-      properties:
-        partyId:
-          type: string
-          description: The party identifier for the account owner.
-        accountType:
-          type: string
-          enum:
-          - DDA
-          - SDA
-          - MMA
-          - CDA
-          - LOAN
-          description: The type of account to create.
-        productCode:
-          type: string
-          description: The product code for the account.
-        branchId:
-          type: string
-          description: The branch identifier where the account is opened.
-        initialDeposit:
-          type: number
-          format: double
-          description: The initial deposit amount.
-        currency:
-          type: string
-          pattern: ^[A-Z]{3}$
-          description: The ISO 4217 currency code.
-    ErrorResponse_2:
+    ErrorResponse:
       type: object
       description: Standard error response.
       properties:
-        code:
+        statusCode:
           type: string
-          description: The error code.
-        message:
+          description: The error status code.
+        statusDescription:
           type: string
-          description: The error message.
-        details:
+          description: A human-readable error description.
+        errors:
           type: array
           items:
             type: object
             properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
               field:
                 type: string
                 description: The field that caused the error.
-              message:
-                type: string
-                description: The field-level error message.
-          description: Detailed field-level errors.
+          description: Detailed error information.
+    AccountAddRequest_2:
+      type: object
+      description: Request body for creating a card account.
+      required:
+      - accountType
+      properties:
+        accountType:
+          type: string
+          enum:
+          - CONSUMER_CREDIT
+          - COMMERCIAL_CREDIT
+          - CONSUMER_DEBIT
+          description: The type of card account.
+        creditLimit:
+          type: number
+          format: double
+          description: The credit limit for credit accounts.
+        billingCycleDay:
+          type: integer
+          minimum: 1
+          maximum: 28
+          description: The billing cycle day of the month.
     AccountAddResponse_2:
       type: object
       description: Response body for account creation.
@@ -397,28 +401,28 @@ components:
           type: string
           format: date
           description: The payment due date.
-    AccountAddRequest_2:
+    ErrorResponse_2:
       type: object
-      description: Request body for creating a card account.
-      required:
-      - accountType
+      description: Standard error response.
       properties:
-        accountType:
+        code:
           type: string
-          enum:
-          - CONSUMER_CREDIT
-          - COMMERCIAL_CREDIT
-          - CONSUMER_DEBIT
-          description: The type of card account.
-        creditLimit:
-          type: number
-          format: double
-          description: The credit limit for credit accounts.
-        billingCycleDay:
-          type: integer
-          minimum: 1
-          maximum: 28
-          description: The billing cycle day of the month.
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
   parameters:
     AccountId:
       name: accountId
