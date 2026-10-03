@@ -60,22 +60,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    CaptureRequest:
-      type: object
-      description: Capture request payload.
-      required:
-      - merchid
-      - retref
-      properties:
-        merchid:
-          type: string
-          description: The CardPointe merchant ID.
-        retref:
-          type: string
-          description: The retrieval reference number of the authorization.
-        amount:
-          type: string
-          description: The capture amount. If omitted, the full authorization amount is captured.
     CaptureResponse:
       type: object
       description: Capture response payload.
@@ -98,6 +82,22 @@ components:
         resptext:
           type: string
           description: The response text.
+    CaptureRequest:
+      type: object
+      description: Capture request payload.
+      required:
+      - merchid
+      - retref
+      properties:
+        merchid:
+          type: string
+          description: The CardPointe merchant ID.
+        retref:
+          type: string
+          description: The retrieval reference number of the authorization.
+        amount:
+          type: string
+          description: The capture amount. If omitted, the full authorization amount is captured.
     ErrorResponse:
       type: object
       description: Error response payload.

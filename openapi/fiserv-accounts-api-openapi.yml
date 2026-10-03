@@ -200,16 +200,25 @@ paths:
       description: Production Environment
 components:
   schemas:
-    AccountUpdateRequest:
+    AccountAddResponse:
       type: object
-      description: Request body for updating account attributes.
+      description: Response body for account creation.
       properties:
+        accountId:
+          type: string
+          description: The newly created account identifier.
+        accountType:
+          type: string
+          description: The account type.
         status:
           type: string
-          description: The updated account status.
-        description:
+          description: The account status.
+        statusCode:
           type: string
-          description: The updated account description.
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
     AccountAddRequest:
       type: object
       description: Request body for creating a new account.
@@ -243,38 +252,6 @@ components:
           type: string
           pattern: ^[A-Z]{3}$
           description: The ISO 4217 currency code.
-    AccountAddResponse:
-      type: object
-      description: Response body for account creation.
-      properties:
-        accountId:
-          type: string
-          description: The newly created account identifier.
-        accountType:
-          type: string
-          description: The account type.
-        status:
-          type: string
-          description: The account status.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
-    AccountUpdateResponse:
-      type: object
-      description: Response body for account update.
-      properties:
-        accountId:
-          type: string
-          description: The account identifier.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
     AccountInquiryResponse:
       type: object
       description: Response body for account inquiry.
@@ -311,6 +288,16 @@ components:
         branchId:
           type: string
           description: The branch identifier.
+    AccountUpdateRequest:
+      type: object
+      description: Request body for updating account attributes.
+      properties:
+        status:
+          type: string
+          description: The updated account status.
+        description:
+          type: string
+          description: The updated account description.
     ErrorResponse:
       type: object
       description: Standard error response.
@@ -336,6 +323,29 @@ components:
                 type: string
                 description: The field that caused the error.
           description: Detailed error information.
+    AccountUpdateResponse:
+      type: object
+      description: Response body for account update.
+      properties:
+        accountId:
+          type: string
+          description: The account identifier.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+    AccountAddResponse_2:
+      type: object
+      description: Response body for account creation.
+      properties:
+        accountNumber:
+          type: string
+          description: The new account number.
+        status:
+          type: string
+          description: The account status.
     AccountAddRequest_2:
       type: object
       description: Request body for creating a card account.
@@ -358,16 +368,6 @@ components:
           minimum: 1
           maximum: 28
           description: The billing cycle day of the month.
-    AccountAddResponse_2:
-      type: object
-      description: Response body for account creation.
-      properties:
-        accountNumber:
-          type: string
-          description: The new account number.
-        status:
-          type: string
-          description: The account status.
     AccountInquiryResponse_2:
       type: object
       description: Response body for account inquiry.

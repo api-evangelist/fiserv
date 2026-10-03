@@ -60,19 +60,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    VoidRequest:
-      type: object
-      description: Void request payload.
-      required:
-      - merchid
-      - retref
-      properties:
-        merchid:
-          type: string
-          description: The CardPointe merchant ID.
-        retref:
-          type: string
-          description: The retrieval reference number of the transaction to void.
     VoidResponse:
       type: object
       description: Void response payload.
@@ -95,6 +82,19 @@ components:
         authcode:
           type: string
           description: The original authorization code.
+    VoidRequest:
+      type: object
+      description: Void request payload.
+      required:
+      - merchid
+      - retref
+      properties:
+        merchid:
+          type: string
+          description: The CardPointe merchant ID.
+        retref:
+          type: string
+          description: The retrieval reference number of the transaction to void.
     ErrorResponse:
       type: object
       description: Error response payload.

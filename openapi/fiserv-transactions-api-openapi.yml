@@ -119,18 +119,6 @@ paths:
       description: Production Environment
 components:
   schemas:
-    TransactionListResponse:
-      type: object
-      description: Response body for transaction list inquiry.
-      properties:
-        accountId:
-          type: string
-          description: The account identifier.
-        transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transaction'
-          description: The list of transactions.
     Transaction:
       type: object
       description: A single account transaction record.
@@ -188,18 +176,40 @@ components:
                 type: string
                 description: The field that caused the error.
           description: Detailed error information.
-    TransactionListResponse_2:
+    TransactionListResponse:
       type: object
-      description: Response body for transaction list.
+      description: Response body for transaction list inquiry.
       properties:
-        accountNumber:
+        accountId:
           type: string
-          description: The account number.
+          description: The account identifier.
         transactions:
           type: array
           items:
-            $ref: '#/components/schemas/CardTransaction'
+            $ref: '#/components/schemas/Transaction'
           description: The list of transactions.
+    ErrorResponse_2:
+      type: object
+      description: Standard error response.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
     CardTransaction:
       type: object
       description: A single card transaction record.
@@ -234,28 +244,18 @@ components:
         description:
           type: string
           description: The transaction description.
-    ErrorResponse_2:
+    TransactionListResponse_2:
       type: object
-      description: Standard error response.
+      description: Response body for transaction list.
       properties:
-        code:
+        accountNumber:
           type: string
-          description: The error code.
-        message:
-          type: string
-          description: The error message.
-        details:
+          description: The account number.
+        transactions:
           type: array
           items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: The field that caused the error.
-              message:
-                type: string
-                description: The field-level error message.
-          description: Detailed field-level errors.
+            $ref: '#/components/schemas/CardTransaction'
+          description: The list of transactions.
   parameters:
     AccountId:
       name: accountId

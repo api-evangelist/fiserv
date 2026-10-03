@@ -85,28 +85,22 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
+    AuthorizationResponse:
       type: object
-      description: Standard error response.
+      description: Response body for authorization creation.
       properties:
-        code:
+        authorizationId:
           type: string
-          description: The error code.
-        message:
+          description: The authorization identifier.
+        status:
           type: string
-          description: The error message.
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: The field that caused the error.
-              message:
-                type: string
-                description: The field-level error message.
-          description: Detailed field-level errors.
+          enum:
+          - APPROVED
+          - DECLINED
+          description: The authorization status.
+        approvalCode:
+          type: string
+          description: The approval code if authorized.
     AuthorizationRequest:
       type: object
       description: Request body for creating a transaction authorization.
@@ -131,22 +125,28 @@ components:
         merchantCategoryCode:
           type: string
           description: The merchant category code (MCC).
-    AuthorizationResponse:
+    ErrorResponse:
       type: object
-      description: Response body for authorization creation.
+      description: Standard error response.
       properties:
-        authorizationId:
+        code:
           type: string
-          description: The authorization identifier.
-        status:
+          description: The error code.
+        message:
           type: string
-          enum:
-          - APPROVED
-          - DECLINED
-          description: The authorization status.
-        approvalCode:
-          type: string
-          description: The approval code if authorized.
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
     AuthorizationCancelResponse:
       type: object
       description: Response body for authorization cancellation.

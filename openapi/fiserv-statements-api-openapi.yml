@@ -53,15 +53,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  parameters:
-    AccountNumber:
-      name: accountNumber
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The card account number.
   schemas:
+    Statement:
+      type: object
+      description: A single account statement record.
+      properties:
+        statementDate:
+          type: string
+          format: date
+          description: The statement date.
+        openingBalance:
+          type: number
+          format: double
+          description: The opening balance.
+        closingBalance:
+          type: number
+          format: double
+          description: The closing balance.
+        minimumPaymentDue:
+          type: number
+          format: double
+          description: The minimum payment due.
+        paymentDueDate:
+          type: string
+          format: date
+          description: The payment due date.
+        totalDebits:
+          type: number
+          format: double
+          description: Total debits for the statement period.
+        totalCredits:
+          type: number
+          format: double
+          description: Total credits for the statement period.
     StatementListResponse:
       type: object
       description: Response body for statement list.
@@ -96,38 +120,14 @@ components:
                 type: string
                 description: The field-level error message.
           description: Detailed field-level errors.
-    Statement:
-      type: object
-      description: A single account statement record.
-      properties:
-        statementDate:
-          type: string
-          format: date
-          description: The statement date.
-        openingBalance:
-          type: number
-          format: double
-          description: The opening balance.
-        closingBalance:
-          type: number
-          format: double
-          description: The closing balance.
-        minimumPaymentDue:
-          type: number
-          format: double
-          description: The minimum payment due.
-        paymentDueDate:
-          type: string
-          format: date
-          description: The payment due date.
-        totalDebits:
-          type: number
-          format: double
-          description: Total debits for the statement period.
-        totalCredits:
-          type: number
-          format: double
-          description: Total credits for the statement period.
+  parameters:
+    AccountNumber:
+      name: accountNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The card account number.
   securitySchemes:
     bearerAuth:
       type: http

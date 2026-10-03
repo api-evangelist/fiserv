@@ -60,6 +60,22 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    RefundRequest:
+      type: object
+      description: Refund request payload.
+      required:
+      - merchid
+      - retref
+      properties:
+        merchid:
+          type: string
+          description: The CardPointe merchant ID.
+        retref:
+          type: string
+          description: The retrieval reference number of the transaction to refund.
+        amount:
+          type: string
+          description: The refund amount. If omitted, a full refund is processed.
     RefundResponse:
       type: object
       description: Refund response payload.
@@ -92,22 +108,6 @@ components:
         resptext:
           type: string
           description: A human-readable error message.
-    RefundRequest:
-      type: object
-      description: Refund request payload.
-      required:
-      - merchid
-      - retref
-      properties:
-        merchid:
-          type: string
-          description: The CardPointe merchant ID.
-        retref:
-          type: string
-          description: The retrieval reference number of the transaction to refund.
-        amount:
-          type: string
-          description: The refund amount. If omitted, a full refund is processed.
   securitySchemes:
     basicAuth:
       type: http

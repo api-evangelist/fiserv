@@ -65,52 +65,53 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  parameters:
-    ClientRequestId:
-      name: Client-Request-Id
-      in: header
-      required: true
-      schema:
-        type: string
-      description: A unique identifier for the request, used for idempotency and troubleshooting.
-    Timestamp:
-      name: Timestamp
-      in: header
-      required: true
-      schema:
-        type: integer
-        format: int64
-      description: Epoch timestamp in milliseconds of the request.
-    ApiKey:
-      name: Api-Key
-      in: header
-      required: true
-      schema:
-        type: string
-      description: The API key assigned to the merchant.
-    TransactionId:
-      name: transactionId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique identifier of the original transaction.
-    ContentType:
-      name: Content-Type
-      in: header
-      required: true
-      schema:
-        type: string
-        default: application/json
-      description: The media type of the request body.
-    Authorization:
-      name: Authorization
-      in: header
-      required: true
-      schema:
-        type: string
-      description: HMAC authorization token for request authentication.
   schemas:
+    GatewayResponse:
+      type: object
+      description: The gateway processing response details.
+      properties:
+        transactionType:
+          type: string
+          description: The type of transaction that was processed.
+        transactionState:
+          type: string
+          enum:
+          - AUTHORIZED
+          - CAPTURED
+          - DECLINED
+          - VOIDED
+          - REFUNDED
+          description: The current state of the transaction.
+        transactionProcessingDetails:
+          $ref: '#/components/schemas/TransactionProcessingDetails'
+    Amount:
+      type: object
+      description: Represents a monetary amount with currency.
+      properties:
+        total:
+          type: number
+          format: double
+          description: The total transaction amount.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 three-letter currency code.
+    RefundResponse:
+      type: object
+      description: Response body for a refund transaction.
+      properties:
+        gatewayResponse:
+          $ref: '#/components/schemas/GatewayResponse'
+        transactionProcessingDetails:
+          $ref: '#/components/schemas/TransactionProcessingDetails'
+    RefundRequest:
+      type: object
+      description: Request body for refunding a captured transaction.
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        transactionDetails:
+          $ref: '#/components/schemas/TransactionDetails'
     TransactionDetails:
       type: object
       description: Additional details about the transaction.
@@ -124,26 +125,6 @@ components:
         merchantTransactionId:
           type: string
           description: The merchant-assigned transaction identifier.
-    RefundRequest:
-      type: object
-      description: Request body for refunding a captured transaction.
-      properties:
-        amount:
-          $ref: '#/components/schemas/Amount'
-        transactionDetails:
-          $ref: '#/components/schemas/TransactionDetails'
-    Amount:
-      type: object
-      description: Represents a monetary amount with currency.
-      properties:
-        total:
-          type: number
-          format: double
-          description: The total transaction amount.
-        currency:
-          type: string
-          pattern: ^[A-Z]{3}$
-          description: The ISO 4217 three-letter currency code.
     ErrorResponse:
       type: object
       description: Error response returned when a request fails.
@@ -165,24 +146,6 @@ components:
               field:
                 type: string
                 description: The field that caused the error, if applicable.
-    GatewayResponse:
-      type: object
-      description: The gateway processing response details.
-      properties:
-        transactionType:
-          type: string
-          description: The type of transaction that was processed.
-        transactionState:
-          type: string
-          enum:
-          - AUTHORIZED
-          - CAPTURED
-          - DECLINED
-          - VOIDED
-          - REFUNDED
-          description: The current state of the transaction.
-        transactionProcessingDetails:
-          $ref: '#/components/schemas/TransactionProcessingDetails'
     TransactionProcessingDetails:
       type: object
       description: Transaction processing identifiers and details.
@@ -200,14 +163,51 @@ components:
         apiTraceId:
           type: string
           description: A unique trace identifier for the API request.
-    RefundResponse:
-      type: object
-      description: Response body for a refund transaction.
-      properties:
-        gatewayResponse:
-          $ref: '#/components/schemas/GatewayResponse'
-        transactionProcessingDetails:
-          $ref: '#/components/schemas/TransactionProcessingDetails'
+  parameters:
+    TransactionId:
+      name: transactionId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the original transaction.
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: HMAC authorization token for request authentication.
+    Timestamp:
+      name: Timestamp
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Epoch timestamp in milliseconds of the request.
+    ApiKey:
+      name: Api-Key
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The API key assigned to the merchant.
+    ContentType:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+      description: The media type of the request body.
+    ClientRequestId:
+      name: Client-Request-Id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: A unique identifier for the request, used for idempotency and troubleshooting.
   securitySchemes:
     apiKeyAuth:
       type: apiKey

@@ -60,6 +60,19 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
     SignatureCaptureResponse:
       type: object
       description: Signature capture response payload.
@@ -93,19 +106,6 @@ components:
         signature:
           type: string
           description: The base64-encoded signature image data.
-    ErrorResponse:
-      type: object
-      description: Error response payload.
-      properties:
-        respstat:
-          type: string
-          description: The response status (C for declined/error).
-        respcode:
-          type: string
-          description: The error response code.
-        resptext:
-          type: string
-          description: A human-readable error message.
   securitySchemes:
     basicAuth:
       type: http
