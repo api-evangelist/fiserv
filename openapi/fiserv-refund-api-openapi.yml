@@ -76,6 +76,19 @@ components:
         amount:
           type: string
           description: The refund amount. If omitted, a full refund is processed.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
     RefundResponse:
       type: object
       description: Refund response payload.
@@ -95,19 +108,6 @@ components:
         resptext:
           type: string
           description: The response text.
-    ErrorResponse:
-      type: object
-      description: Error response payload.
-      properties:
-        respstat:
-          type: string
-          description: The response status (C for declined/error).
-        respcode:
-          type: string
-          description: The error response code.
-        resptext:
-          type: string
-          description: A human-readable error message.
   securitySchemes:
     basicAuth:
       type: http

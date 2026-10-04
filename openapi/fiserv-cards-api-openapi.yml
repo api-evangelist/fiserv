@@ -118,7 +118,69 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    CardNumber:
+      name: cardNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The card number.
   schemas:
+    CardUpdateResponse:
+      type: object
+      description: Response body for card update.
+      properties:
+        cardNumber:
+          type: string
+          description: The card number.
+        status:
+          type: string
+          description: The updated status.
+    CardUpdateRequest:
+      type: object
+      description: Request body for updating card attributes.
+      properties:
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - BLOCKED
+          - LOST
+          - STOLEN
+          description: The updated card status.
+    CardIssueRequest:
+      type: object
+      description: Request body for issuing a card.
+      required:
+      - accountNumber
+      properties:
+        accountNumber:
+          type: string
+          description: The account to issue the card for.
+        cardType:
+          type: string
+          enum:
+          - PRIMARY
+          - AUTHORIZED_USER
+          description: The card type.
+        nameOnCard:
+          type: string
+          description: The name to emboss on the card.
+    CardIssueResponse:
+      type: object
+      description: Response body for card issuance.
+      properties:
+        cardNumber:
+          type: string
+          description: The issued card number (masked).
+        expirationDate:
+          type: string
+          description: The card expiration date.
+        status:
+          type: string
+          description: The card status.
     CardInquiryResponse:
       type: object
       description: Response body for card inquiry.
@@ -141,32 +203,6 @@ components:
         nameOnCard:
           type: string
           description: The name on the card.
-    CardIssueResponse:
-      type: object
-      description: Response body for card issuance.
-      properties:
-        cardNumber:
-          type: string
-          description: The issued card number (masked).
-        expirationDate:
-          type: string
-          description: The card expiration date.
-        status:
-          type: string
-          description: The card status.
-    CardUpdateRequest:
-      type: object
-      description: Request body for updating card attributes.
-      properties:
-        status:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - BLOCKED
-          - LOST
-          - STOLEN
-          description: The updated card status.
     ErrorResponse:
       type: object
       description: Standard error response.
@@ -189,42 +225,6 @@ components:
                 type: string
                 description: The field-level error message.
           description: Detailed field-level errors.
-    CardIssueRequest:
-      type: object
-      description: Request body for issuing a card.
-      required:
-      - accountNumber
-      properties:
-        accountNumber:
-          type: string
-          description: The account to issue the card for.
-        cardType:
-          type: string
-          enum:
-          - PRIMARY
-          - AUTHORIZED_USER
-          description: The card type.
-        nameOnCard:
-          type: string
-          description: The name to emboss on the card.
-    CardUpdateResponse:
-      type: object
-      description: Response body for card update.
-      properties:
-        cardNumber:
-          type: string
-          description: The card number.
-        status:
-          type: string
-          description: The updated status.
-  parameters:
-    CardNumber:
-      name: cardNumber
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The card number.
   securitySchemes:
     bearerAuth:
       type: http

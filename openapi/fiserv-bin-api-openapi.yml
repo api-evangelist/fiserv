@@ -64,19 +64,6 @@ components:
         type: string
       description: The CardPointe merchant identifier.
   schemas:
-    ErrorResponse:
-      type: object
-      description: Error response payload.
-      properties:
-        respstat:
-          type: string
-          description: The response status (C for declined/error).
-        respcode:
-          type: string
-          description: The error response code.
-        resptext:
-          type: string
-          description: A human-readable error message.
     BINResponse:
       type: object
       description: BIN lookup response payload.
@@ -96,6 +83,19 @@ components:
         corporate:
           type: string
           description: Whether the card is a corporate card.
+    ErrorResponse:
+      type: object
+      description: Error response payload.
+      properties:
+        respstat:
+          type: string
+          description: The response status (C for declined/error).
+        respcode:
+          type: string
+          description: The error response code.
+        resptext:
+          type: string
+          description: A human-readable error message.
   securitySchemes:
     basicAuth:
       type: http

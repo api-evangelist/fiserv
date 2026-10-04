@@ -138,15 +138,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  parameters:
-    MerchantIdPath:
-      name: merchid
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The CardPointe merchant identifier.
   schemas:
+    ProfileResponse:
+      type: object
+      description: Profile response payload.
+      properties:
+        profileid:
+          type: string
+          description: The unique profile identifier.
+        acctid:
+          type: string
+          description: The account identifier within the profile.
+        respstat:
+          type: string
+          description: The response status.
+        account:
+          type: string
+          description: The masked account number or token.
+        respcode:
+          type: string
+          description: The response code.
+        resptext:
+          type: string
+          description: The response text.
+        token:
+          type: string
+          description: The CardSecure token for the account.
     ProfileRequest:
       type: object
       description: Profile creation or update request.
@@ -185,31 +202,6 @@ components:
         postal:
           type: string
           description: The billing postal code.
-    ProfileResponse:
-      type: object
-      description: Profile response payload.
-      properties:
-        profileid:
-          type: string
-          description: The unique profile identifier.
-        acctid:
-          type: string
-          description: The account identifier within the profile.
-        respstat:
-          type: string
-          description: The response status.
-        account:
-          type: string
-          description: The masked account number or token.
-        respcode:
-          type: string
-          description: The response code.
-        resptext:
-          type: string
-          description: The response text.
-        token:
-          type: string
-          description: The CardSecure token for the account.
     ProfileDeleteResponse:
       type: object
       description: Profile deletion response.
@@ -239,6 +231,14 @@ components:
         resptext:
           type: string
           description: A human-readable error message.
+  parameters:
+    MerchantIdPath:
+      name: merchid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The CardPointe merchant identifier.
   securitySchemes:
     basicAuth:
       type: http

@@ -59,6 +59,36 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    Token:
+      type: object
+      description: Payment token details.
+      properties:
+        tokenData:
+          type: string
+          description: The token value representing the stored payment credential.
+        tokenSource:
+          type: string
+          description: The source or provider of the token.
+        expirationMonth:
+          type: string
+          pattern: ^\d{2}$
+          description: Token expiration month in MM format.
+        expirationYear:
+          type: string
+          pattern: ^\d{4}$
+          description: Token expiration year in YYYY format.
+    Amount:
+      type: object
+      description: Represents a monetary amount with currency.
+      properties:
+        total:
+          type: number
+          format: double
+          description: The total transaction amount.
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+          description: The ISO 4217 three-letter currency code.
     PaymentSource:
       type: object
       description: The payment source for the transaction, such as a card or token.
@@ -94,36 +124,6 @@ components:
           description: The current state of the transaction.
         transactionProcessingDetails:
           $ref: '#/components/schemas/TransactionProcessingDetails'
-    Amount:
-      type: object
-      description: Represents a monetary amount with currency.
-      properties:
-        total:
-          type: number
-          format: double
-          description: The total transaction amount.
-        currency:
-          type: string
-          pattern: ^[A-Z]{3}$
-          description: The ISO 4217 three-letter currency code.
-    Token:
-      type: object
-      description: Payment token details.
-      properties:
-        tokenData:
-          type: string
-          description: The token value representing the stored payment credential.
-        tokenSource:
-          type: string
-          description: The source or provider of the token.
-        expirationMonth:
-          type: string
-          pattern: ^\d{2}$
-          description: Token expiration month in MM format.
-        expirationYear:
-          type: string
-          pattern: ^\d{4}$
-          description: Token expiration year in YYYY format.
     Card:
       type: object
       description: Payment card details.
@@ -142,39 +142,6 @@ components:
         securityCode:
           type: string
           description: The card verification value (CVV/CVC).
-    ErrorResponse:
-      type: object
-      description: Error response returned when a request fails.
-      properties:
-        error:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-                description: The error type classification.
-              code:
-                type: string
-                description: The error code.
-              message:
-                type: string
-                description: A human-readable error message.
-              field:
-                type: string
-                description: The field that caused the error, if applicable.
-    ThreeDSAuthenticationResponse:
-      type: object
-      description: Response body for 3-D Secure authentication.
-      properties:
-        gatewayResponse:
-          $ref: '#/components/schemas/GatewayResponse'
-        authenticationStatus:
-          type: string
-          description: The status of the 3-D Secure authentication.
-        authenticationValue:
-          type: string
-          description: The authentication value (CAVV/AAV) from the issuer.
     TransactionProcessingDetails:
       type: object
       description: Transaction processing identifiers and details.
@@ -202,22 +169,40 @@ components:
           $ref: '#/components/schemas/PaymentSource'
         amount:
           $ref: '#/components/schemas/Amount'
+    ThreeDSAuthenticationResponse:
+      type: object
+      description: Response body for 3-D Secure authentication.
+      properties:
+        gatewayResponse:
+          $ref: '#/components/schemas/GatewayResponse'
+        authenticationStatus:
+          type: string
+          description: The status of the 3-D Secure authentication.
+        authenticationValue:
+          type: string
+          description: The authentication value (CAVV/AAV) from the issuer.
+    ErrorResponse:
+      type: object
+      description: Error response returned when a request fails.
+      properties:
+        error:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The error type classification.
+              code:
+                type: string
+                description: The error code.
+              message:
+                type: string
+                description: A human-readable error message.
+              field:
+                type: string
+                description: The field that caused the error, if applicable.
   parameters:
-    Authorization:
-      name: Authorization
-      in: header
-      required: true
-      schema:
-        type: string
-      description: HMAC authorization token for request authentication.
-    Timestamp:
-      name: Timestamp
-      in: header
-      required: true
-      schema:
-        type: integer
-        format: int64
-      description: Epoch timestamp in milliseconds of the request.
     ApiKey:
       name: Api-Key
       in: header
@@ -233,6 +218,21 @@ components:
         type: string
         default: application/json
       description: The media type of the request body.
+    Timestamp:
+      name: Timestamp
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Epoch timestamp in milliseconds of the request.
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: HMAC authorization token for request authentication.
     ClientRequestId:
       name: Client-Request-Id
       in: header

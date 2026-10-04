@@ -163,109 +163,6 @@ components:
             country:
               type: string
               description: The country code.
-    PartyUpdateResponse:
-      type: object
-      description: Response body for party update.
-      properties:
-        partyId:
-          type: string
-          description: The party identifier.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
-    ErrorResponse:
-      type: object
-      description: Standard error response.
-      properties:
-        statusCode:
-          type: string
-          description: The error status code.
-        statusDescription:
-          type: string
-          description: A human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: The specific error code.
-              message:
-                type: string
-                description: The error message.
-              field:
-                type: string
-                description: The field that caused the error.
-          description: Detailed error information.
-    PartyInquiryResponse:
-      type: object
-      description: Response body for party inquiry.
-      properties:
-        partyId:
-          type: string
-          description: The party identifier.
-        partyType:
-          type: string
-          description: The party type.
-        name:
-          type: object
-          description: The party name.
-          properties:
-            firstName:
-              type: string
-              description: The first name.
-            lastName:
-              type: string
-              description: The last name.
-            organizationName:
-              type: string
-              description: The organization name.
-        contact:
-          type: object
-          description: Contact information.
-          properties:
-            email:
-              type: string
-              description: The email address.
-            phone:
-              type: string
-              description: The phone number.
-        address:
-          type: object
-          description: The physical address.
-          properties:
-            line1:
-              type: string
-              description: Address line 1.
-            city:
-              type: string
-              description: The city.
-            state:
-              type: string
-              description: The state or province.
-            postalCode:
-              type: string
-              description: The postal code.
-            country:
-              type: string
-              description: The country code.
-    PartyAddResponse:
-      type: object
-      description: Response body for party creation.
-      properties:
-        partyId:
-          type: string
-          description: The unique party identifier.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
     PartyAddRequest:
       type: object
       description: Request body for creating a customer party.
@@ -332,6 +229,109 @@ components:
             country:
               type: string
               description: The country code.
+    PartyAddResponse:
+      type: object
+      description: Response body for party creation.
+      properties:
+        partyId:
+          type: string
+          description: The unique party identifier.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+    PartyUpdateResponse:
+      type: object
+      description: Response body for party update.
+      properties:
+        partyId:
+          type: string
+          description: The party identifier.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
+    PartyInquiryResponse:
+      type: object
+      description: Response body for party inquiry.
+      properties:
+        partyId:
+          type: string
+          description: The party identifier.
+        partyType:
+          type: string
+          description: The party type.
+        name:
+          type: object
+          description: The party name.
+          properties:
+            firstName:
+              type: string
+              description: The first name.
+            lastName:
+              type: string
+              description: The last name.
+            organizationName:
+              type: string
+              description: The organization name.
+        contact:
+          type: object
+          description: Contact information.
+          properties:
+            email:
+              type: string
+              description: The email address.
+            phone:
+              type: string
+              description: The phone number.
+        address:
+          type: object
+          description: The physical address.
+          properties:
+            line1:
+              type: string
+              description: Address line 1.
+            city:
+              type: string
+              description: The city.
+            state:
+              type: string
+              description: The state or province.
+            postalCode:
+              type: string
+              description: The postal code.
+            country:
+              type: string
+              description: The country code.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: string
+          description: The error status code.
+        statusDescription:
+          type: string
+          description: A human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
+              field:
+                type: string
+                description: The field that caused the error.
+          description: Detailed error information.
   securitySchemes:
     bearerAuth:
       type: http

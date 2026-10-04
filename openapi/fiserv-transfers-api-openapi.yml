@@ -85,31 +85,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      description: Standard error response.
-      properties:
-        statusCode:
-          type: string
-          description: The error status code.
-        statusDescription:
-          type: string
-          description: A human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: The specific error code.
-              message:
-                type: string
-                description: The error message.
-              field:
-                type: string
-                description: The field that caused the error.
-          description: Detailed error information.
     TransferInquiryResponse:
       type: object
       description: Response body for transfer inquiry.
@@ -134,22 +109,6 @@ components:
           type: string
           format: date-time
           description: The date and time the transfer was created.
-    TransferAddResponse:
-      type: object
-      description: Response body for transfer initiation.
-      properties:
-        transferId:
-          type: string
-          description: The unique transfer identifier.
-        status:
-          type: string
-          description: The transfer status.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
     TransferAddRequest:
       type: object
       description: Request body for initiating a fund transfer.
@@ -186,6 +145,47 @@ components:
           type: string
           format: date
           description: The scheduled date for the transfer.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: string
+          description: The error status code.
+        statusDescription:
+          type: string
+          description: A human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
+              field:
+                type: string
+                description: The field that caused the error.
+          description: Detailed error information.
+    TransferAddResponse:
+      type: object
+      description: Response body for transfer initiation.
+      properties:
+        transferId:
+          type: string
+          description: The unique transfer identifier.
+        status:
+          type: string
+          description: The transfer status.
+        statusCode:
+          type: string
+          description: The response status code.
+        statusDescription:
+          type: string
+          description: The response status description.
   securitySchemes:
     bearerAuth:
       type: http

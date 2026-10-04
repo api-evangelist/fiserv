@@ -60,50 +60,19 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    AuthResponse:
+    ErrorResponse:
       type: object
-      description: Authorization response payload.
+      description: Error response payload.
       properties:
         respstat:
           type: string
-          enum:
-          - A
-          - B
-          - C
-          description: 'Response status: A=Approved, B=Retry, C=Declined.'
-        retref:
-          type: string
-          description: The retrieval reference number for the transaction.
-        account:
-          type: string
-          description: The masked account number or token.
-        token:
-          type: string
-          description: The CardSecure token for the account.
-        amount:
-          type: string
-          description: The authorized amount.
-        merchid:
-          type: string
-          description: The merchant identifier.
+          description: The response status (C for declined/error).
         respcode:
           type: string
-          description: The processor response code.
+          description: The error response code.
         resptext:
           type: string
-          description: The human-readable response text.
-        authcode:
-          type: string
-          description: The authorization code from the issuer.
-        avsresp:
-          type: string
-          description: The AVS response code.
-        cvvresp:
-          type: string
-          description: The CVV response code.
-        profileid:
-          type: string
-          description: The stored profile ID if profile creation was requested.
+          description: A human-readable error message.
     AuthRequest:
       type: object
       description: Authorization request payload.
@@ -166,19 +135,50 @@ components:
           - Y
           - N
           description: Set to Y to create a stored profile for the account.
-    ErrorResponse:
+    AuthResponse:
       type: object
-      description: Error response payload.
+      description: Authorization response payload.
       properties:
         respstat:
           type: string
-          description: The response status (C for declined/error).
+          enum:
+          - A
+          - B
+          - C
+          description: 'Response status: A=Approved, B=Retry, C=Declined.'
+        retref:
+          type: string
+          description: The retrieval reference number for the transaction.
+        account:
+          type: string
+          description: The masked account number or token.
+        token:
+          type: string
+          description: The CardSecure token for the account.
+        amount:
+          type: string
+          description: The authorized amount.
+        merchid:
+          type: string
+          description: The merchant identifier.
         respcode:
           type: string
-          description: The error response code.
+          description: The processor response code.
         resptext:
           type: string
-          description: A human-readable error message.
+          description: The human-readable response text.
+        authcode:
+          type: string
+          description: The authorization code from the issuer.
+        avsresp:
+          type: string
+          description: The AVS response code.
+        cvvresp:
+          type: string
+          description: The CVV response code.
+        profileid:
+          type: string
+          description: The stored profile ID if profile creation was requested.
   securitySchemes:
     basicAuth:
       type: http

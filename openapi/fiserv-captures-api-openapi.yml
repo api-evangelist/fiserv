@@ -66,32 +66,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    CaptureRequest:
-      type: object
-      description: Request body for capturing an authorized transaction.
-      properties:
-        amount:
-          $ref: '#/components/schemas/Amount'
-        transactionDetails:
-          $ref: '#/components/schemas/TransactionDetails'
-    GatewayResponse:
-      type: object
-      description: The gateway processing response details.
-      properties:
-        transactionType:
-          type: string
-          description: The type of transaction that was processed.
-        transactionState:
-          type: string
-          enum:
-          - AUTHORIZED
-          - CAPTURED
-          - DECLINED
-          - VOIDED
-          - REFUNDED
-          description: The current state of the transaction.
-        transactionProcessingDetails:
-          $ref: '#/components/schemas/TransactionProcessingDetails'
     Amount:
       type: object
       description: Represents a monetary amount with currency.
@@ -112,6 +86,41 @@ components:
           $ref: '#/components/schemas/GatewayResponse'
         transactionProcessingDetails:
           $ref: '#/components/schemas/TransactionProcessingDetails'
+    GatewayResponse:
+      type: object
+      description: The gateway processing response details.
+      properties:
+        transactionType:
+          type: string
+          description: The type of transaction that was processed.
+        transactionState:
+          type: string
+          enum:
+          - AUTHORIZED
+          - CAPTURED
+          - DECLINED
+          - VOIDED
+          - REFUNDED
+          description: The current state of the transaction.
+        transactionProcessingDetails:
+          $ref: '#/components/schemas/TransactionProcessingDetails'
+    TransactionProcessingDetails:
+      type: object
+      description: Transaction processing identifiers and details.
+      properties:
+        transactionId:
+          type: string
+          description: The gateway-assigned transaction identifier.
+        orderId:
+          type: string
+          description: The order identifier associated with the transaction.
+        transactionTimestamp:
+          type: string
+          format: date-time
+          description: The timestamp when the transaction was processed.
+        apiTraceId:
+          type: string
+          description: A unique trace identifier for the API request.
     TransactionDetails:
       type: object
       description: Additional details about the transaction.
@@ -125,6 +134,14 @@ components:
         merchantTransactionId:
           type: string
           description: The merchant-assigned transaction identifier.
+    CaptureRequest:
+      type: object
+      description: Request body for capturing an authorized transaction.
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        transactionDetails:
+          $ref: '#/components/schemas/TransactionDetails'
     ErrorResponse:
       type: object
       description: Error response returned when a request fails.
@@ -146,46 +163,7 @@ components:
               field:
                 type: string
                 description: The field that caused the error, if applicable.
-    TransactionProcessingDetails:
-      type: object
-      description: Transaction processing identifiers and details.
-      properties:
-        transactionId:
-          type: string
-          description: The gateway-assigned transaction identifier.
-        orderId:
-          type: string
-          description: The order identifier associated with the transaction.
-        transactionTimestamp:
-          type: string
-          format: date-time
-          description: The timestamp when the transaction was processed.
-        apiTraceId:
-          type: string
-          description: A unique trace identifier for the API request.
   parameters:
-    TransactionId:
-      name: transactionId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique identifier of the original transaction.
-    Authorization:
-      name: Authorization
-      in: header
-      required: true
-      schema:
-        type: string
-      description: HMAC authorization token for request authentication.
-    Timestamp:
-      name: Timestamp
-      in: header
-      required: true
-      schema:
-        type: integer
-        format: int64
-      description: Epoch timestamp in milliseconds of the request.
     ApiKey:
       name: Api-Key
       in: header
@@ -201,6 +179,28 @@ components:
         type: string
         default: application/json
       description: The media type of the request body.
+    TransactionId:
+      name: transactionId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the original transaction.
+    Timestamp:
+      name: Timestamp
+      in: header
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Epoch timestamp in milliseconds of the request.
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: HMAC authorization token for request authentication.
     ClientRequestId:
       name: Client-Request-Id
       in: header

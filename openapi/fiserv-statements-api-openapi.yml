@@ -54,6 +54,18 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    StatementListResponse:
+      type: object
+      description: Response body for statement list.
+      properties:
+        accountNumber:
+          type: string
+          description: The account number.
+        statements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+          description: The list of statements.
     Statement:
       type: object
       description: A single account statement record.
@@ -86,18 +98,6 @@ components:
           type: number
           format: double
           description: Total credits for the statement period.
-    StatementListResponse:
-      type: object
-      description: Response body for statement list.
-      properties:
-        accountNumber:
-          type: string
-          description: The account number.
-        statements:
-          type: array
-          items:
-            $ref: '#/components/schemas/Statement'
-          description: The list of statements.
     ErrorResponse:
       type: object
       description: Standard error response.

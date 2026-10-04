@@ -60,6 +60,23 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    SignatureCaptureRequest:
+      type: object
+      description: Signature capture request payload.
+      required:
+      - merchid
+      - retref
+      - signature
+      properties:
+        merchid:
+          type: string
+          description: The CardPointe merchant ID.
+        retref:
+          type: string
+          description: The retrieval reference number of the transaction.
+        signature:
+          type: string
+          description: The base64-encoded signature image data.
     ErrorResponse:
       type: object
       description: Error response payload.
@@ -89,23 +106,6 @@ components:
         resptext:
           type: string
           description: The response text.
-    SignatureCaptureRequest:
-      type: object
-      description: Signature capture request payload.
-      required:
-      - merchid
-      - retref
-      - signature
-      properties:
-        merchid:
-          type: string
-          description: The CardPointe merchant ID.
-        retref:
-          type: string
-          description: The retrieval reference number of the transaction.
-        signature:
-          type: string
-          description: The base64-encoded signature image data.
   securitySchemes:
     basicAuth:
       type: http
