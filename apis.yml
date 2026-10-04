@@ -40,12 +40,14 @@ tags:
   - Payments
   - Wealth Management
   - Fortune 500
+  - Payment Processing
 tags_raw:
   - Banking
   - Financial
   - Payments
   - Wealth Management
   - Fortune 500
+  - Payment Processing
 url: https://raw.githubusercontent.com/api-evangelist/fiserv/refs/heads/main/apis.yml
 x-api-posture: partner-gated
 x-api-posture-basis: observed
