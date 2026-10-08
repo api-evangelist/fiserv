@@ -609,6 +609,12 @@ apis:
     url: >-
       https://developer.fiserv.com/product/CardDeveloper/docs/?path=docs/gettingstarted/getting-started.md
 common:
+  - type: Plans
+    url: plans/fiserv-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/fiserv-rate-limits.yml
+  - type: FinOps
+    url: finops/fiserv-finops.yml
   - type: CapabilityMap
     url: capabilities/fiserv-capability-edges.yml
     name: Fiserv Business Capability Map
