@@ -11,6 +11,7 @@ checked:
 - https://n8n.io/integrations/fiserv/
 - https://registry.financialdataexchange.org/
 - https://zapier.com/apps/fiserv/integrations
+- olo/integrations/olo-integration-edges.yml
 summary: null
 marketplace_apps: []
 edges:
@@ -38,4 +39,21 @@ edges:
     detected: '2026-10-14'
   detected_by: sweep-fdx.py
   first_seen: '2026-10-14'
+- partner_name: Olo (own)
+  partner: olo
+  partner_match: mirror
+  mirror_match: domain+name-among-holders
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.olo.com/partners/fiserv
+  mirror_of: olo/integrations/olo-integration-edges.yml
+  apps:
+  - Fiserv
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Payment Processor
 templates: []
