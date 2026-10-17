@@ -139,31 +139,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ProfileResponse:
-      type: object
-      description: Profile response payload.
-      properties:
-        profileid:
-          type: string
-          description: The unique profile identifier.
-        acctid:
-          type: string
-          description: The account identifier within the profile.
-        respstat:
-          type: string
-          description: The response status.
-        account:
-          type: string
-          description: The masked account number or token.
-        respcode:
-          type: string
-          description: The response code.
-        resptext:
-          type: string
-          description: The response text.
-        token:
-          type: string
-          description: The CardSecure token for the account.
     ProfileRequest:
       type: object
       description: Profile creation or update request.
@@ -218,6 +193,31 @@ components:
         resptext:
           type: string
           description: The response text.
+    ProfileResponse:
+      type: object
+      description: Profile response payload.
+      properties:
+        profileid:
+          type: string
+          description: The unique profile identifier.
+        acctid:
+          type: string
+          description: The account identifier within the profile.
+        respstat:
+          type: string
+          description: The response status.
+        account:
+          type: string
+          description: The masked account number or token.
+        respcode:
+          type: string
+          description: The response code.
+        resptext:
+          type: string
+          description: The response text.
+        token:
+          type: string
+          description: The CardSecure token for the account.
     ErrorResponse:
       type: object
       description: Error response payload.

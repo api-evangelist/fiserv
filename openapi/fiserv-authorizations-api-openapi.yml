@@ -85,6 +85,32 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    AuthorizationCancelResponse:
+      type: object
+      description: Response body for authorization cancellation.
+      properties:
+        authorizationId:
+          type: string
+          description: The cancelled authorization identifier.
+        status:
+          type: string
+          description: The cancellation status.
+    AuthorizationResponse:
+      type: object
+      description: Response body for authorization creation.
+      properties:
+        authorizationId:
+          type: string
+          description: The authorization identifier.
+        status:
+          type: string
+          enum:
+          - APPROVED
+          - DECLINED
+          description: The authorization status.
+        approvalCode:
+          type: string
+          description: The approval code if authorized.
     AuthorizationRequest:
       type: object
       description: Request body for creating a transaction authorization.
@@ -131,32 +157,6 @@ components:
                 type: string
                 description: The field-level error message.
           description: Detailed field-level errors.
-    AuthorizationCancelResponse:
-      type: object
-      description: Response body for authorization cancellation.
-      properties:
-        authorizationId:
-          type: string
-          description: The cancelled authorization identifier.
-        status:
-          type: string
-          description: The cancellation status.
-    AuthorizationResponse:
-      type: object
-      description: Response body for authorization creation.
-      properties:
-        authorizationId:
-          type: string
-          description: The authorization identifier.
-        status:
-          type: string
-          enum:
-          - APPROVED
-          - DECLINED
-          description: The authorization status.
-        approvalCode:
-          type: string
-          description: The approval code if authorized.
   securitySchemes:
     bearerAuth:
       type: http

@@ -118,19 +118,22 @@ paths:
     - url: https://prod.api.fiservapps.com
       description: Production Environment
 components:
+  parameters:
+    AccountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique account identifier.
+    AccountNumber:
+      name: accountNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The card account number.
   schemas:
-    TransactionListResponse:
-      type: object
-      description: Response body for transaction list inquiry.
-      properties:
-        accountId:
-          type: string
-          description: The account identifier.
-        transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transaction'
-          description: The list of transactions.
     Transaction:
       type: object
       description: A single account transaction record.
@@ -188,6 +191,18 @@ components:
                 type: string
                 description: The field that caused the error.
           description: Detailed error information.
+    TransactionListResponse:
+      type: object
+      description: Response body for transaction list inquiry.
+      properties:
+        accountId:
+          type: string
+          description: The account identifier.
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+          description: The list of transactions.
     CardTransaction:
       type: object
       description: A single card transaction record.
@@ -222,18 +237,6 @@ components:
         description:
           type: string
           description: The transaction description.
-    TransactionListResponse_2:
-      type: object
-      description: Response body for transaction list.
-      properties:
-        accountNumber:
-          type: string
-          description: The account number.
-        transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/CardTransaction'
-          description: The list of transactions.
     ErrorResponse_2:
       type: object
       description: Standard error response.
@@ -256,21 +259,18 @@ components:
                 type: string
                 description: The field-level error message.
           description: Detailed field-level errors.
-  parameters:
-    AccountId:
-      name: accountId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique account identifier.
-    AccountNumber:
-      name: accountNumber
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The card account number.
+    TransactionListResponse_2:
+      type: object
+      description: Response body for transaction list.
+      properties:
+        accountNumber:
+          type: string
+          description: The account number.
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardTransaction'
+          description: The list of transactions.
   securitySchemes:
     bearerAuth:
       type: http

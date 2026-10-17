@@ -229,19 +229,6 @@ components:
         description:
           type: string
           description: The updated account description.
-    AccountUpdateResponse:
-      type: object
-      description: Response body for account update.
-      properties:
-        accountId:
-          type: string
-          description: The account identifier.
-        statusCode:
-          type: string
-          description: The response status code.
-        statusDescription:
-          type: string
-          description: The response status description.
     AccountAddRequest:
       type: object
       description: Request body for creating a new account.
@@ -275,6 +262,31 @@ components:
           type: string
           pattern: ^[A-Z]{3}$
           description: The ISO 4217 currency code.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: string
+          description: The error status code.
+        statusDescription:
+          type: string
+          description: A human-readable error description.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The specific error code.
+              message:
+                type: string
+                description: The error message.
+              field:
+                type: string
+                description: The field that caused the error.
+          description: Detailed error information.
     AccountInquiryResponse:
       type: object
       description: Response body for account inquiry.
@@ -311,31 +323,19 @@ components:
         branchId:
           type: string
           description: The branch identifier.
-    ErrorResponse:
+    AccountUpdateResponse:
       type: object
-      description: Standard error response.
+      description: Response body for account update.
       properties:
+        accountId:
+          type: string
+          description: The account identifier.
         statusCode:
           type: string
-          description: The error status code.
+          description: The response status code.
         statusDescription:
           type: string
-          description: A human-readable error description.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: The specific error code.
-              message:
-                type: string
-                description: The error message.
-              field:
-                type: string
-                description: The field that caused the error.
-          description: Detailed error information.
+          description: The response status description.
     AccountAddResponse_2:
       type: object
       description: Response body for account creation.
@@ -368,6 +368,28 @@ components:
           minimum: 1
           maximum: 28
           description: The billing cycle day of the month.
+    ErrorResponse_2:
+      type: object
+      description: Standard error response.
+      properties:
+        code:
+          type: string
+          description: The error code.
+        message:
+          type: string
+          description: The error message.
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field that caused the error.
+              message:
+                type: string
+                description: The field-level error message.
+          description: Detailed field-level errors.
     AccountInquiryResponse_2:
       type: object
       description: Response body for account inquiry.
@@ -401,28 +423,6 @@ components:
           type: string
           format: date
           description: The payment due date.
-    ErrorResponse_2:
-      type: object
-      description: Standard error response.
-      properties:
-        code:
-          type: string
-          description: The error code.
-        message:
-          type: string
-          description: The error message.
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: The field that caused the error.
-              message:
-                type: string
-                description: The field-level error message.
-          description: Detailed field-level errors.
   parameters:
     AccountId:
       name: accountId

@@ -118,14 +118,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  parameters:
-    CardNumber:
-      name: cardNumber
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The card number.
   schemas:
     CardUpdateResponse:
       type: object
@@ -168,19 +160,6 @@ components:
         nameOnCard:
           type: string
           description: The name to emboss on the card.
-    CardIssueResponse:
-      type: object
-      description: Response body for card issuance.
-      properties:
-        cardNumber:
-          type: string
-          description: The issued card number (masked).
-        expirationDate:
-          type: string
-          description: The card expiration date.
-        status:
-          type: string
-          description: The card status.
     CardInquiryResponse:
       type: object
       description: Response body for card inquiry.
@@ -225,6 +204,27 @@ components:
                 type: string
                 description: The field-level error message.
           description: Detailed field-level errors.
+    CardIssueResponse:
+      type: object
+      description: Response body for card issuance.
+      properties:
+        cardNumber:
+          type: string
+          description: The issued card number (masked).
+        expirationDate:
+          type: string
+          description: The card expiration date.
+        status:
+          type: string
+          description: The card status.
+  parameters:
+    CardNumber:
+      name: cardNumber
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The card number.
   securitySchemes:
     bearerAuth:
       type: http
