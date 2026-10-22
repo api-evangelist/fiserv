@@ -23,6 +23,11 @@ checked:
 - https://x402-list.com
 - https://x402.org/members/
 - https://x402scan.com
+- https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/
+- https://www.bankofcanada.ca/rps-api/cif2/accounts/list
+- https://www.payments.ca/payment-resources/directories?field_directory_type=10
+- https://www.payments.ca/payment-resources/directories?field_directory_type=13
+- https://www.payments.ca/payment-resources/directories?field_directory_type=14
 summary: null
 marketplace_apps: []
 edges:
@@ -124,4 +129,70 @@ edges:
     detected: '2026-10-21'
   detected_by: sweep-x402-micropayments.py
   first_seen: '2026-10-21'
+- partner_name: Bank of Canada RPAA registry of payment service providers
+  partner: null
+  partner_match: register
+  type: register
+  channel: regulator-register
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/
+  category: Canadian retail payment activities (RPAA) PSP registration
+  contract_reference:
+    register: Bank of Canada RPAA registry of payment service providers
+    spec_file: null
+    standard: null
+    role: registered-psp
+    registrations:
+    - registered_name: Fiserv Canada Ltd.
+      register_status: registered
+      register_country: CA
+      register_id: 96b87757-4b98-ef11-8a68-002248adaada
+      matched_domain: fiserv.com
+      matched_by: domain+name-among-holders
+      evidence_url: https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=96b87757-4b98-ef11-8a68-002248adaada
+      licences:
+      - RPAA registered PSP
+      brand: Fiserv
+      registration_date: '2026-01-27'
+      head_office_country: Canada
+      trade_names:
+      - Ignite Payments
+      payment_functions:
+      - Holding of funds on behalf of an end user until they are withdrawn by the end user or transferred to another
+        individual or entity
+      - The provision or maintenance of an account that, in relation to an electronic funds transfer, is held on
+        behalf of one or more end users
+      - The initiation of an electronic funds transfer at the request of an end user
+      - Authorization or Transmission, Reception or Facilitation of an instruction in relation to an electronic
+        funds transfer
+      - Clearing or settlement services
+      has_violations: false
+    - registered_name: Fiserv Solutions LLC
+      register_status: registered
+      register_country: US
+      register_id: 3b7b4ebb-ac98-ef11-8a68-000d3a84a24c
+      matched_domain: fiserv.com
+      matched_by: domain+name-among-holders
+      evidence_url: https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=3b7b4ebb-ac98-ef11-8a68-000d3a84a24c
+      licences:
+      - RPAA registered PSP
+      brand: Fiserv
+      registration_date: '2026-05-15'
+      head_office_country: United States of America (the)
+      trade_names:
+      - Open Solutions DTS
+      payment_functions:
+      - The provision or maintenance of an account that, in relation to an electronic funds transfer, is held on
+        behalf of one or more end users
+      - Authorization or Transmission, Reception or Facilitation of an instruction in relation to an electronic
+        funds transfer
+      - Clearing or settlement services
+      has_violations: false
+    signal_note: 'participation only: a regulator registration / payment-system membership; no API conformance is
+      published by this register'
+    detected_by: sweep-canada-rpaa-psp-registry.py
+    detected: '2026-10-22'
+  detected_by: sweep-canada-rpaa-psp-registry.py
+  first_seen: '2026-10-22'
 templates: []
