@@ -29,26 +29,10 @@ checked:
 - https://www.payments.ca/payment-resources/directories?field_directory_type=13
 - https://www.payments.ca/payment-resources/directories?field_directory_type=14
 - https://dir.texas.gov/resource-library-item/tx-ramp-certified-cloud-products
+- adobe-commerce/integrations/adobe-commerce-integration-edges.yml
 summary: null
 marketplace_apps: []
 edges:
-- partner_name: Olo (own)
-  partner: olo
-  partner_match: mirror
-  mirror_match: domain+name-among-holders
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.olo.com/partners/fiserv
-  mirror_of: olo/integrations/olo-integration-edges.yml
-  apps:
-  - Fiserv
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
-  category: Payment Processor
 - partner_name: FDX (Financial Data Exchange)
   partner: fdx
   type: contract
@@ -252,4 +236,38 @@ edges:
     detected: '2026-10-22'
   detected_by: sweep-tx-ramp-certified-cloud.py
   first_seen: '2026-10-22'
+- partner_name: Olo (own)
+  partner: olo
+  partner_match: mirror
+  mirror_match: domain+name-among-holders
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.olo.com/partners/fiserv
+  mirror_of: olo/integrations/olo-integration-edges.yml
+  apps:
+  - Fiserv
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Payment Processor
+- partner_name: Adobe Commerce (own)
+  partner: adobe-commerce
+  partner_match: mirror
+  mirror_match: domain+name-among-holders
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://exchange.adobe.com/apps/ec/108868
+  mirror_of: adobe-commerce/integrations/adobe-commerce-integration-edges.yml
+  apps:
+  - Fiserv Payments
+  listing_count: 1
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Adobe Exchange Experience Cloud listing (Commerce)
 templates: []
