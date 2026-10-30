@@ -1,4 +1,4 @@
-# Fiserv (fiserv)
+# Fiserv
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,148 +66,202 @@
 
 Fiserv is a global provider of financial services technology solutions, offering a wide range of products and services to help clients in the banking, payments, and wealth management industries.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/fiserv/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/fiserv/refs/heads/main/apis.yml)
+**Areas:** Banking · Finance · Payments · Wealth Management · Fortune 500 · Payment Processing
 
-## Scope
+## Fiserv on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Fiserv is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/fiserv/](https://apis.io/providers/fiserv/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (27)
 
-- Banking
-- Financial
-- Payments
-- Wealth Management
+- [Fiserv Payment Events](https://apis.io/apis/fiserv/payment-events/) — Fiserv provides webhook-based event notifications across the payments lifecycle. Merchants can subscribe to webhooks to receive real-time notifications for…
+- [Fiserv Accounts API](https://apis.io/apis/fiserv/fiserv-accounts-api/) — Create, retrieve, update, and manage deposit and loan accounts.
+- [Fiserv Authorization API](https://apis.io/apis/fiserv/fiserv-authorization-api/) — Authorize payment transactions against a cardholder account.
+- [Fiserv Authorizations API](https://apis.io/apis/fiserv/fiserv-authorizations-api/) — Create and manage transaction authorizations.
+- [Fiserv BIN API](https://apis.io/apis/fiserv/fiserv-bin-api/) — Look up Bank Identification Number (BIN) data for cards.
+- [Fiserv Cancels API](https://apis.io/apis/fiserv/fiserv-cancels-api/) — Cancel or void previously authorized transactions.
+- [Fiserv Capture API](https://apis.io/apis/fiserv/fiserv-capture-api/) — Capture previously authorized transactions for settlement.
+- [Fiserv Captures API](https://apis.io/apis/fiserv/fiserv-captures-api/) — Capture previously authorized transactions for settlement.
+- [Fiserv Cards API](https://apis.io/apis/fiserv/fiserv-cards-api/) — Issue, activate, manage, and retrieve card details.
+- [Fiserv Charges API](https://apis.io/apis/fiserv/fiserv-charges-api/) — Process payment charges including authorizations, sales, and pre-authorizations.
+- [Fiserv Funding API](https://apis.io/apis/fiserv/fiserv-funding-api/) — Retrieve funding information for settled transactions.
+- [Fiserv Inquire API](https://apis.io/apis/fiserv/fiserv-inquire-api/) — Inquire about the status of transactions and merchant information.
+- [Fiserv Limits API](https://apis.io/apis/fiserv/fiserv-limits-api/) — Manage credit, temporary credit, and cash limits.
+- [Fiserv Parties API](https://apis.io/apis/fiserv/fiserv-parties-api/) — Manage customer and party information including personal details and contact information.
+- [Fiserv Payments API](https://apis.io/apis/fiserv/fiserv-payments-api/) — Process payment transactions including credits, debits, and bill payments.
+- [Fiserv Profile API](https://apis.io/apis/fiserv/fiserv-profile-api/) — Manage stored customer payment profiles for recurring or future transactions.
+- [Fiserv Refund API](https://apis.io/apis/fiserv/fiserv-refund-api/) — Refund previously captured and settled transactions.
+- [Fiserv Refunds API](https://apis.io/apis/fiserv/fiserv-refunds-api/) — Process refunds against previously captured transactions.
+- [Fiserv Settlement API](https://apis.io/apis/fiserv/fiserv-settlement-api/) — Retrieve settlement status for processed transactions.
+- [Fiserv Signature Capture API](https://apis.io/apis/fiserv/fiserv-signature-capture-api/) — Submit signature capture data for completed transactions.
+- [Fiserv Statements API](https://apis.io/apis/fiserv/fiserv-statements-api/) — Retrieve account statements and statement transactions.
+- [Fiserv Tokens API](https://apis.io/apis/fiserv/fiserv-tokens-api/) — Create, manage, and use payment tokens for secure storage of payment credentials.
+- [Fiserv Transactions API](https://apis.io/apis/fiserv/fiserv-transactions-api/) — Retrieve and manage account transaction history and details.
+- [Fiserv Transfers API](https://apis.io/apis/fiserv/fiserv-transfers-api/) — Initiate and manage fund transfers between accounts.
+- [Fiserv Verifications API](https://apis.io/apis/fiserv/fiserv-verifications-api/) — Verify payment cards or tokens before processing a transaction.
+- [Fiserv Void API](https://apis.io/apis/fiserv/fiserv-void-api/) — Void previously authorized transactions before settlement.
+- [Fiserv 3D Secure API](https://apis.io/apis/fiserv/fiserv-3d-secure-api/) — Manage 3-D Secure authentication flows for cardholder verification.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-02-17
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Fiserv CommerceHub API
+Event-driven and webhook contracts.
 
-The Fiserv CommerceHub API provides a unified RESTful interface for processing payments, managing tokens, verifying payment sources, and handling 3-D Secure authentication. CommerceHub enables merchants to accept payments through multiple channels including online, mobile, and in-app, with support for charges, pre-authorizations, captures, refunds, cancellations, and tokenization of payment credentials.
+- [Fiserv Payment Events](https://apis.io/asyncapis/fiserv/fiserv-payment-events-asyncapi/)
 
-- **Human URL:** [https://developer.fiserv.com/product/CommerceHub](https://developer.fiserv.com/product/CommerceHub)
+#### Event channels (4)
 
-#### Tags
+Individual events and webhooks the provider emits.
 
-- 3-D Secure
-- Commerce
-- Payments
-- Tokenization
+- [/webhooks/checkout](https://apis.io/channels/fiserv/webhooks-checkout/)
+- [/webhooks/disputes](https://apis.io/channels/fiserv/webhooks-disputes/)
+- [/webhooks/settlements](https://apis.io/channels/fiserv/webhooks-settlements/)
+- [/webhooks/transactions](https://apis.io/channels/fiserv/webhooks-transactions/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://developer.fiserv.com/product/CommerceHub/docs/?path=docs/Resources/API-Documents/Use-Our-APIs.md)
-- [OpenAPI](openapi/fiserv-commercehub-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/fiserv-commercehub.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fiserv-commercehub.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Fiserv CardPointe Gateway API
+- [Fiserv Agentic Access](https://apis.io/agentic-access/fiserv/fiserv-agentic-access/)
 
-The CardPointe Gateway API provides a RESTful interface for integrating secure tokenization, payment processing, and reporting features into applications and websites. The API supports authorization, capture, void, refund, and inquiry operations, as well as customer profile management for storing payment credentials securely.
+#### JSON Schema (2)
 
-- **Human URL:** [https://developer.fiserv.com/product/CardPointe](https://developer.fiserv.com/product/CardPointe)
+The data models the API reads and writes.
 
-#### Tags
+- [Fiserv Account](https://apis.io/schemas/fiserv/fiserv-account/)
+- [Fiserv Payment Transaction](https://apis.io/schemas/fiserv/fiserv-payment-transaction/)
 
-- Gateway
-- Payments
-- Point of Sale
-- Tokenization
+#### JSON-LD (1)
 
-#### Properties
+Linked-data contexts for the provider's vocabulary.
 
-- [Documentation](https://developer.fiserv.com/product/CardPointe/docs/?path=docs%2FAPIs%2FCardPointeGatewayAPI.md)
-- [OpenAPI](openapi/fiserv-cardpointe-gateway-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/fiserv-cardpointe-gateway.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fiserv-cardpointe-gateway.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Fiserv Context](https://apis.io/jsonld/fiserv/fiserv-context/)
 
-### Fiserv BankingHub API
+#### Collections (30)
 
-The Fiserv BankingHub API provides RESTful access to core banking operations including account management, transactions, transfers, payments, and party (customer) management. BankingHub enables financial institutions and fintech partners to integrate account opening, fund transfers, payment processing, and customer data management into their applications.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://developer.fiserv.com/product/BankingHub](https://developer.fiserv.com/product/BankingHub)
+- [Fiserv BankingHub 3-D Secure API](https://apis.io/collections/fiserv/open-fiserv-3-d-secure-api/)
+- [Fiserv BankingHub 3-D Secure Accounts API](https://apis.io/collections/fiserv/open-fiserv-accounts-api/)
+- [Fiserv BankingHub 3-D Secure Authorization API](https://apis.io/collections/fiserv/open-fiserv-authorization-api/)
+- [Fiserv BankingHub 3-D Secure Authorizations API](https://apis.io/collections/fiserv/open-fiserv-authorizations-api/)
+- [Fiserv BankingHub API](https://apis.io/collections/fiserv/open-fiserv-bankinghub/)
+- [Fiserv BankingHub 3-D Secure BIN API](https://apis.io/collections/fiserv/open-fiserv-bin-api/)
+- [Fiserv BankingHub 3-D Secure Cancels API](https://apis.io/collections/fiserv/open-fiserv-cancels-api/)
+- [Fiserv BankingHub 3-D Secure Capture API](https://apis.io/collections/fiserv/open-fiserv-capture-api/)
+- [Fiserv BankingHub 3-D Secure Captures API](https://apis.io/collections/fiserv/open-fiserv-captures-api/)
+- [Fiserv CardDeveloper API](https://apis.io/collections/fiserv/open-fiserv-carddeveloper/)
+- [Fiserv CardPointe Gateway API](https://apis.io/collections/fiserv/open-fiserv-cardpointe-gateway/)
+- [Fiserv BankingHub 3-D Secure Cards API](https://apis.io/collections/fiserv/open-fiserv-cards-api/)
+- [Fiserv BankingHub 3-D Secure Charges API](https://apis.io/collections/fiserv/open-fiserv-charges-api/)
+- [Fiserv CommerceHub API](https://apis.io/collections/fiserv/open-fiserv-commercehub/)
+- [Fiserv BankingHub 3-D Secure Funding API](https://apis.io/collections/fiserv/open-fiserv-funding-api/)
+- [Fiserv BankingHub 3-D Secure Inquire API](https://apis.io/collections/fiserv/open-fiserv-inquire-api/)
+- [Fiserv BankingHub 3-D Secure Limits API](https://apis.io/collections/fiserv/open-fiserv-limits-api/)
+- [Fiserv BankingHub 3-D Secure Parties API](https://apis.io/collections/fiserv/open-fiserv-parties-api/)
+- [Fiserv BankingHub 3-D Secure Payments API](https://apis.io/collections/fiserv/open-fiserv-payments-api/)
+- [Fiserv BankingHub 3-D Secure Profile API](https://apis.io/collections/fiserv/open-fiserv-profile-api/)
+- [Fiserv BankingHub 3-D Secure Refund API](https://apis.io/collections/fiserv/open-fiserv-refund-api/)
+- [Fiserv BankingHub 3-D Secure Refunds API](https://apis.io/collections/fiserv/open-fiserv-refunds-api/)
+- [Fiserv BankingHub 3-D Secure Settlement API](https://apis.io/collections/fiserv/open-fiserv-settlement-api/)
+- [Fiserv BankingHub 3-D Secure Signature Capture API](https://apis.io/collections/fiserv/open-fiserv-signature-capture-api/)
+- [Fiserv BankingHub 3-D Secure Statements API](https://apis.io/collections/fiserv/open-fiserv-statements-api/)
+- …and 5 more published on APIs.io
 
-#### Tags
+#### Governance rules (2)
 
-- Accounts
-- Banking
-- Payments
-- Transfers
+Spectral rulesets for the provider's contracts.
 
-#### Properties
+- [Fiserv — asyncapi rules](https://apis.io/rules/fiserv/fiserv-asyncapi-spectral-rules/)
+- [Fiserv — jsonschema rules](https://apis.io/rules/fiserv/fiserv-jsonschema-spectral-rules/)
 
-- [Documentation](https://developer.fiserv.com/product/BankingHub/docs/?path=docs/get-started.md)
-- [OpenAPI](openapi/fiserv-bankinghub-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/fiserv-bankinghub.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fiserv-bankinghub.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Security (2)
 
-### Fiserv CardDeveloper API
+Authentication, trust centre, and vulnerability disclosure.
 
-The Fiserv CardDeveloper API enables financial institutions and cardholders to manage card and account information through various touchpoints. The API supports account creation, card management, authorization management, transaction inquiry, limit management, and statement retrieval for credit and debit card programs.
+- [Fiserv Authentication](https://apis.io/security/fiserv/fiserv-authentication/)
+- [Fiserv Domain Security](https://apis.io/security/fiserv/fiserv-domain-security/)
 
-- **Human URL:** [https://developer.fiserv.com/product/CardDeveloper](https://developer.fiserv.com/product/CardDeveloper)
+#### Plans and pricing (1)
 
-#### Tags
+Published plans, tiers and prices.
 
-- Accounts
-- Authorizations
-- Cards
-- Statements
+- [Fiserv Plans Pricing](https://apis.io/plans/fiserv/fiserv-plans-pricing/)
 
-#### Properties
+#### Rate limits (1)
 
-- [Documentation](https://developer.fiserv.com/product/CardDeveloper/docs/?path=docs/gettingstarted/getting-started.md)
-- [OpenAPI](openapi/fiserv-carddeveloper-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/fiserv-carddeveloper.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fiserv-carddeveloper.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Published request limits.
 
-### Fiserv Payment Events
+- [Fiserv Rate Limits](https://apis.io/rate-limits/fiserv/fiserv-rate-limits/)
 
-Fiserv provides webhook-based event notifications across the payments lifecycle. Merchants can subscribe to webhooks to receive real-time notifications for key events including transaction status changes, settlement updates, dispute notifications, and checkout completions.
+#### FinOps (1)
 
-- **Human URL:** [https://docs.fiserv.dev/public/docs/webhooks-and-status-updates-checkout](https://docs.fiserv.dev/public/docs/webhooks-and-status-updates-checkout)
+What the API costs to run, by operation.
 
-#### Tags
+- [Fiserv Finops](https://apis.io/finops/fiserv/fiserv-finops/)
 
-- Disputes
-- Events
-- Payments
-- Webhooks
+## Where to find this API
 
-#### Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- [Documentation](https://docs.fiserv.dev/public/docs/webhooks-and-status-updates-checkout)
-- [AsyncAPI](asyncapi/fiserv-payment-events-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Postman Collection](collections/fiserv-bankinghub.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fiserv-bankinghub.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fiserv-carddeveloper.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fiserv-carddeveloper.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fiserv-cardpointe-gateway.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fiserv-cardpointe-gateway.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fiserv-commercehub.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fiserv-commercehub.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/Fiserv)
-- [LinkedIn](https://www.linkedin.com/company/fiserv)
 - [Website](https://www.fiserv.com/)
 - [Documentation](https://developer.fiserv.com/)
-- [Sign Up](https://developer.fiserv.com/)
-- [JSON-LD](json-ld/fiserv-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON Schema](json-schema/fiserv-payment-transaction-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/fiserv-account-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Features](undefined)
-- [L L Ms Txt](https://docs.fiserv.dev/llms.txt)
+- [Terms of service](https://www.fiserv.com/en/about-fiserv/terms-of-use.html)
+- [Privacy policy](https://www.fiserv.com/en/about-fiserv/privacy-notice.html)
+- [GitHub](https://github.com/Fiserv)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 36.6** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 60.7 |
+| Contract quality | 62.8 |
+| Contract governance | 13.6 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 14.3 |
+| Access clarity | 39.5 |
+
+**Agent readiness 26.5** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 19.7** — Banking & Open Finance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/fiserv/](https://apis.io/providers/fiserv/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Fiserv: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/fiserv/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
